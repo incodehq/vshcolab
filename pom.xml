@@ -362,7 +362,7 @@
     </profiles>
 
   <modules>
-    <module>module-simple</module>
+    <module>module-work</module>
     <module>application</module>
     <module>webapp</module>
   </modules>
