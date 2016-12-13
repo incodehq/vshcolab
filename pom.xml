@@ -23,7 +23,7 @@
     <artifactId>vshcolab</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>SimpleApp Parent</name>
+    <name>VshColab App Parent</name>
 
     <packaging>pom</packaging>
 
