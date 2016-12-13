@@ -34,7 +34,7 @@
 
     <properties>
 
-        <isis-maven-plugin.swagger.appManifest>domainapp.application.manifest.DomainAppAppManifest</isis-maven-plugin.swagger.appManifest>
+        <isis-maven-plugin.swagger.appManifest>org.incodehq.amberg.vshcolab.application.manifest.DomainAppAppManifest</isis-maven-plugin.swagger.appManifest>
         <isis-maven-plugin.swagger.dependency.groupId>${project.groupId}</isis-maven-plugin.swagger.dependency.groupId>
         <isis-maven-plugin.swagger.dependency.artifactId>${project.parent.artifactId}-application</isis-maven-plugin.swagger.dependency.artifactId>
 
