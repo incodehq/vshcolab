@@ -31,7 +31,7 @@ import cucumber.api.junit.Cucumber;
                 "html:target/cucumber-html-report"
                 ,"json:target/cucumber.json"
         },
-        glue={"classpath:domainapp.application.bdd.specglue"},
+        glue={"classpath:org.incodehq.amberg.vshcolab.application.bdd.specglue"},
         strict = true,
         tags = { "~@backlog", "~@ignore" })
 public class RunIntegBddSpecs {
