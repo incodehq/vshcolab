@@ -38,23 +38,6 @@ import de.agilecoders.wicket.core.settings.IBootstrapSettings;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
 
-/**
- * As specified in <tt>web.xml</tt>.
- * 
- * <p>
- * See:
- * <pre>
- * &lt;filter>
- *   &lt;filter-name>wicket&lt;/filter-name>
- *    &lt;filter-class>org.apache.wicket.protocol.http.WicketFilter&lt;/filter-class>
- *    &lt;init-param>
- *      &lt;param-name>applicationClassName&lt;/param-name>
- *      &lt;param-value>DomainApplication&lt;/param-value>
- *    &lt;/init-param>
- * &lt;/filter>
- * </pre>
- * 
- */
 public class DomainApplication extends IsisWicketApplication {
 
     private static final long serialVersionUID = 1L;
@@ -74,11 +57,11 @@ public class DomainApplication extends IsisWicketApplication {
         final Module overrides = new AbstractModule() {
             @Override
             protected void configure() {
-                bind(String.class).annotatedWith(Names.named("applicationName")).toInstance("Simple App");
+                bind(String.class).annotatedWith(Names.named("applicationName")).toInstance("VSH Colab");
                 bind(String.class).annotatedWith(Names.named("applicationCss")).toInstance("css/application.css");
                 bind(String.class).annotatedWith(Names.named("applicationJs")).toInstance("scripts/application.js");
                 bind(String.class).annotatedWith(Names.named("welcomeMessage")).toInstance(readLines(getClass(), "welcome.html"));
-                bind(String.class).annotatedWith(Names.named("aboutMessage")).toInstance("Simple App");
+                bind(String.class).annotatedWith(Names.named("aboutMessage")).toInstance("VSH Colab");
                 bind(InputStream.class).annotatedWith(Names.named("metaInfManifest")).toProvider(
                         Providers.of(getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF")));
                 // if uncommented, then overrides isis.appManifest in config file.
@@ -95,7 +78,7 @@ public class DomainApplication extends IsisWicketApplication {
             final String aboutText = Joiner.on("\n").join(readLines);
             return aboutText;
         } catch (IOException e) {
-            return "This is a simple app";
+            return "This is the VSH Colab exploration of the workflow domain";
         }
     }
 
