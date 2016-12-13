@@ -31,6 +31,8 @@ import org.apache.isis.applib.AppManifest;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.isisaddons.module.excel.ExcelModule;
+import org.isisaddons.wicket.gmap3.cpt.applib.Gmap3ApplibModule;
+import org.isisaddons.wicket.gmap3.cpt.service.Gmap3ServiceModule;
 
 /**
  * Bootstrap the application.
@@ -46,7 +48,9 @@ public class DomainAppAppManifest implements AppManifest {
                 WorkModuleDomSubmodule.class,
                 DomainAppApplicationModuleFixtureSubmodule.class,
                 DomainAppApplicationModuleServicesSubmodule.class,
-                ExcelModule.class
+                ExcelModule.class,
+                Gmap3ApplibModule.class,
+                Gmap3ServiceModule.class
         );
     }
 

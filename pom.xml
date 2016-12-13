@@ -348,6 +348,12 @@
                 <version>1.13.0</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.isisaddons.wicket.gmap3</groupId>
+                <artifactId>isis-wicket-gmap3-cpt</artifactId>
+                <version>1.13.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
