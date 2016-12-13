@@ -21,13 +21,13 @@ package org.incodehq.amberg.vshcolab.application.fixture.teardown;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.SimpleModuleTearDown;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 
 public class DomainAppTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        executionContext.executeChild(this, new SimpleModuleTearDown());
+        executionContext.executeChild(this, new WorkModuleTearDown());
     }
 
 

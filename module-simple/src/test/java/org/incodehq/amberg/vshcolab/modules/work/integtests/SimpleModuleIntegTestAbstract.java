@@ -24,7 +24,7 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import org.incodehq.amberg.vshcolab.modules.work.SimpleModuleManifest;
+import org.incodehq.amberg.vshcolab.modules.work.WorkModuleManifest;
 import org.junit.BeforeClass;
 
 import org.apache.isis.applib.annotation.DomainService;
@@ -45,7 +45,7 @@ public abstract class SimpleModuleIntegTestAbstract extends IntegrationTestAbstr
         if(isft == null) {
             isft = new IsisSystemForTest.Builder()
                     .withLoggingAt(org.apache.log4j.Level.INFO)
-                    .with(new SimpleModuleManifest() {
+                    .with(new WorkModuleManifest() {
                         @Override
                         public Map<String, String> getConfigurationProperties() {
                             final Map<String, String> map = Maps.newHashMap();

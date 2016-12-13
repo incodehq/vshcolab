@@ -16,9 +16,21 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.fixture;
 
-public final class SimpleModuleFixtureSubmodule {
+package org.incodehq.amberg.vshcolab.modules.work.fixture.teardown;
 
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
+
+public class WorkModuleTearDown extends FixtureScript {
+
+    @Override
+    protected void execute(ExecutionContext executionContext) {
+        isisJdoSupport.executeUpdate("delete from \"simple\".\"SimpleObject\"");
+    }
+
+
+    @javax.inject.Inject
+    private IsisJdoSupport isisJdoSupport;
 
 }

@@ -28,6 +28,7 @@ import com.google.common.base.Throwables;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -38,7 +39,6 @@ import org.apache.isis.applib.services.xactn.TransactionService;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.SimpleModuleTearDown;
 import org.incodehq.amberg.vshcolab.modules.work.integtests.SimpleModuleIntegTestAbstract;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -77,7 +77,7 @@ public class SimpleObjectMenu_IntegTest extends SimpleModuleIntegTestAbstract {
         public void whenNone() throws Exception {
 
             // given
-            FixtureScript fs = new SimpleModuleTearDown();
+            FixtureScript fs = new WorkModuleTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             transactionService.nextTransaction();
 
@@ -95,7 +95,7 @@ public class SimpleObjectMenu_IntegTest extends SimpleModuleIntegTestAbstract {
         public void happyCase() throws Exception {
 
             // given
-            FixtureScript fs = new SimpleModuleTearDown();
+            FixtureScript fs = new WorkModuleTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             transactionService.nextTransaction();
 
@@ -111,7 +111,7 @@ public class SimpleObjectMenu_IntegTest extends SimpleModuleIntegTestAbstract {
         public void whenAlreadyExists() throws Exception {
 
             // given
-            FixtureScript fs = new SimpleModuleTearDown();
+            FixtureScript fs = new WorkModuleTearDown();
             fixtureScripts.runFixtureScript(fs, null);
             transactionService.nextTransaction();
             wrap(menu).create("Faz");

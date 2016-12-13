@@ -21,7 +21,7 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.SimpleModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -96,7 +96,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
         }
 
         public static class PropertyDomainEvent
-                extends SimpleModuleDomSubmodule.PropertyDomainEvent<SimpleObject, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<SimpleObject, String> { }
     }
 
 
@@ -123,7 +123,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
         }
 
         public static class PropertyDomainEvent
-                extends SimpleModuleDomSubmodule.PropertyDomainEvent<SimpleObject, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<SimpleObject, String> { }
     }
 
 
@@ -144,7 +144,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Mixin(method = "exec")
     public static class updateName {
 
-        public static class ActionDomainEvent extends SimpleModuleDomSubmodule.ActionDomainEvent<SimpleObject> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<SimpleObject> {
         }
 
         private final SimpleObject simpleObject;
@@ -185,7 +185,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Mixin(method = "exec")
     public static class delete {
 
-        public static class ActionDomainEvent extends SimpleModuleDomSubmodule.ActionDomainEvent<SimpleObject> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<SimpleObject> {
         }
 
         private final SimpleObject simpleObject;

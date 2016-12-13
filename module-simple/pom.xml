@@ -25,11 +25,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>vshcolab-module-simple</artifactId>
-    <name>VshColab App Simple Module</name>
+    <artifactId>vshcolab-module-work</artifactId>
+    <name>VshColab App Work Module</name>
 
     <properties>
-        <isis-maven-plugin.validate.appManifest>org.incodehq.amberg.vshcolab.modules.work.SimpleModuleManifest</isis-maven-plugin.validate.appManifest>
+        <isis-maven-plugin.validate.appManifest>org.incodehq.amberg.vshcolab.modules.work.WorkModuleManifest</isis-maven-plugin.validate.appManifest>
 
         <maven-checkstyle-plugin.configLocation>${project.parent.basedir}/_checks/checkstyle.xml</maven-checkstyle-plugin.configLocation>
         <maven-pmd-plugin.ruleset>${project.parent.basedir}/_checks/pmd.xml</maven-pmd-plugin.ruleset>

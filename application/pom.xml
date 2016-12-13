@@ -100,7 +100,7 @@
         <!-- this app -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>vshcolab-module-simple</artifactId>
+            <artifactId>vshcolab-module-work</artifactId>
         </dependency>
 
 

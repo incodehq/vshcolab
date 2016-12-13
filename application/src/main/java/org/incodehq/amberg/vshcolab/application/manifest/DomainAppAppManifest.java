@@ -30,7 +30,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.incodehq.amberg.vshcolab.application.fixture.DomainAppApplicationModuleFixtureSubmodule;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.SimpleModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 
 /**
  * Bootstrap the application.
@@ -43,7 +43,7 @@ public class DomainAppAppManifest implements AppManifest {
     @Override
     public List<Class<?>> getModules() {
         return Arrays.asList(
-                SimpleModuleDomSubmodule.class,
+                WorkModuleDomSubmodule.class,
                 DomainAppApplicationModuleFixtureSubmodule.class,
                 DomainAppApplicationModuleServicesSubmodule.class
         );

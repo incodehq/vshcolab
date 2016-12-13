@@ -26,7 +26,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import org.incodehq.amberg.vshcolab.modules.work.fixture.data.SimpleObjectMenu_create;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.SimpleModuleTearDown;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -66,7 +66,7 @@ public class RecreateSimpleObjects extends FixtureScript {
         }
 
         // execute
-        ec.executeChild(this, new SimpleModuleTearDown());
+        ec.executeChild(this, new WorkModuleTearDown());
         for (int i = 0; i < number; i++) {
             final String name = NAMES.get(i);
             final SimpleObjectMenu_create fs = new SimpleObjectMenu_create().setName(name);
