@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.webapp;
+package org.incodehq.amberg.vshcolab.webapp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +49,7 @@ import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvid
  *    &lt;filter-class>org.apache.wicket.protocol.http.WicketFilter&lt;/filter-class>
  *    &lt;init-param>
  *      &lt;param-name>applicationClassName&lt;/param-name>
- *      &lt;param-value>domainapp.webapp.DomainApplication&lt;/param-value>
+ *      &lt;param-value>DomainApplication&lt;/param-value>
  *    &lt;/init-param>
  * &lt;/filter>
  * </pre>
