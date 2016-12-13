@@ -16,69 +16,50 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.application.manifest;
+package org.incodehq.amberg.vshcolab.modules.work;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.incodehq.amberg.vshcolab.application.services.DomainAppApplicationModuleServicesSubmodule;
-
 import org.apache.isis.applib.AppManifest;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incodehq.amberg.vshcolab.application.fixture.DomainAppApplicationModuleFixtureSubmodule;
-
 import org.incodehq.amberg.vshcolab.modules.work.dom.SimpleModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.SimpleModuleFixtureSubmodule;
 
 /**
- * Bootstrap the application.
+ * Used by <code>isis-maven-plugin</code> (build-time validation of the module) and also by module-level integration tests.
  */
-public class DomainAppAppManifest implements AppManifest {
+public class SimpleModuleManifest implements AppManifest {
 
-    /**
-     * Load all services and entities found in (the packages and subpackages within) these modules
-     */
     @Override
     public List<Class<?>> getModules() {
-        return Arrays.asList(
+        return Arrays.<Class<?>>asList(
                 SimpleModuleDomSubmodule.class,
-                DomainAppApplicationModuleFixtureSubmodule.class,
-                DomainAppApplicationModuleServicesSubmodule.class
+                SimpleModuleFixtureSubmodule.class
         );
     }
 
-    /**
-     * No additional services.
-     */
     @Override
     public List<Class<?>> getAdditionalServices() {
         return Collections.emptyList();
     }
 
-    /**
-     * Use shiro for authentication.
-     */
     @Override
     public String getAuthenticationMechanism() {
-        return "shiro";
+        return null;
     }
 
-    /**
-     * Use shiro for authorization.
-     */
     @Override
     public String getAuthorizationMechanism() {
-        return "shiro";
+        return null;
     }
 
-    /**
-     * No fixtures.
-     */
     @Override
     public List<Class<? extends FixtureScript>> getFixtures() {
-        return Collections.emptyList();
+        return null;
     }
 
     /**

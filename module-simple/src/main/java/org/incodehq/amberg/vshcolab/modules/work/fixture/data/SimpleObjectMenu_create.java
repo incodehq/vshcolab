@@ -16,36 +16,43 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.application.services.homepage;
 
-import java.util.List;
+package org.incodehq.amberg.vshcolab.modules.work.fixture.data;
 
-import org.apache.isis.applib.annotation.ViewModel;
-import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@ViewModel
-public class HomePageViewModel {
+@Accessors(chain = true)
+public class SimpleObjectMenu_create extends FixtureScript {
 
-    //region > title
-    public TranslatableString title() {
-        return TranslatableString.tr("{num} objects", "num", getObjects().size());
+    /**
+     * Name of the object (required)
+     */
+    @Getter @Setter
+    private String name;
+
+    /**
+     * The created simple object (output).
+     */
+    @Getter
+    private SimpleObject simpleObject;
+
+
+    @Override
+    protected void execute(final ExecutionContext ec) {
+
+        String name = checkParam("name", ec, String.class);
+
+        this.simpleObject = wrap(simpleObjectMenu).create(name);
+        ec.addResult(this, simpleObject);
     }
-    //endregion
-
-    //region > object (collection)
-    @org.apache.isis.applib.annotation.HomePage
-    public List<SimpleObject> getObjects() {
-        return simpleObjectRepository.listAll();
-    }
-    //endregion
-
-    //region > injected services
 
     @javax.inject.Inject
-    SimpleObjectRepository simpleObjectRepository;
+    SimpleObjectMenu simpleObjectMenu;
 
-    //endregion
 }

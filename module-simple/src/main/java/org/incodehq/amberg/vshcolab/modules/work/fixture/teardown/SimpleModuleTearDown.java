@@ -16,36 +16,21 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.application.services.homepage;
 
-import java.util.List;
+package org.incodehq.amberg.vshcolab.modules.work.fixture.teardown;
 
-import org.apache.isis.applib.annotation.ViewModel;
-import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectRepository;
+public class SimpleModuleTearDown extends FixtureScript {
 
-@ViewModel
-public class HomePageViewModel {
-
-    //region > title
-    public TranslatableString title() {
-        return TranslatableString.tr("{num} objects", "num", getObjects().size());
+    @Override
+    protected void execute(ExecutionContext executionContext) {
+        isisJdoSupport.executeUpdate("delete from \"simple\".\"SimpleObject\"");
     }
-    //endregion
 
-    //region > object (collection)
-    @org.apache.isis.applib.annotation.HomePage
-    public List<SimpleObject> getObjects() {
-        return simpleObjectRepository.listAll();
-    }
-    //endregion
-
-    //region > injected services
 
     @javax.inject.Inject
-    SimpleObjectRepository simpleObjectRepository;
+    private IsisJdoSupport isisJdoSupport;
 
-    //endregion
 }

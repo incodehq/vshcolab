@@ -16,22 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.application.fixture.teardown;
+package org.incodehq.amberg.vshcolab.modules.work.fixture;
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
+public final class SimpleModuleFixtureSubmodule {
 
-import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.SimpleModuleTearDown;
-
-public class DomainAppTearDown extends FixtureScript {
-
-    @Override
-    protected void execute(ExecutionContext executionContext) {
-        executionContext.executeChild(this, new SimpleModuleTearDown());
-    }
-
-
-    @javax.inject.Inject
-    private IsisJdoSupport isisJdoSupport;
 
 }

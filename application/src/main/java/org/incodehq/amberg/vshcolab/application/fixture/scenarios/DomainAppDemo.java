@@ -22,7 +22,7 @@ import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDo
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import domainapp.modules.simple.fixture.scenario.RecreateSimpleObjects;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
 
 public class DomainAppDemo extends FixtureScript {
 

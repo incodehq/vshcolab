@@ -14,18 +14,36 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.incodehq.amberg.vshcolab.application.bdd.specglue;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
-import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
+import org.junit.Before;
+import org.junit.Test;
 
-import cucumber.api.java.Before;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class CatalogOfFixturesGlue extends CukeGlueAbstract {
+public class SimpleObject_Test {
 
-    @Before(value={"@integration", "@RecreateSimpleObjects"}, order=20000)
-    public void integrationFixtures() throws Throwable {
-        scenarioExecution().install(new RecreateSimpleObjects());
+    SimpleObject simpleObject;
+
+    @Before
+    public void setUp() throws Exception {
+        simpleObject = new SimpleObject("Foobar");
+    }
+
+    public static class Name extends SimpleObject_Test {
+
+        @Test
+        public void happyCase() throws Exception {
+            // given
+            assertThat(simpleObject.getName()).isEqualTo("Foobar");
+
+            // when
+            String name = "Foobar - updated";
+            simpleObject.setName(name);
+
+            // then
+            assertThat(simpleObject.getName()).isEqualTo(name);
+        }
     }
 
 }
