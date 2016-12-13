@@ -336,6 +336,18 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.isisaddons.module.excel</groupId>
+                <artifactId>isis-module-excel-dom</artifactId>
+                <version>1.13.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.isisaddons.wicket.excel</groupId>
+                <artifactId>isis-wicket-excel-cpt</artifactId>
+                <version>1.13.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

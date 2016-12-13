@@ -133,6 +133,11 @@
             <artifactId>vshcolab-application</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.isisaddons.wicket.excel</groupId>
+            <artifactId>isis-wicket-excel-cpt</artifactId>
+        </dependency>
+
         <!-- isis -->
         <dependency>
             <groupId>com.danhaywood.mavendeps</groupId>
