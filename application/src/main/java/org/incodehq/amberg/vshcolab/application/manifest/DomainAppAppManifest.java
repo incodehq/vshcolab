@@ -23,14 +23,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.incodehq.amberg.vshcolab.application.fixture.DomainAppApplicationModuleFixtureSubmodule;
 import org.incodehq.amberg.vshcolab.application.services.DomainAppApplicationModuleServicesSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 
 import org.apache.isis.applib.AppManifest;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incodehq.amberg.vshcolab.application.fixture.DomainAppApplicationModuleFixtureSubmodule;
-
-import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.isisaddons.module.excel.ExcelModule;
 
 /**
  * Bootstrap the application.
@@ -45,7 +45,8 @@ public class DomainAppAppManifest implements AppManifest {
         return Arrays.asList(
                 WorkModuleDomSubmodule.class,
                 DomainAppApplicationModuleFixtureSubmodule.class,
-                DomainAppApplicationModuleServicesSubmodule.class
+                DomainAppApplicationModuleServicesSubmodule.class,
+                ExcelModule.class
         );
     }
 
