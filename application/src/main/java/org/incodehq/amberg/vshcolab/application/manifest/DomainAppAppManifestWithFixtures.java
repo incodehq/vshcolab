@@ -18,16 +18,14 @@
  */
 package org.incodehq.amberg.vshcolab.application.manifest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
-import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
+
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 /**
  * Run the app but without setting up any fixtures.
@@ -47,7 +45,7 @@ public class DomainAppAppManifestWithFixtures extends DomainAppAppManifest {
      */
     @Override
     public Map<String, String> getConfigurationProperties() {
-        HashMap<String,String> props = Maps.newHashMap();
+        final Map<String, String> props = super.getConfigurationProperties();
         props.put("isis.persistor.datanucleus.install-fixtures","true");
         return props;
     }

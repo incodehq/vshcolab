@@ -20,8 +20,11 @@ package org.incodehq.amberg.vshcolab.application.manifest;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.Maps;
 
 import org.incodehq.amberg.vshcolab.application.fixture.DomainAppApplicationModuleFixtureSubmodule;
 import org.incodehq.amberg.vshcolab.application.services.DomainAppApplicationModuleServicesSubmodule;
@@ -91,7 +94,10 @@ public class DomainAppAppManifest implements AppManifest {
      */
     @Override
     public Map<String, String> getConfigurationProperties() {
-        return null;
+        HashMap<String,String> props = Maps.newHashMap();
+        props.put("isis.reflector.facets.include", "org.isisaddons.metamodel.paraname8.NamedFacetOnParameterParaname8Factory");
+        return props;
+
     }
 
 }

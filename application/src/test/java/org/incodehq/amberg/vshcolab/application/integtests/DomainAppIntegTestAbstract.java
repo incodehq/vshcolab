@@ -20,8 +20,6 @@ package org.incodehq.amberg.vshcolab.application.integtests;
 
 import java.util.Map;
 
-import com.google.common.collect.Maps;
-
 import org.incodehq.amberg.vshcolab.application.manifest.DomainAppAppManifest;
 import org.junit.BeforeClass;
 
@@ -41,11 +39,11 @@ public abstract class DomainAppIntegTestAbstract extends IntegrationTestAbstract
                     .with(new DomainAppAppManifest() {
                         @Override
                         public Map<String, String> getConfigurationProperties() {
-                            final Map<String, String> map = Maps.newHashMap();
-                            Util.withJavaxJdoRunInMemoryProperties(map);
-                            Util.withDataNucleusProperties(map);
-                            Util.withIsisIntegTestProperties(map);
-                            return map;
+                            final Map<String, String> props = super.getConfigurationProperties();
+                            Util.withJavaxJdoRunInMemoryProperties(props);
+                            Util.withDataNucleusProperties(props);
+                            Util.withIsisIntegTestProperties(props);
+                            return props;
                         }
                     })
                     .build();

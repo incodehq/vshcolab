@@ -32,7 +32,6 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -164,7 +163,6 @@ public class SimpleObject implements Comparable<SimpleObject> {
         )
         public SimpleObject exec(
                 @Parameter(maxLength = SimpleObject.NameType.Meta.MAX_LEN)
-                @ParameterLayout(named = "Name")
                 final String name) {
             simpleObject.setName(name);
             return simpleObject;
