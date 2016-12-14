@@ -32,7 +32,7 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.13.1.20161213-1454</isis.version>
+        <isis.version>1.13.2</isis.version>
 
         <lombok.version>1.16.10</lombok.version>
         <assertj-core.version>3.6.1</assertj-core.version>
