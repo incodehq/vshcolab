@@ -28,6 +28,7 @@ import com.google.common.base.Throwables;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 import org.junit.Test;
 
@@ -36,9 +37,8 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 import org.incodehq.amberg.vshcolab.modules.work.integtests.SimpleModuleIntegTestAbstract;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -59,18 +59,18 @@ public class SimpleObjectMenu_IntegTest extends SimpleModuleIntegTestAbstract {
         public void happyCase() throws Exception {
 
             // given
-            RecreateSimpleObjects fs = new RecreateSimpleObjects();
+            RecreateClients fs = new RecreateClients();
             fixtureScripts.runFixtureScript(fs, null);
             transactionService.nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(menu).listAll();
+            final List<Client> all = wrap(menu).listAll();
 
             // then
-            assertThat(all).hasSize(fs.getSimpleObjects().size());
+            assertThat(all).hasSize(fs.getClients().size());
 
-            SimpleObject simpleObject = wrap(all.get(0));
-            assertThat(simpleObject.getName()).isEqualTo(fs.getSimpleObjects().get(0).getName());
+            Client client = wrap(all.get(0));
+            assertThat(client.getName()).isEqualTo(fs.getClients().get(0).getName());
         }
 
         @Test
@@ -82,7 +82,7 @@ public class SimpleObjectMenu_IntegTest extends SimpleModuleIntegTestAbstract {
             transactionService.nextTransaction();
 
             // when
-            final List<SimpleObject> all = wrap(menu).listAll();
+            final List<Client> all = wrap(menu).listAll();
 
             // then
             assertThat(all).hasSize(0);
@@ -103,7 +103,7 @@ public class SimpleObjectMenu_IntegTest extends SimpleModuleIntegTestAbstract {
             wrap(menu).create("Faz");
 
             // then
-            final List<SimpleObject> all = wrap(menu).listAll();
+            final List<Client> all = wrap(menu).listAll();
             assertThat(all).hasSize(1);
         }
 

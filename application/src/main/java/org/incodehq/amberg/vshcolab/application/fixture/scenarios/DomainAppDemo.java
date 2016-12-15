@@ -22,7 +22,7 @@ import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDo
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 
 public class DomainAppDemo extends FixtureScript {
 
@@ -55,7 +55,7 @@ public class DomainAppDemo extends FixtureScript {
 
         // execute
         ec.executeChild(this, new DomainAppTearDown());
-        ec.executeChild(this, new RecreateSimpleObjects().setNumber(number));
+        ec.executeChild(this, new RecreateClients().setNumber(number));
 
     }
 }

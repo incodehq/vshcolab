@@ -47,7 +47,7 @@ import lombok.Setter;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "SimpleObject"
+        table = "Client"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -59,7 +59,7 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM SimpleObject "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
@@ -68,7 +68,7 @@ import lombok.Setter;
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class SimpleObject implements Comparable<SimpleObject> {
+public class Client implements Comparable<Client> {
 
     //region > title
     public TranslatableString title() {
@@ -77,7 +77,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
     //endregion
 
     //region > constructor
-    public SimpleObject(final String name) {
+    public Client(final String name) {
         setName(name);
     }
     //endregion
@@ -95,7 +95,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<SimpleObject, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Client, String> { }
     }
 
 
@@ -122,7 +122,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<SimpleObject, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Client, String> { }
     }
 
 
@@ -143,13 +143,13 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Mixin(method = "exec")
     public static class updateName {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<SimpleObject> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Client> {
         }
 
-        private final SimpleObject simpleObject;
+        private final Client client;
 
-        public updateName(final SimpleObject simpleObject) {
-            this.simpleObject = simpleObject;
+        public updateName(final Client client) {
+            this.client = client;
         }
 
         @Action(
@@ -161,15 +161,15 @@ public class SimpleObject implements Comparable<SimpleObject> {
         @ActionLayout(
                 contributed = Contributed.AS_ACTION
         )
-        public SimpleObject exec(
-                @Parameter(maxLength = SimpleObject.NameType.Meta.MAX_LEN)
+        public Client exec(
+                @Parameter(maxLength = Client.NameType.Meta.MAX_LEN)
                 final String name) {
-            simpleObject.setName(name);
-            return simpleObject;
+            client.setName(name);
+            return client;
         }
 
         public String default0Exec() {
-            return simpleObject.getName();
+            return client.getName();
         }
 
         public TranslatableString validate0Exec(final String name) {
@@ -183,12 +183,12 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Mixin(method = "exec")
     public static class delete {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<SimpleObject> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Client> {
         }
 
-        private final SimpleObject simpleObject;
-        public delete(final SimpleObject simpleObject) {
-            this.simpleObject = simpleObject;
+        private final Client client;
+        public delete(final Client client) {
+            this.client = client;
         }
 
         @Action(
@@ -199,9 +199,9 @@ public class SimpleObject implements Comparable<SimpleObject> {
                 contributed = Contributed.AS_ACTION
         )
         public void exec() {
-            final String title = titleService.titleOf(simpleObject);
+            final String title = titleService.titleOf(client);
             messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(simpleObject);
+            repositoryService.remove(client);
         }
 
         @javax.inject.Inject
@@ -223,7 +223,7 @@ public class SimpleObject implements Comparable<SimpleObject> {
     }
 
     @Override
-    public int compareTo(final SimpleObject other) {
+    public int compareTo(final Client other) {
         return ObjectContracts.compare(this, other, "name");
     }
 

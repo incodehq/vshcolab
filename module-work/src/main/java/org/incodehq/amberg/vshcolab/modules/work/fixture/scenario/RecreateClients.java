@@ -25,34 +25,27 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.data.SimpleObjectMenu_create;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
-
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-public class RecreateSimpleObjects extends FixtureScript {
+public class RecreateClients extends FixtureScript {
 
     public final List<String> NAMES = Collections.unmodifiableList(Arrays.asList(
-            "Foo", "Bar", "Baz", "Frodo", "Froyo", "Fizz", "Bip", "Bop", "Bang", "Boo"));
+            "Kappl", "Meier", "Logbau"));
 
-    /**
-     * The number of objects to create, up to 10; optional, defaults to 3.
-     */
     @Getter @Setter
     private Integer number;
 
-    /**
-     * The simpleobjects created by this fixture (output).
-     */
     @Getter
-    private final List<SimpleObject> simpleObjects = Lists.newArrayList();
+    private final List<Client> clients = Lists.newArrayList();
 
     @Override
     protected void execute(final ExecutionContext ec) {
@@ -71,7 +64,7 @@ public class RecreateSimpleObjects extends FixtureScript {
             final String name = NAMES.get(i);
             final SimpleObjectMenu_create fs = new SimpleObjectMenu_create().setName(name);
             ec.executeChild(this, fs.getName(), fs);
-            simpleObjects.add(fs.getSimpleObject());
+            clients.add(fs.getClient());
         }
     }
 

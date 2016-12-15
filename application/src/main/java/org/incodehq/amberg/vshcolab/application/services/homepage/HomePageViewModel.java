@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.isis.applib.annotation.ViewModel;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectRepository;
 
 @ViewModel
@@ -37,7 +37,7 @@ public class HomePageViewModel {
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<SimpleObject> getObjects() {
+    public List<Client> getObjects() {
         return simpleObjectRepository.listAll();
     }
     //endregion

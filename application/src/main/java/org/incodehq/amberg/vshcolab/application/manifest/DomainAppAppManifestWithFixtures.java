@@ -23,7 +23,7 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -37,7 +37,7 @@ public class DomainAppAppManifestWithFixtures extends DomainAppAppManifest {
      */
     @Override
     public List<Class<? extends FixtureScript>> getFixtures() {
-        return Lists.newArrayList(RecreateSimpleObjects.class);
+        return Lists.newArrayList(RecreateClients.class);
     }
 
     /**

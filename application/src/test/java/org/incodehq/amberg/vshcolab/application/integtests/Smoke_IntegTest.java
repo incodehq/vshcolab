@@ -23,12 +23,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDown;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,7 +52,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        List<SimpleObject> all = wrap(menu).listAll();
+        List<Client> all = wrap(menu).listAll();
 
         // then
         assertThat(all).isEmpty();
@@ -59,7 +60,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        final SimpleObject fred = wrap(menu).create("Fred");
+        final Client fred = wrap(menu).create("Fred");
         transactionService.flushTransaction();
 
         // then
@@ -70,7 +71,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        final SimpleObject bill = wrap(menu).create("Bill");
+        final Client bill = wrap(menu).create("Bill");
         transactionService.flushTransaction();
 
         // then
@@ -81,7 +82,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        wrap(mixin(SimpleObject.updateName.class, fred)).exec("Freddy");
+        wrap(mixin(Client.updateName.class, fred)).exec("Freddy");
         transactionService.flushTransaction();
 
         // then
@@ -97,7 +98,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        wrap(mixin(SimpleObject.delete.class, fred)).exec();
+        wrap(mixin(Client.delete.class, fred)).exec();
         transactionService.flushTransaction();
 
 

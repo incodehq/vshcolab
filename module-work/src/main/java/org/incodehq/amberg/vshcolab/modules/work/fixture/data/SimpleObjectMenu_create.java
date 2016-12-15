@@ -21,7 +21,7 @@ package org.incodehq.amberg.vshcolab.modules.work.fixture.data;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObject;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class SimpleObjectMenu_create extends FixtureScript {
      * The created simple object (output).
      */
     @Getter
-    private SimpleObject simpleObject;
+    private Client client;
 
 
     @Override
@@ -48,8 +48,8 @@ public class SimpleObjectMenu_create extends FixtureScript {
 
         String name = checkParam("name", ec, String.class);
 
-        this.simpleObject = wrap(simpleObjectMenu).create(name);
-        ec.addResult(this, simpleObject);
+        this.client = wrap(simpleObjectMenu).create(name);
+        ec.addResult(this, client);
     }
 
     @javax.inject.Inject

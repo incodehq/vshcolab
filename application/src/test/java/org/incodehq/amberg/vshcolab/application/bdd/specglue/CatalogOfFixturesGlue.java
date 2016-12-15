@@ -19,13 +19,13 @@ package org.incodehq.amberg.vshcolab.application.bdd.specglue;
 import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
 
 import cucumber.api.java.Before;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateSimpleObjects;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 
 public class CatalogOfFixturesGlue extends CukeGlueAbstract {
 
     @Before(value={"@integration", "@RecreateSimpleObjects"}, order=20000)
     public void integrationFixtures() throws Throwable {
-        scenarioExecution().install(new RecreateSimpleObjects());
+        scenarioExecution().install(new RecreateClients());
     }
 
 }
