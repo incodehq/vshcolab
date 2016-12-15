@@ -19,10 +19,13 @@
 package org.incodehq.amberg.vshcolab.application.fixture.scenarios;
 
 import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDown;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateBaustellen;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.factory.FactoryService;
 
 public class DomainAppDemo extends FixtureScript {
 
@@ -30,33 +33,30 @@ public class DomainAppDemo extends FixtureScript {
         withDiscoverability(Discoverability.DISCOVERABLE);
     }
 
-    //region > number (optional input)
-    private Integer number;
-
-    /**
-     * The number of objects to create, up to 10; optional, defaults to 3.
-     */
-    public Integer getNumber() {
-        return number;
-    }
-
-    public DomainAppDemo setNumber(final Integer number) {
-        this.number = number;
-        return this;
-    }
-    //endregion
-
     @Override
     protected void execute(final ExecutionContext ec) {
 
-        // defaults
-        final int number = defaultParam("number", ec, 3);
-
-
-        // execute
         ec.executeChild(this, new DomainAppTearDown());
-        ec.executeChild(this, new RecreateClients().setNumber(number));
-        ec.executeChild(this, new RecreateBaustellen().setNumber(number));
+        final Client kappl = clientRepository.create("Kappl");
+
+        final Baustelle tamina = factoryService.mixin(Client.addBaustelle.class, kappl).act("Tamina");
+        factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #1");
+        factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #2");
+
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #1", TestType.FBK);
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #2", TestType.MEWert);
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #3", TestType.Wurfel);
+
+        final Client meier = clientRepository.create("Meier");
+        final Client logbau = clientRepository.create("Logbau");
 
     }
+
+
+    @javax.inject.Inject
+    ClientRepository clientRepository;
+
+    @javax.inject.Inject FactoryService factoryService;
+
+
 }

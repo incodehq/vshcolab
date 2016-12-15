@@ -85,9 +85,8 @@ public class Client implements Comparable<Client> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public Client act(final String name) {
-            baustelleRepository.create(name, client);
-            return client;
+        public Baustelle act(final String name) {
+            return baustelleRepository.create(name, client);
         }
         public boolean hideAct() {
             return false;
