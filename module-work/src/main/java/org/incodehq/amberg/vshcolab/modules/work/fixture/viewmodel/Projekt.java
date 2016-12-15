@@ -31,7 +31,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-public class VshModel implements ExcelFixtureRowHandler {
+public class Projekt implements ExcelFixtureRowHandler {
 
     @Getter @Setter
     private String kostenTraeger;
