@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup;
 
 import java.util.List;
 
@@ -28,24 +28,24 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = TestType.class
+        repositoryFor = TestGroup.class
 )
-public class TestTypeRepository {
+public class TestGroupRepository {
 
-    public List<TestType> listAll() {
-        return repositoryService.allInstances(TestType.class);
+    public List<TestGroup> listAll() {
+        return repositoryService.allInstances(TestGroup.class);
     }
 
-    public List<TestType> findByCode(final String code) {
+    public List<TestGroup> findByName(final String name) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        TestType.class,
-                        "findByCode",
-                        "name", code));
+                        TestGroup.class,
+                        "findByName",
+                        "name", name));
     }
 
-    public TestType create(final String code, final String name, final String norm) {
-        final TestType object = new TestType(code, name, norm);
+    public TestGroup create(final String name) {
+        final TestGroup object = new TestGroup(name);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;

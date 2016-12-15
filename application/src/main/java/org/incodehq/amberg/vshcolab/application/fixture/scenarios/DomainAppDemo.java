@@ -23,6 +23,8 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroupRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestTypeRepository;
 
@@ -40,6 +42,10 @@ public class DomainAppDemo extends FixtureScript {
     protected void execute(final ExecutionContext ec) {
 
         ec.executeChild(this, new DomainAppTearDown());
+
+        final TestGroup testGroup1 = testGroupRepository.create("Test group #1");
+        final TestGroup testGroup2 = testGroupRepository.create("Test group #2");
+        final TestGroup testGroup3 = testGroupRepository.create("Test group #3");
 
         TestType type13412 = testTypeRepository.create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
         TestType type13414 = testTypeRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
@@ -70,6 +76,8 @@ public class DomainAppDemo extends FixtureScript {
 
     @javax.inject.Inject
     ClientRepository clientRepository;
+
+    @javax.inject.Inject TestGroupRepository testGroupRepository;
 
     @javax.inject.Inject TestTypeRepository testTypeRepository;
 

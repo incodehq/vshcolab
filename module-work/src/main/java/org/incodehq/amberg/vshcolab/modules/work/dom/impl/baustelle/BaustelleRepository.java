@@ -30,7 +30,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = Client.class
+        repositoryFor = Baustelle.class
 )
 public class BaustelleRepository {
 
