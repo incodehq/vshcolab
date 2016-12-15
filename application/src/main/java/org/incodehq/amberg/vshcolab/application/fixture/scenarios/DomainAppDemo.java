@@ -23,11 +23,10 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroupRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahrenRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.viewmodel.ProjektImport;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -52,11 +51,12 @@ public class DomainAppDemo extends FixtureScript {
         final TestGroup testGroup2 = testGroupRepository.create("Test group #2");
         final TestGroup testGroup3 = testGroupRepository.create("Test group #3");
 
-        PruefVerfahren type13412 = prufVerfahrenRepository
+        PruefVerfahren type13412 = pruefVerfahrenRepository
                 .create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
-        PruefVerfahren type13414 = prufVerfahrenRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
-        PruefVerfahren type13416 = prufVerfahrenRepository.create("13416", "Frischbetonrohdichte", "SN EN 12350-6");
-        PruefVerfahren type13418 = prufVerfahrenRepository.create("13418", "Luftgehalt von Frischbeton", "SN EN 12350-7");
+        PruefVerfahren type13414 = pruefVerfahrenRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
+        PruefVerfahren type13416 = pruefVerfahrenRepository.create("13416", "Frischbetonrohdichte", "SN EN 12350-6");
+        PruefVerfahren type13418 = pruefVerfahrenRepository
+                .create("13418", "Luftgehalt von Frischbeton", "SN EN 12350-7");
 
         final Client kappl = clientRepository.create("Kappl");
 
@@ -85,7 +85,7 @@ public class DomainAppDemo extends FixtureScript {
 
     @javax.inject.Inject TestGroupRepository testGroupRepository;
 
-    @javax.inject.Inject PrufVerfahrenRepository prufVerfahrenRepository;
+    @javax.inject.Inject PruefVerfahrenRepository pruefVerfahrenRepository;
 
     @javax.inject.Inject ClockService clockService;
 

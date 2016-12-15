@@ -30,7 +30,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
         nature = NatureOfService.DOMAIN,
         repositoryFor = PruefVerfahren.class
 )
-public class PrufVerfahrenRepository {
+public class PruefVerfahrenRepository {
 
     public List<PruefVerfahren> listAll() {
         return repositoryService.allInstances(PruefVerfahren.class);

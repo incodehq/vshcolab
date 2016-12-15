@@ -37,18 +37,18 @@ import org.apache.isis.applib.annotation.SemanticsOf;
         named = "PrufVerfahren",
         menuOrder = "20"
 )
-public class PrufVerfahrenMenu {
+public class PruefVerfahrenMenu {
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
     public List<PruefVerfahren> listAll() {
-        return prufVerfahrenRepository.listAll();
+        return pruefVerfahrenRepository.listAll();
     }
 
 
     @javax.inject.Inject
-    PrufVerfahrenRepository prufVerfahrenRepository;
+    PruefVerfahrenRepository pruefVerfahrenRepository;
 
 }
