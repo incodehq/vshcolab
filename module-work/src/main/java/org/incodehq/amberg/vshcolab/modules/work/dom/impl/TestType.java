@@ -235,12 +235,12 @@ public class TestType implements Comparable<TestType> {
     //region > toString, compareTo
     @Override
     public String toString() {
-        return ObjectContracts.toString(this, "name");
+        return ObjectContracts.toString(this, "code");
     }
 
     @Override
     public int compareTo(final TestType other) {
-        return ObjectContracts.compare(this, other, "name");
+        return ObjectContracts.compare(this, other, "code");
     }
 
     //endregion

@@ -25,6 +25,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.joda.time.DateTime;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -102,6 +103,11 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
 //    @Getter @Setter
 //    private TestType testType;
 
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private DateTime when;
+
     //region > addStep (action)
     @Mixin(method="act")
     public static class addStep {
@@ -113,9 +119,14 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public TestAuftrag act(final Integer number, final TestType testType) {
-            testStepRepository.create(number, testType, testAuftrag);
-            return testAuftrag;
+        public TestStep act(final Integer number, final TestType testType, final int numberDays) {
+            final TestStep testStep = testStepRepository.create(number, testType, testAuftrag);
+            final DateTime when = testAuftrag.getWhen();
+            if(when != null) {
+                final DateTime stepStart = when.plusDays(numberDays);
+                testStep.setWhen(stepStart);
+            }
+            return testStep;
         }
 
         @javax.inject.Inject

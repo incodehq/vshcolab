@@ -13,7 +13,9 @@
                         <bs3:col span="12">
                             <cpt:fieldSet name="Name">
                                 <cpt:action id="delete"/>
-                                <cpt:property id="name" namedEscaped="true">
+                                <cpt:property id="number" namedEscaped="true">
+                                </cpt:property>
+                                <cpt:property id="when" namedEscaped="true">
                                 </cpt:property>
                                 <cpt:property id="notes" namedEscaped="true" multiLine="10" hidden="ALL_TABLES"/>
                             </cpt:fieldSet>

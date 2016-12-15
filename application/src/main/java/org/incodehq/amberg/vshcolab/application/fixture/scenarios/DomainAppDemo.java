@@ -27,6 +27,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestTypeRepository;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.factory.FactoryService;
 
 public class DomainAppDemo extends FixtureScript {
@@ -52,9 +53,11 @@ public class DomainAppDemo extends FixtureScript {
         factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #2");
 
         final TestAuftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #1");
-        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act(1, type13412);
-        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act(2, type13414);
-        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act(3, type13416);
+        taminaTest1.setWhen(clockService.nowAsDateTime());
+
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act(1, type13412, 0);
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act(2, type13414, 7);
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act(3, type13416, 14);
 
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #2");
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #3");
@@ -69,6 +72,8 @@ public class DomainAppDemo extends FixtureScript {
     ClientRepository clientRepository;
 
     @javax.inject.Inject TestTypeRepository testTypeRepository;
+
+    @javax.inject.Inject ClockService clockService;
 
     @javax.inject.Inject FactoryService factoryService;
 
