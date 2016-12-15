@@ -207,12 +207,14 @@ public class Baustelle implements Comparable<Baustelle> {
         @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ASSOCIATION)
         public List<TestAuftrag> coll() {
-            // TODO: business logic here
-            return Collections.emptyList();
+            return testAuftragRepository.findByBaustelle(baustelle);
         }
         public boolean hideColl() {
             return false;
         }
+
+        @javax.inject.Inject
+        TestAuftragRepository testAuftragRepository;
     }
     //endregion
 

@@ -54,7 +54,7 @@ import lombok.Setter;
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
-                name = "findByClient", language = "JDOQL",
+                name = "findByBaustelle", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag "
                         + "WHERE baustelle == :baustelle ")

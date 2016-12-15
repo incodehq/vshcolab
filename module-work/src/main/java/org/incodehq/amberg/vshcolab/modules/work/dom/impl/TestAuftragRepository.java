@@ -44,6 +44,14 @@ public class TestAuftragRepository {
                         "name", name));
     }
 
+    public List<TestAuftrag> findByBaustelle(final Baustelle baustelle) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        TestAuftrag.class,
+                        "findByBaustelle",
+                        "baustelle", baustelle));
+    }
+
     public TestAuftrag create(final String name, final TestType testType, final Baustelle baustelle) {
         final TestAuftrag object = new TestAuftrag(name, testType, baustelle);
         serviceRegistry.injectServicesInto(object);
@@ -55,4 +63,5 @@ public class TestAuftragRepository {
     RepositoryService repositoryService;
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
+
 }
