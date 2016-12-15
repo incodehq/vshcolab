@@ -28,7 +28,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchfuehrungRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.joda.time.LocalDate;
 
 import org.apache.isis.applib.annotation.Action;

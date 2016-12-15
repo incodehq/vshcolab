@@ -25,8 +25,8 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepositor
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroupRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahrenRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.viewmodel.ProjektImport;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;

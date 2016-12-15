@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -71,7 +71,7 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByCode", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren "
                         + "WHERE code.indexOf(:code) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="PruefVerfahren_code_UNQ", members = {"code"})

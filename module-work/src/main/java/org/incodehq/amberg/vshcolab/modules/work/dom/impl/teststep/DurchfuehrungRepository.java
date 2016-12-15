@@ -20,7 +20,7 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
 
 import java.util.List;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
 
 import org.apache.isis.applib.annotation.DomainService;
