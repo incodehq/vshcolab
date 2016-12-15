@@ -27,6 +27,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroupRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestTypeRepository;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.viewmodel.VshModelImport;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.clock.ClockService;
@@ -42,6 +43,9 @@ public class DomainAppDemo extends FixtureScript {
     protected void execute(final ExecutionContext ec) {
 
         ec.executeChild(this, new DomainAppTearDown());
+
+        final VshModelImport vshModelImport = new VshModelImport();
+        ec.executeChild(this, vshModelImport);
 
         final TestGroup testGroup1 = testGroupRepository.create("Test group #1");
         final TestGroup testGroup2 = testGroupRepository.create("Test group #2");
