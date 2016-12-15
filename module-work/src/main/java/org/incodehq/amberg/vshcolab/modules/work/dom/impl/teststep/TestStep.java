@@ -72,7 +72,7 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("TestStep: {number}: {type}", "number", getNumber(), "type", getTestType().getCode());
+        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", getTestType().getCode());
     }
     //endregion
 

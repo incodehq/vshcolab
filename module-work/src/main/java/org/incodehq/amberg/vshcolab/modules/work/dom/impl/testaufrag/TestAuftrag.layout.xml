@@ -32,8 +32,8 @@
                         <bs3:col span="12">
                             <c:fieldSet name="Name">
                                 <c:action id="delete"/>
-                                <c:property id="name" namedEscaped="true">
-                                </c:property>
+                                <c:property id="name" namedEscaped="true"/>
+                                <c:property id="when"/>
                                 <c:property id="baustelle" hidden="PARENTED_TABLES"/>
                                 <c:property id="notes" namedEscaped="true" multiLine="10" hidden="EVERYWHERE"/>
                             </c:fieldSet>
@@ -65,7 +65,7 @@
     </bs3:row>
     <bs3:row>
         <bs3:col span="12">
-            <c:collection id="steppen">
+            <c:collection id="steppen" defaultView="calendar">
                 <c:action id="addStep"/>
             </c:collection>
         </bs3:col>

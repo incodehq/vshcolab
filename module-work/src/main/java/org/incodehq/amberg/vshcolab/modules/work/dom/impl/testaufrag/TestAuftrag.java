@@ -82,7 +82,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("TestAuftrag: {name}", "name", getName());
+        return TranslatableString.tr("{name}", "name", getName());
     }
     //endregion
 

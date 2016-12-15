@@ -163,7 +163,7 @@ public class Client implements Comparable<Client> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Client: {name}", "name", getName());
+        return TranslatableString.tr("{name}", "name", getName());
     }
     //endregion
 

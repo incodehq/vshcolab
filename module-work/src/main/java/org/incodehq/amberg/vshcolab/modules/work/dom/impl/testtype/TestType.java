@@ -72,7 +72,7 @@ public class TestType implements Comparable<TestType> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Test Type: {code}", "code", getCode());
+        return TranslatableString.tr("{code}", "code", getCode());
     }
     //endregion
 

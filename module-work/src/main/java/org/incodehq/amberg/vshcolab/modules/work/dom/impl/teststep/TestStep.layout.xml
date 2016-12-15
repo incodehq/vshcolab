@@ -15,8 +15,6 @@
                                 <cpt:action id="delete"/>
                                 <cpt:property id="number" namedEscaped="true">
                                 </cpt:property>
-                                <cpt:property id="when" namedEscaped="true">
-                                </cpt:property>
                                 <cpt:property id="notes" namedEscaped="true" multiLine="10" hidden="ALL_TABLES"/>
                             </cpt:fieldSet>
                         </bs3:col>
@@ -49,6 +47,7 @@
             <cpt:fieldSet name="Details">
                 <cpt:property id="testAuftrag"/>
                 <cpt:property id="testType"/>
+                <cpt:property id="when" namedEscaped="true"/>
             </cpt:fieldSet>
         </bs3:col>
     </bs3:row>
