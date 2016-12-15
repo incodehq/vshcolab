@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.clent;
 
 import java.util.List;
 
@@ -24,6 +24,8 @@ import org.assertj.core.api.Assertions;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 import org.jmock.Expectations;
 import org.jmock.Sequence;
 import org.jmock.auto.Mock;
@@ -38,7 +40,7 @@ import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SimpleObjectRepository_Test {
+public class ClientRepository_Test {
 
     @Rule
     public JUnitRuleMockery2 context = JUnitRuleMockery2.createFor(Mode.INTERFACES_AND_CLASSES);
@@ -58,7 +60,7 @@ public class SimpleObjectRepository_Test {
         clientRepository.serviceRegistry = mockServiceRegistry;
     }
 
-    public static class Create extends SimpleObjectRepository_Test {
+    public static class Create extends ClientRepository_Test {
 
         @Test
         public void happyCase() throws Exception {
@@ -101,7 +103,7 @@ public class SimpleObjectRepository_Test {
         }
     }
 
-    public static class ListAll extends SimpleObjectRepository_Test {
+    public static class ListAll extends ClientRepository_Test {
 
         @Test
         public void happyCase() throws Exception {

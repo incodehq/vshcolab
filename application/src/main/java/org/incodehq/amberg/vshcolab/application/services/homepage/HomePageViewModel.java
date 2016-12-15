@@ -23,8 +23,8 @@ import java.util.List;
 import org.apache.isis.applib.annotation.ViewModel;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 
 @ViewModel
 public class HomePageViewModel {

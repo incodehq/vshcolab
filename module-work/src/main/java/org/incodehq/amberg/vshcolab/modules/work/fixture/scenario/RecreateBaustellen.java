@@ -25,7 +25,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.data.ClientMenu_create;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 

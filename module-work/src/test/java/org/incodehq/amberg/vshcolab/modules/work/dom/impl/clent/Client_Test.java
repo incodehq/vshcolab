@@ -14,14 +14,15 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.clent;
 
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SimpleObject_Test {
+public class Client_Test {
 
     Client client;
 
@@ -30,7 +31,7 @@ public class SimpleObject_Test {
         client = new Client("Foobar");
     }
 
-    public static class Name extends SimpleObject_Test {
+    public static class Name extends Client_Test {
 
         @Test
         public void happyCase() throws Exception {

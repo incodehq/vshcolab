@@ -28,7 +28,7 @@ import com.google.common.base.Throwables;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientMenu;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientMenu;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 import org.incodehq.amberg.vshcolab.modules.work.integtests.SimpleModuleIntegTestAbstract;
 import static org.assertj.core.api.Assertions.assertThat;

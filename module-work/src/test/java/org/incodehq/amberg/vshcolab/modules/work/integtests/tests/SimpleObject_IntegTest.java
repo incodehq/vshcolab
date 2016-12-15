@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 
 import javax.inject.Inject;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.junit.Before;
 import org.junit.Test;
 

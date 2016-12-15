@@ -19,8 +19,8 @@
 
 package org.incodehq.amberg.vshcolab.modules.work.fixture.data;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientMenu;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientMenu;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 

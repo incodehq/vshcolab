@@ -23,13 +23,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDown;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientMenu;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientMenu;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Smoke_IntegTest extends DomainAppIntegTestAbstract {

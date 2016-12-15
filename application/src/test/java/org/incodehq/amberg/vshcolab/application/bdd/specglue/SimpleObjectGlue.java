@@ -24,8 +24,8 @@ import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientMenu;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientMenu;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
