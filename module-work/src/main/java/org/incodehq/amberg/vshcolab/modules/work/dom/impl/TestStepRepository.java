@@ -52,8 +52,8 @@ public class TestStepRepository {
                         "testAuftrag", testAuftrag));
     }
 
-    public TestStep create(final String name, final TestType testType, final TestAuftrag testAuftrag) {
-        final TestStep object = new TestStep(name, testType, testAuftrag);
+    public TestStep create(final Integer stepNumber, final TestType testType, final TestAuftrag testAuftrag) {
+        final TestStep object = new TestStep(stepNumber, testType, testAuftrag);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;

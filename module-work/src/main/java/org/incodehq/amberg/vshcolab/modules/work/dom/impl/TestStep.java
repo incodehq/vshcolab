@@ -49,17 +49,12 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByName", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestStep "
-                        + "WHERE name.indexOf(:name) >= 0 "),
-        @javax.jdo.annotations.Query(
                 name = "findByTestAuftrag", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestStep "
                         + "WHERE testAuftrag == :testAuftrag ")
 })
-@javax.jdo.annotations.Unique(name="TestStep_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="TestStep_auftrag_number_UNQ", members = {"testAuftrag", "number"})
 @DomainObject(
         objectType = "simple.TestStep",
         auditing = Auditing.ENABLED,
@@ -69,13 +64,13 @@ public class TestStep implements Comparable<TestStep> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("TestStep: {name}", "name", getName());
+        return TranslatableString.tr("TestStep: {number}: {type}", "number", getNumber(), "type", getTestType().getCode());
     }
     //endregion
 
     //region > constructor
-    public TestStep(final String name, final TestType testType, final TestAuftrag testAuftrag) {
-        setName(name);
+    public TestStep(final Integer number, final TestType testType, final TestAuftrag testAuftrag) {
+        setNumber(number);
         setTestType(testType);
         setTestAuftrag(testAuftrag);
     }
@@ -92,13 +87,11 @@ public class TestStep implements Comparable<TestStep> {
     private TestType testType;
 
     //region > name (editable property)
-    public static class NameType {
-        private NameType() {
+    public static class NumberType {
+        private NumberType() {
         }
 
         public static class Meta {
-            public static final int MAX_LEN = 40;
-
             private Meta() {
             }
         }
@@ -108,13 +101,13 @@ public class TestStep implements Comparable<TestStep> {
     }
 
 
-    @Column(allowsNull = "false", length = NameType.Meta.MAX_LEN)
+    @Column(allowsNull = "false")
     @Property(
             editing = Editing.ENABLED,
-            domainEvent = NameType.PropertyDomainEvent.class
+            domainEvent = NumberType.PropertyDomainEvent.class
     )
     @Getter @Setter
-    private String name;
+    private Integer number;
 
     // endregion
 

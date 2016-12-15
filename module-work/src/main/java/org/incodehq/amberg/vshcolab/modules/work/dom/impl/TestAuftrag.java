@@ -18,7 +18,6 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
@@ -68,7 +67,7 @@ import lombok.Setter;
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag "
                         + "WHERE baustelle == :baustelle ")
 })
-@javax.jdo.annotations.Unique(name="TestAuftrag_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="TestAuftrag_baustelle_name_UNQ", members = {"baustelle", "name"})
 @DomainObject(
         objectType = "simple.TestAuftrag",
         auditing = Auditing.ENABLED,
@@ -114,24 +113,9 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public TestAuftrag act(final String name, final TestType testType) {
-            testStepRepository.create(name, testType, testAuftrag);
+        public TestAuftrag act(final Integer number, final TestType testType) {
+            testStepRepository.create(number, testType, testAuftrag);
             return testAuftrag;
-        }
-        public boolean hideAct() {
-            return false;
-        }
-        public String disableAct() {
-            return null;
-        }
-        public String validate0Act(final String name) {
-            return null;
-        }
-        public List<String> choices0Act() {
-            return Collections.emptyList();
-        }
-        public String default0Act() {
-            return null;
         }
 
         @javax.inject.Inject

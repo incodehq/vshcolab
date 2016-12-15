@@ -71,7 +71,7 @@ import lombok.Setter;
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle "
                         + "WHERE client == :client ")
 })
-@javax.jdo.annotations.Unique(name="Baustelle_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Baustelle_client_name_UNQ", members = {"client", "name"})
 @DomainObject(
         objectType = "simple.Baustelle",
         auditing = Auditing.ENABLED,
