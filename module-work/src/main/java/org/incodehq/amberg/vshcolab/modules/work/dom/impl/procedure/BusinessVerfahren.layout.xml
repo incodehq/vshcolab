@@ -34,7 +34,7 @@
                                 <c:action id="delete"/>
                                 <c:property id="code" namedEscaped="true"/>
                                 <c:property id="description" namedEscaped="true"/>
-                                <c:property id="norm" namedEscaped="true"/>
+                                <c:property id="parent" namedEscaped="true"/>
                                 <c:property id="notes" namedEscaped="true" multiLine="10" hidden="ALL_TABLES"/>
                             </c:fieldSet>
                         </bs3:col>

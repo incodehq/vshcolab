@@ -63,7 +63,8 @@ import lombok.Setter;
 @javax.jdo.annotations.Unique(name="Norm_name_UNQ", members = {"name"})
 @DomainObject(
         auditing = Auditing.ENABLED,
-        publishing = Publishing.ENABLED
+        publishing = Publishing.ENABLED,
+        bounded = true
 )
 public class Norm implements Comparable<Norm> {
 

@@ -18,6 +18,7 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -26,6 +27,8 @@ import javax.jdo.annotations.Element;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.Persistent;
+
+import com.google.common.collect.Lists;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.NormRepository;
@@ -75,7 +78,7 @@ public class PruefVerfahren extends Verfahren {
         return this;
     }
 
-    //region > norms (collection); addNorm (action)
+    //region > norms (collection); addNorm (action); removeNorm (action)
 
     @Persistent( table = "PruefVerfahrenNorm")
     @Join(column = "pruefVerfahren")
@@ -84,13 +87,42 @@ public class PruefVerfahren extends Verfahren {
     @Getter @Setter
     private SortedSet<Norm> norms = new TreeSet<Norm>();
 
+    @Action
+    @MemberOrder(name = "norms", sequence = "1")
+    public void addNorm(final Norm norm) {
+        getNorms().add(norm);
+    }
+
+    public List<Norm> choices0AddNorm() {
+        List<Norm> norms = Lists.newArrayList(normRepository.listAll());
+        norms.removeAll(getNorms());
+        return norms;
+    }
+
+    public String disableAddNorm() {
+        return choices0AddNorm().isEmpty() ? "No norms to add": null;
+    }
+
     @Programmatic
     public void addNorm(final String normName) {
         if(normName != null) {
             final Norm norm = normRepository.findOrCreateByName(normName);
-            getNorms().add(norm);
+            addNorm(norm);
         }
     }
+
+    @Action
+    @MemberOrder(name = "norms", sequence = "2")
+    public void removeNorm(final Norm norm) {
+        getNorms().remove(norm);
+    }
+    public SortedSet<Norm> choices0RemoveNorm() {
+        return getNorms();
+    }
+    public String disableRemoveNorm() {
+        return getNorms().isEmpty() ? "Nothing to remove" : null;
+    }
+
     //endregion
 
     @Inject
