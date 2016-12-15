@@ -18,7 +18,6 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.jdo.annotations.IdentityType;
@@ -73,6 +72,69 @@ import lombok.Setter;
         publishing = Publishing.ENABLED
 )
 public class Client implements Comparable<Client> {
+
+
+    //region > addBaustelle (action)
+    @Mixin(method="act")
+    public static class addBaustelle {
+        private final Client client;
+        public addBaustelle(final Client client) {
+            this.client = client;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Client> {
+        }
+        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed=Contributed.AS_ACTION)
+        public Client act(final String name) {
+            baustelleRepository.create(name, client);
+            return client;
+        }
+        public boolean hideAct() {
+            return false;
+        }
+        public String disableAct() {
+            return null;
+        }
+        public String validate0Act(final String name) {
+            return null;
+        }
+        @javax.inject.Inject
+        BaustelleRepository baustelleRepository;
+    }
+    //endregion
+
+    //region > removeBaustelle (action)
+    @Mixin(method="act")
+    public static class removeBaustelle {
+        private final Client client;
+        public removeBaustelle(final Client client) {
+            this.client = client;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Client> {
+        }
+        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed=Contributed.AS_ACTION)
+        public Client act(final Baustelle baustelle) {
+            repositoryService.removeAndFlush(baustelle);
+            return client;
+        }
+        public boolean hideAct() {
+            return false;
+        }
+        public String disableAct() {
+            return null;
+        }
+        public List<Baustelle> choices0Act() {
+            return baustelleRepository.findByClient(client);
+        }
+
+        @javax.inject.Inject
+        RepositoryService repositoryService;
+
+        @javax.inject.Inject
+        BaustelleRepository baustelleRepository;
+    }
+    //endregion
 
 
     //region > baustelles (derived collection)
