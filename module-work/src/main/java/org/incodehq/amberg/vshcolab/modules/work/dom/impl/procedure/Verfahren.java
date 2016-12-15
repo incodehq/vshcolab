@@ -45,7 +45,9 @@ import lombok.Setter;
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="id")
-@javax.jdo.annotations.Discriminator(strategy = DiscriminatorStrategy.VALUE_MAP)
+@javax.jdo.annotations.Discriminator(
+        strategy = DiscriminatorStrategy.VALUE_MAP,
+        column = "discriminator")
 @javax.jdo.annotations.Version(
         strategy= VersionStrategy.DATE_TIME,
         column="version")

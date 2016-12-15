@@ -23,7 +23,6 @@ import java.util.TreeSet;
 
 import javax.inject.Inject;
 import javax.jdo.annotations.Element;
-import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.Join;
 import javax.jdo.annotations.Persistent;
@@ -36,7 +35,6 @@ import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Publishing;
-import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,32 +42,21 @@ import lombok.Setter;
 /**
  * A test "procedure".
  */
-@javax.jdo.annotations.PersistenceCapable(
-        identityType=IdentityType.DATASTORE,
-        schema = "test"
-)
+@javax.jdo.annotations.PersistenceCapable(schema = "test")
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 @javax.jdo.annotations.Discriminator(value="test.PruefVerfahren")
-@javax.jdo.annotations.Queries({
-        @javax.jdo.annotations.Query(
-                name = "findByCode",
-                value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren "
-                        + "WHERE code.indexOf(:code) >= 0 ")
-})
-@javax.jdo.annotations.Unique(name="PruefVerfahren_code_UNQ", members = {"code"})
+//@javax.jdo.annotations.Queries({
+//        @javax.jdo.annotations.Query(
+//                name = "findByCode",
+//                value = "SELECT "
+//                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren "
+//                        + "WHERE code.indexOf(:code) >= 0 ")
+//})
 @DomainObject(
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
 public class PruefVerfahren extends Verfahren {
-
-
-    //region > title
-    public TranslatableString title() {
-        return TranslatableString.tr("{code}", "code", getCode());
-    }
-    //endregion
 
     //region > constructor
     public PruefVerfahren(final String code, final String description) {
@@ -95,7 +82,6 @@ public class PruefVerfahren extends Verfahren {
         }
     }
     //endregion
-
 
     @Inject
     NormRepository normRepository;

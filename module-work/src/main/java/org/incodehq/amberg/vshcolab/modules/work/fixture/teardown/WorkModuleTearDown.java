@@ -34,7 +34,8 @@ public class WorkModuleTearDown extends FixtureScript {
         isisJdoSupport.executeUpdate("delete from \"test\".\"Client\"");
 
         isisJdoSupport.executeUpdate("delete from \"test\".\"PruefVerfahren\"");
-        isisJdoSupport.executeUpdate("delete from \"test\".\"TestGroup\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"Verfahren\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"ResourceType\"");
     }
 
 
