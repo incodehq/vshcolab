@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.clent;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.client;
 
 import java.util.List;
 
@@ -24,8 +24,6 @@ import org.assertj.core.api.Assertions;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 import org.jmock.Expectations;
 import org.jmock.Sequence;
 import org.jmock.auto.Mock;

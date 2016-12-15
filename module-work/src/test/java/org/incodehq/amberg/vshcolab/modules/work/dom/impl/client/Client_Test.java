@@ -14,9 +14,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.clent;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.client;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.junit.Before;
 import org.junit.Test;
 
