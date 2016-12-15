@@ -18,23 +18,42 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
 
+import java.math.BigDecimal;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.measurement.Messwert;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Auditing;
+import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CommandReification;
+import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
 
@@ -61,15 +80,15 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByAuftrag", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehren "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung "
                         + "WHERE auftrag == :auftrag ")
 })
-@javax.jdo.annotations.Unique(name="Durchfuehren_auftrag_number_UNQ", members = {"auftrag", "number"})
+@javax.jdo.annotations.Unique(name="Durchfuehrung_auftrag_number_UNQ", members = {"auftrag", "number"})
 @DomainObject(
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable {
+public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventable {
 
     //region > title
     public TranslatableString title() {
@@ -77,8 +96,9 @@ public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable
     }
     //endregion
 
+
     //region > constructor
-    public Durchfuehren(final Integer number, final PruefVerfahren pruefVerfahren, final Auftrag auftrag) {
+    public Durchfuehrung(final Integer number, final PruefVerfahren pruefVerfahren, final Auftrag auftrag) {
         setNumber(number);
         setPruefVerfahren(pruefVerfahren);
         setAuftrag(auftrag);
@@ -99,7 +119,7 @@ public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private DateTime when;
+    private LocalDate when;
 
     @Programmatic
     @Override
@@ -110,7 +130,70 @@ public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable
     @Programmatic
     @Override
     public CalendarEvent toCalendarEvent() {
-        return getWhen() != null ? new CalendarEvent(getWhen(), getCalendarName(), titleService.titleOf(this)): null;
+        return getWhen() != null
+                ? new CalendarEvent(getWhen().toDateTimeAtStartOfDay(), getCalendarName(), titleService.titleOf(this))
+                : null;
+    }
+    //endregion
+
+    @Persistent(mappedBy = "durchfuehrung", dependentElement = "false")
+    @Collection()
+    @Getter @Setter
+    private SortedSet<Messwert> messwerte = new TreeSet<>();
+
+    //region > messwertZufuegen (action)
+    @Mixin(method="act")
+    public static class messwertZufuegen {
+        private final Durchfuehrung durchfuehrung;
+        public messwertZufuegen(final Durchfuehrung durchfuehrung) {
+            this.durchfuehrung = durchfuehrung;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
+        }
+        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-plus")
+        @MemberOrder(name = "messwerte", sequence = "1")
+        public Durchfuehrung act(final Norm norm, final LocalDateTime measuredAt, final BigDecimal value) {
+            final Messwert messwert = new Messwert(durchfuehrung, norm, measuredAt, value);
+            repositoryService.persist(messwert);
+            return durchfuehrung;
+        }
+
+        public SortedSet<Norm> choices0Act() {
+            return durchfuehrung.getPruefVerfahren().getNorms();
+        }
+
+        public LocalDateTime default1Act() {
+            return durchfuehrung.getWhen() != null ? durchfuehrung.getWhen().toLocalDateTime(new LocalTime(9,0)): null;
+        }
+        @Inject
+        RepositoryService repositoryService;
+    }
+    //endregion
+
+    //region > messwertEntfernen (action)
+    @Mixin(method="act")
+    public static class messwertEntfernen {
+        private final Durchfuehrung durchfuehrung;
+        public messwertEntfernen(final Durchfuehrung durchfuehrung) {
+            this.durchfuehrung = durchfuehrung;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
+        }
+        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-minus")
+        @MemberOrder(name = "messwerte", sequence = "2")
+        public Durchfuehrung act(final Messwert messwert) {
+            repositoryService.remove(messwert);
+            return durchfuehrung;
+        }
+
+        public SortedSet<Messwert> choices0Act() {
+            return durchfuehrung.getMesswerte();
+        }
+
+        @Inject
+        RepositoryService repositoryService;
     }
     //endregion
 
@@ -125,7 +208,7 @@ public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Durchfuehren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Durchfuehrung, String> { }
     }
 
 
@@ -152,7 +235,7 @@ public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Durchfuehren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Durchfuehrung, String> { }
     }
 
 
@@ -176,7 +259,7 @@ public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable
     }
 
     @Override
-    public int compareTo(final Durchfuehren other) {
+    public int compareTo(final Durchfuehrung other) {
         return ObjectContracts.compare(this, other, "auftrag", "number");
     }
 

@@ -25,11 +25,11 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehren;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchFuhrenRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
-import org.joda.time.DateTime;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchfuehrungRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
+import org.joda.time.LocalDate;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -100,15 +100,10 @@ public class Auftrag implements Comparable<Auftrag> {
     @Getter @Setter
     private Baustelle baustelle;
 
-//    @Column(allowsNull = "false")
-//    @Property()
-//    @Getter @Setter
-//    private TestType testType;
-
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
-    private DateTime when;
+    private LocalDate when;
 
     //region > addStep (action)
     @Mixin(method="act")
@@ -121,18 +116,18 @@ public class Auftrag implements Comparable<Auftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public Durchfuehren act(final Integer number, final PruefVerfahren pruefVerfahren, final int numberDays) {
-            final Durchfuehren durchfuehren = durchFuhrenRepository.create(number, pruefVerfahren, auftrag);
-            final DateTime when = auftrag.getWhen();
+        public Durchfuehrung act(final Integer number, final PruefVerfahren pruefVerfahren, final int numberDays) {
+            final Durchfuehrung durchfuehrung = durchfuehrungRepository.create(number, pruefVerfahren, auftrag);
+            final LocalDate when = auftrag.getWhen();
             if(when != null) {
-                final DateTime stepStart = when.plusDays(numberDays);
-                durchfuehren.setWhen(stepStart);
+                final LocalDate stepStart = when.plusDays(numberDays);
+                durchfuehrung.setWhen(stepStart);
             }
-            return durchfuehren;
+            return durchfuehrung;
         }
 
         @javax.inject.Inject
-        DurchFuhrenRepository durchFuhrenRepository;
+        DurchfuehrungRepository durchfuehrungRepository;
     }
     //endregion
 
@@ -147,15 +142,15 @@ public class Auftrag implements Comparable<Auftrag> {
         }
         @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
         @ActionLayout(contributed= Contributed.AS_ASSOCIATION)
-        public List<Durchfuehren> coll() {
-            return durchFuhrenRepository.findByAuftrag(auftrag);
+        public List<Durchfuehrung> coll() {
+            return durchfuehrungRepository.findByAuftrag(auftrag);
         }
         public boolean hideColl() {
             return false;
         }
 
         @javax.inject.Inject
-        DurchFuhrenRepository durchFuhrenRepository;
+        DurchfuehrungRepository durchfuehrungRepository;
     }
     //endregion
 

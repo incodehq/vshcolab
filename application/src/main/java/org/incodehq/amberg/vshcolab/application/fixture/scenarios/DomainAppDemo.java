@@ -55,8 +55,10 @@ public class DomainAppDemo extends FixtureScript {
                 .create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
         PruefVerfahren type13414 = pruefVerfahrenRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
         PruefVerfahren type13416 = pruefVerfahrenRepository.create("13416", "Frischbetonrohdichte", "SN EN 12350-6");
-        PruefVerfahren type13418 = pruefVerfahrenRepository
+        PruefVerfahren procedure13418 = pruefVerfahrenRepository
                 .create("13418", "Luftgehalt von Frischbeton", "SN EN 12350-7");
+        procedure13418.addNorm("SN EN 12350-9");
+        procedure13418.addNorm("SN EN 12350-11");
 
         final Client kappl = clientRepository.create("Kappl");
 
@@ -64,15 +66,16 @@ public class DomainAppDemo extends FixtureScript {
         factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #1");
         factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #2");
 
-        final Auftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #1");
-        taminaTest1.setWhen(clockService.nowAsDateTime());
+        final Auftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #1");
+        //taminaTest1.setWhen(now);
+        taminaTest1.setWhen(clockService.now());
 
         factoryService.mixin(Auftrag.addStep.class, taminaTest1).act(1, type13412, 0);
         factoryService.mixin(Auftrag.addStep.class, taminaTest1).act(2, type13414, 7);
         factoryService.mixin(Auftrag.addStep.class, taminaTest1).act(3, type13416, 14);
 
-        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #2");
-        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #3");
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #2");
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #3");
 
         final Client meier = clientRepository.create("Meier");
         final Client logbau = clientRepository.create("Logbau");

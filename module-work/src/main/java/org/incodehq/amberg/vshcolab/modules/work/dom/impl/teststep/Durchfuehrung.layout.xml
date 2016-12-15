@@ -46,7 +46,7 @@
         <bs3:col span="8">
             <cpt:fieldSet name="Details">
                 <cpt:property id="auftrag"/>
-                <cpt:property id="prufverfahren"/>
+                <cpt:property id="pruefVerfahren"/>
                 <cpt:property id="when" namedEscaped="true"/>
             </cpt:fieldSet>
         </bs3:col>

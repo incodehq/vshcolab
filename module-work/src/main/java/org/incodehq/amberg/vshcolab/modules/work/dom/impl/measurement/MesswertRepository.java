@@ -16,12 +16,11 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.measurement;
 
 import java.util.List;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -31,35 +30,20 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = Durchfuehren.class
+        repositoryFor = Messwert.class
 )
-public class DurchFuhrenRepository {
+public class MesswertRepository {
 
-    public List<Durchfuehren> listAll() {
-        return repositoryService.allInstances(Durchfuehren.class);
+    public List<Messwert> listAll() {
+        return repositoryService.allInstances(Messwert.class);
     }
 
-    public List<Durchfuehren> findByName(final String name) {
+    public List<Messwert> findByDurchfuehrung(final Durchfuehrung durchfuehrung) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        Durchfuehren.class,
-                        "findByName",
-                        "name", name));
-    }
-
-    public List<Durchfuehren> findByAuftrag(final Auftrag auftrag) {
-        return repositoryService.allMatches(
-                new QueryDefault<>(
-                        Durchfuehren.class,
-                        "findByAuftrag",
-                        "auftrag", auftrag));
-    }
-
-    public Durchfuehren create(final Integer stepNumber, final PruefVerfahren pruefVerfahren, final Auftrag auftrag) {
-        final Durchfuehren object = new Durchfuehren(stepNumber, pruefVerfahren, auftrag);
-        serviceRegistry.injectServicesInto(object);
-        repositoryService.persist(object);
-        return object;
+                        Messwert.class,
+                        "findByDurchfuehrung",
+                        "durchfuehrung", durchfuehrung));
     }
 
     @javax.inject.Inject
