@@ -26,8 +26,8 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.AuftragRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.AuftragRepository;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;

@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.order;
 
 import java.util.List;
 
@@ -63,12 +63,12 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
                 name = "findByBaustelle", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag "
                         + "WHERE baustelle == :baustelle ")
 })
 @javax.jdo.annotations.Unique(name="Auftrag_baustelle_name_UNQ", members = {"baustelle", "name"})

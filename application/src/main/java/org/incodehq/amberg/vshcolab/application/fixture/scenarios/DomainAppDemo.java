@@ -22,7 +22,7 @@ import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDo
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroupRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
