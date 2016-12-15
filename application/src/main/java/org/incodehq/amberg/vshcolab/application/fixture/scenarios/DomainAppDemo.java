@@ -23,8 +23,8 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroupRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.resourcetype.ResourceType;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.resourcetype.ResourceTypeRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.viewmodel.ProjektImport;
@@ -47,9 +47,9 @@ public class DomainAppDemo extends FixtureScript {
         final ProjektImport projektImport = new ProjektImport();
         ec.executeChild(this, projektImport);
 
-        final TestGroup testGroup1 = testGroupRepository.create("Test group #1");
-        final TestGroup testGroup2 = testGroupRepository.create("Test group #2");
-        final TestGroup testGroup3 = testGroupRepository.create("Test group #3");
+        final ResourceType resourceType1 = resourceTypeRepository.create("Test group #1");
+        final ResourceType resourceType2 = resourceTypeRepository.create("Test group #2");
+        final ResourceType resourceType3 = resourceTypeRepository.create("Test group #3");
 
         PruefVerfahren type13412 = pruefVerfahrenRepository
                 .create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
@@ -86,7 +86,7 @@ public class DomainAppDemo extends FixtureScript {
     @javax.inject.Inject
     ClientRepository clientRepository;
 
-    @javax.inject.Inject TestGroupRepository testGroupRepository;
+    @javax.inject.Inject ResourceTypeRepository resourceTypeRepository;
 
     @javax.inject.Inject PruefVerfahrenRepository pruefVerfahrenRepository;
 

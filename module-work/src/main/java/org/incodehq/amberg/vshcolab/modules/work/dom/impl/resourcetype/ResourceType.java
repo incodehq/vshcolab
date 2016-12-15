@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.resourcetype;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -57,15 +57,15 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.resourcetype.ResourceType "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="TestGroup_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="ResourceType_name_UNQ", members = {"name"})
 @DomainObject(
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class TestGroup implements Comparable<TestGroup> {
+public class ResourceType implements Comparable<ResourceType> {
 
 
     //region > title
@@ -75,7 +75,7 @@ public class TestGroup implements Comparable<TestGroup> {
     //endregion
 
     //region > constructor
-    public TestGroup(final String name) {
+    public ResourceType(final String name) {
         setName(name);
     }
     //endregion
@@ -93,7 +93,7 @@ public class TestGroup implements Comparable<TestGroup> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestGroup, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<ResourceType, String> { }
     }
 
 
@@ -120,7 +120,7 @@ public class TestGroup implements Comparable<TestGroup> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestGroup, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<ResourceType, String> { }
     }
 
 
@@ -141,11 +141,11 @@ public class TestGroup implements Comparable<TestGroup> {
     @Mixin(method = "exec")
     public static class delete {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<TestGroup> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<ResourceType> {
         }
 
-        private final TestGroup client;
-        public delete(final TestGroup client) {
+        private final ResourceType client;
+        public delete(final ResourceType client) {
             this.client = client;
         }
 
@@ -181,7 +181,7 @@ public class TestGroup implements Comparable<TestGroup> {
     }
 
     @Override
-    public int compareTo(final TestGroup other) {
+    public int compareTo(final ResourceType other) {
         return ObjectContracts.compare(this, other, "name");
     }
 

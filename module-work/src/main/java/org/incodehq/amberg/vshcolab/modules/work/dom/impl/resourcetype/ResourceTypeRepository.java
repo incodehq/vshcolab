@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.resourcetype;
 
 import java.util.List;
 
@@ -28,24 +28,24 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = TestGroup.class
+        repositoryFor = ResourceType.class
 )
-public class TestGroupRepository {
+public class ResourceTypeRepository {
 
-    public List<TestGroup> listAll() {
-        return repositoryService.allInstances(TestGroup.class);
+    public List<ResourceType> listAll() {
+        return repositoryService.allInstances(ResourceType.class);
     }
 
-    public List<TestGroup> findByName(final String name) {
+    public List<ResourceType> findByName(final String name) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        TestGroup.class,
+                        ResourceType.class,
                         "findByName",
                         "name", name));
     }
 
-    public TestGroup create(final String name) {
-        final TestGroup object = new TestGroup(name);
+    public ResourceType create(final String name) {
+        final ResourceType object = new ResourceType(name);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;

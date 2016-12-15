@@ -16,38 +16,39 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.resourcetype;
 
 import java.util.List;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-//
-// unused...
-//
-//@DomainService(
-//        nature = NatureOfService.VIEW_MENU_ONLY
-//)
-//@DomainServiceLayout(
-//        named = "Test groups",
-//        menuOrder = "19"
-//)
-public class TestGroupMenu {
+
+@DomainService(
+        nature = NatureOfService.VIEW_MENU_ONLY
+)
+@DomainServiceLayout(
+        named = "Resource types",
+        menuOrder = "19"
+)
+public class ResourceTypeMenu {
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<TestGroup> listAll() {
-        return testGroupRepository.listAll();
+    public List<ResourceType> listAll() {
+        return resourceTypeRepository.listAll();
     }
 
 
     @javax.inject.Inject
-    TestGroupRepository testGroupRepository;
+    ResourceTypeRepository resourceTypeRepository;
 
 }
