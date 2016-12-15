@@ -16,10 +16,11 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
 
 import java.util.List;
 
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
 
 import org.apache.isis.applib.annotation.DomainService;

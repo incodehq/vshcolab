@@ -16,13 +16,14 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
 import org.joda.time.DateTime;
 
@@ -58,7 +59,7 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByTestAuftrag", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestStep "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.TestStep "
                         + "WHERE testAuftrag == :testAuftrag ")
 })
 @javax.jdo.annotations.Unique(name="TestStep_auftrag_number_UNQ", members = {"testAuftrag", "number"})
