@@ -108,17 +108,17 @@ public class Projekt implements Comparable<Projekt> {
     @Getter @Setter
     private String auftraggeber;
 
-    @Column(allowsNull = "false", length = 255)
+    @Column(allowsNull = "true", length = 255)
     @Property()
     @Getter @Setter
     private String rechnung;
 
-    @Column(allowsNull = "false", length = 255)
+    @Column(allowsNull = "true", length = 255)
     @Property()
     @Getter @Setter
     private String versandRechnung;
 
-    @Column(allowsNull = "false", length = 255)
+    @Column(allowsNull = "true", length = 255)
     @Property()
     @Getter @Setter
     private String bericht;

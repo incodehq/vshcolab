@@ -35,9 +35,7 @@ import org.isisaddons.module.excel.dom.ExcelFixtureRowHandler;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
-@Accessors(chain = true)
 public class ProjektRowHandler implements ExcelFixtureRowHandler {
 
     @Getter @Setter
@@ -60,8 +58,14 @@ public class ProjektRowHandler implements ExcelFixtureRowHandler {
             final FixtureScript.ExecutionContext executionContext,
             final ExcelFixture excelFixture,
             final Object previousRow) {
-        final Projekt projekt = new Projekt(getKostenTraeger(), getProjektLeiter(), getProjektNummer(),
-                getAuftraggeber(), getRechnung(), getVersandRechnung(), getBericht());
+        final Projekt projekt = new Projekt(
+                getKostenTraeger(),
+                getProjektLeiter(),
+                getProjektNummer(),
+                getAuftraggeber(),
+                getRechnung(),
+                getVersandRechnung(),
+                getBericht());
         repositoryService.persist(projekt);
         return Lists.newArrayList(projekt);
     }

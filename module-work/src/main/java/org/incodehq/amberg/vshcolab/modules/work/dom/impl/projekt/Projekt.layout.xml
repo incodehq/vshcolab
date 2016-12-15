@@ -32,8 +32,8 @@
                         <bs3:col span="12">
                             <c:fieldSet name="Name">
                                 <c:property id="kostenTraeger"/>
-                                <c:property id="projektLeiter"/>
-                                <c:property id="projektNummer"/>
+                                <c:property id="leiter"/>
+                                <c:property id="nummer"/>
                                 <c:property id="auftraggeber"/>
                                 <c:property id="rechnung"/>
                                 <c:property id="versandRechnung"/>

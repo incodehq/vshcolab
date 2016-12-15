@@ -44,10 +44,8 @@ public class DomainAppDemo extends FixtureScript {
 
         ec.executeChild(this, new DomainAppTearDown());
 
-        if(false) {
-            final ProjektImport projektImport = new ProjektImport();
-            ec.executeChild(this, projektImport);
-        }
+        final ProjektImport projektImport = new ProjektImport();
+        ec.executeChild(this, projektImport);
 
         final TestGroup testGroup1 = testGroupRepository.create("Test group #1");
         final TestGroup testGroup2 = testGroupRepository.create("Test group #2");
