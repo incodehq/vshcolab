@@ -18,14 +18,20 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DiscriminatorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.InheritanceStrategy;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 
 import org.apache.isis.applib.annotation.Auditing;
+import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CommandReification;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
@@ -72,9 +78,10 @@ public abstract class Verfahren implements Comparable<Verfahren> {
     //endregion
 
     //region > constructor
-    public Verfahren(final String code, final String description) {
+    public Verfahren(final String code, final String description, final Verfahren parentIfAny) {
         setCode(code);
         setDescription(description);
+        setParent(parentIfAny);
     }
 
     //endregion
@@ -162,6 +169,16 @@ public abstract class Verfahren implements Comparable<Verfahren> {
     @Getter @Setter
     private String notes;
     //endregion
+
+    @Persistent(mappedBy = "parent", dependentElement = "false")
+    @Collection()
+    @Getter @Setter
+    private SortedSet<Verfahren> children = new TreeSet<>();
+
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private Verfahren parent;
 
     //region > toString, compareTo
     @Override

@@ -34,7 +34,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
         repositoryFor = PruefVerfahren.class
 )
 @DomainServiceLayout(
-        named = "PrufVerfahren",
+        named = "PruefVerfahren",
         menuOrder = "20"
 )
 public class PruefVerfahrenMenu {

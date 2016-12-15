@@ -18,10 +18,13 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
 
+import javax.inject.Inject;
 import javax.jdo.annotations.InheritanceStrategy;
 
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Publishing;
 
 /**
@@ -43,8 +46,20 @@ import org.apache.isis.applib.annotation.Publishing;
 )
 public class BusinessVerfahren extends Verfahren {
 
-    public BusinessVerfahren(final String code, final String description) {
-        super(code, description);
+    public BusinessVerfahren(final String code, final String description, final Verfahren parentIfAny) {
+        super(code, description, parentIfAny);
     }
+
+    @Action()
+    @MemberOrder(name = "children", sequence = "1")
+    public Verfahren addChild(final String code, final String description ) {
+        BusinessVerfahren businessVerfahren = repository.create(code, description, this);
+        getChildren().add(businessVerfahren);
+        return this;
+    }
+
+    @Inject
+    BusinessVerfahrenRepository repository;
+
 
 }

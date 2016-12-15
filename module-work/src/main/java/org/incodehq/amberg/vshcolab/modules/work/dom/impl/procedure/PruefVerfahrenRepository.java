@@ -35,8 +35,12 @@ public class PruefVerfahrenRepository {
         return repositoryService.allInstances(PruefVerfahren.class);
     }
 
-    public PruefVerfahren create(final String code, final String name, final String norm) {
-        final PruefVerfahren pruefVerfahren = new PruefVerfahren(code, name);
+    public PruefVerfahren create(
+            final String code,
+            final String name,
+            final Verfahren parentIfAny,
+            final String norm) {
+        final PruefVerfahren pruefVerfahren = new PruefVerfahren(code, name, parentIfAny);
         serviceRegistry.injectServicesInto(pruefVerfahren);
         pruefVerfahren.addNorm(norm);
         repositoryService.persist(pruefVerfahren);

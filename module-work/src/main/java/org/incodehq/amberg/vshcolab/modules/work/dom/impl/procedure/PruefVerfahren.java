@@ -30,9 +30,11 @@ import javax.jdo.annotations.Persistent;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.NormRepository;
 
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Publishing;
 
@@ -59,11 +61,19 @@ import lombok.Setter;
 public class PruefVerfahren extends Verfahren {
 
     //region > constructor
-    public PruefVerfahren(final String code, final String description) {
-        super(code, description);
+    public PruefVerfahren(final String code, final String description, final Verfahren parentIfAny) {
+        super(code, description, parentIfAny);
     }
 
     //endregion
+
+    @Action()
+    @MemberOrder(name = "children", sequence = "1")
+    public Verfahren addChild(final String code, final String description ) {
+        PruefVerfahren pruefVerfahren = repository.create(code, description, this, null);
+        getChildren().add(pruefVerfahren);
+        return this;
+    }
 
     //region > norms (collection); addNorm (action)
 
@@ -85,5 +95,8 @@ public class PruefVerfahren extends Verfahren {
 
     @Inject
     NormRepository normRepository;
+
+    @Inject
+    PruefVerfahrenRepository repository;
 
 }

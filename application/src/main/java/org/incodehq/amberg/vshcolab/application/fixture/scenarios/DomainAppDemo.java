@@ -47,16 +47,21 @@ public class DomainAppDemo extends FixtureScript {
         final ProjektImport projektImport = new ProjektImport();
         ec.executeChild(this, projektImport);
 
-        final ResourceType resourceType1 = resourceTypeRepository.create("Test group #1");
-        final ResourceType resourceType2 = resourceTypeRepository.create("Test group #2");
-        final ResourceType resourceType3 = resourceTypeRepository.create("Test group #3");
+        final ResourceType resourceType1 = resourceTypeRepository.create("Skill #1");
+        final ResourceType skill2 = resourceTypeRepository.create("Skill #2");
+        final ResourceType equipmentTypeA = resourceTypeRepository.create("Equipment type A");
+        final ResourceType equipmentTypeB = resourceTypeRepository.create("Equipment type B");
 
         PruefVerfahren type13412 = pruefVerfahrenRepository
-                .create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
-        PruefVerfahren type13414 = pruefVerfahrenRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
-        PruefVerfahren type13416 = pruefVerfahrenRepository.create("13416", "Frischbetonrohdichte", "SN EN 12350-6");
+                .create("13412", "Wassergehalt von Frischbeton", null, "SN EN 12350-6");
+        PruefVerfahren type13414 = pruefVerfahrenRepository.create("13414", "Konsistenz", null,
+                "SN EN 12350-2 bzw"
+        );
+        PruefVerfahren type13416 = pruefVerfahrenRepository.create("13416", "Frischbetonrohdichte", null,
+                "SN EN 12350-6"
+        );
         PruefVerfahren procedure13418 = pruefVerfahrenRepository
-                .create("13418", "Luftgehalt von Frischbeton", "SN EN 12350-7");
+                .create("13418", "Luftgehalt von Frischbeton", null, "SN EN 12350-7");
         procedure13418.addNorm("SN EN 12350-9");
         procedure13418.addNorm("SN EN 12350-11");
 

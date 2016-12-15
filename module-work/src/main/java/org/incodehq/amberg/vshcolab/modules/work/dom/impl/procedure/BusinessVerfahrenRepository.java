@@ -34,8 +34,8 @@ public class BusinessVerfahrenRepository {
         return repositoryService.allInstances(BusinessVerfahren.class);
     }
 
-    public BusinessVerfahren create(final String code, final String name) {
-        final BusinessVerfahren pruefVerfahren = new BusinessVerfahren(code, name);
+    public BusinessVerfahren create(final String code, final String name, final Verfahren parentIfAny) {
+        final BusinessVerfahren pruefVerfahren = new BusinessVerfahren(code, name, parentIfAny);
         repositoryService.persist(pruefVerfahren);
         return pruefVerfahren;
     }
