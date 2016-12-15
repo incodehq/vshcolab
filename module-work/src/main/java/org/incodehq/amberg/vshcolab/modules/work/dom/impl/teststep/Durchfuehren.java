@@ -23,8 +23,8 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
 import org.joda.time.DateTime;
 
 import org.apache.isis.applib.annotation.Auditing;
@@ -49,8 +49,7 @@ import lombok.Setter;
  */
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "test",
-        table = "DurchFuhren"
+        schema = "test"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -60,42 +59,41 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByTestAuftrag", language = "JDOQL",
+                name = "findByAuftrag", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuhren "
-                        + "WHERE testAuftrag == :testAuftrag ")
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehren "
+                        + "WHERE auftrag == :auftrag ")
 })
-@javax.jdo.annotations.Unique(name="TestStep_auftrag_number_UNQ", members = {"testAuftrag", "number"})
+@javax.jdo.annotations.Unique(name="Durchfuehren_auftrag_number_UNQ", members = {"auftrag", "number"})
 @DomainObject(
-        objectType = "test.DurchFuhren",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class DurchFuhren implements Comparable<DurchFuhren>, CalendarEventable {
+public class Durchfuehren implements Comparable<Durchfuehren>, CalendarEventable {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", this.getPrufVerfahren().getCode());
+        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", this.getPruefVerfahren().getCode());
     }
     //endregion
 
     //region > constructor
-    public DurchFuhren(final Integer number, final PrufVerfahren prufVerfahren, final TestAuftrag testAuftrag) {
+    public Durchfuehren(final Integer number, final PruefVerfahren pruefVerfahren, final Auftrag auftrag) {
         setNumber(number);
-        setPrufVerfahren(prufVerfahren);
-        setTestAuftrag(testAuftrag);
+        setPruefVerfahren(pruefVerfahren);
+        setAuftrag(auftrag);
     }
     //endregion
 
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private TestAuftrag testAuftrag;
+    private Auftrag auftrag;
 
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private PrufVerfahren prufVerfahren;
+    private PruefVerfahren pruefVerfahren;
 
     //region > when
     @Column(allowsNull = "true")
@@ -106,8 +104,7 @@ public class DurchFuhren implements Comparable<DurchFuhren>, CalendarEventable {
     @Programmatic
     @Override
     public String getCalendarName() {
-        //return getTestAuftrag().getBaustelle().getName() + ":" + testAuftrag.getName();
-        return testAuftrag.getName();
+        return getAuftrag().getBaustelle().getName() + ":" + getAuftrag().getName();
     }
 
     @Programmatic
@@ -128,7 +125,7 @@ public class DurchFuhren implements Comparable<DurchFuhren>, CalendarEventable {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<DurchFuhren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Durchfuehren, String> { }
     }
 
 
@@ -155,7 +152,7 @@ public class DurchFuhren implements Comparable<DurchFuhren>, CalendarEventable {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<DurchFuhren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Durchfuehren, String> { }
     }
 
 
@@ -175,12 +172,12 @@ public class DurchFuhren implements Comparable<DurchFuhren>, CalendarEventable {
     //region > toString, compareTo
     @Override
     public String toString() {
-        return ObjectContracts.toString(this, "testAuftrag", "number");
+        return ObjectContracts.toString(this, "auftrag", "number");
     }
 
     @Override
-    public int compareTo(final DurchFuhren other) {
-        return ObjectContracts.compare(this, other, "testAuftrag", "number");
+    public int compareTo(final Durchfuehren other) {
+        return ObjectContracts.compare(this, other, "auftrag", "number");
     }
 
     //endregion

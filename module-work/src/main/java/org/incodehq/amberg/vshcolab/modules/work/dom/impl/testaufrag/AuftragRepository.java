@@ -30,35 +30,35 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = TestAuftrag.class
+        repositoryFor = Auftrag.class
 )
-public class TestAuftragRepository {
+public class AuftragRepository {
 
-    public List<TestAuftrag> listAll() {
-        return repositoryService.allInstances(TestAuftrag.class);
+    public List<Auftrag> listAll() {
+        return repositoryService.allInstances(Auftrag.class);
     }
 
-    public List<TestAuftrag> findByName(final String name) {
+    public List<Auftrag> findByName(final String name) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        TestAuftrag.class,
+                        Auftrag.class,
                         "findByName",
                         "name", name));
     }
 
-    public List<TestAuftrag> findByBaustelle(final Baustelle baustelle) {
+    public List<Auftrag> findByBaustelle(final Baustelle baustelle) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        TestAuftrag.class,
+                        Auftrag.class,
                         "findByBaustelle",
                         "baustelle", baustelle));
     }
 
-    public TestAuftrag create(
+    public Auftrag create(
             final String name,
             //final TestType testType,
             final Baustelle baustelle) {
-        final TestAuftrag object = new TestAuftrag(name, /*testType, */baustelle);
+        final Auftrag object = new Auftrag(name, /*testType, */baustelle);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;

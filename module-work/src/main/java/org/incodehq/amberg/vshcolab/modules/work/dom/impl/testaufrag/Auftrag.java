@@ -25,9 +25,9 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchFuhren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchFuhrenRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.joda.time.DateTime;
 
@@ -51,8 +51,7 @@ import lombok.Setter;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "test",
-        table = "TestAuftrag"
+        schema = "test"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -64,21 +63,20 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
                 name = "findByBaustelle", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag "
                         + "WHERE baustelle == :baustelle ")
 })
-@javax.jdo.annotations.Unique(name="TestAuftrag_baustelle_name_UNQ", members = {"baustelle", "name"})
+@javax.jdo.annotations.Unique(name="Auftrag_baustelle_name_UNQ", members = {"baustelle", "name"})
 @DomainObject(
-        objectType = "test.TestAuftrag",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class TestAuftrag implements Comparable<TestAuftrag> {
+public class Auftrag implements Comparable<Auftrag> {
 
     //region > title
     public TranslatableString title() {
@@ -87,7 +85,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
     //endregion
 
     //region > constructor
-    public TestAuftrag(
+    public Auftrag(
             final String name,
 //            final TestType testType,
             final Baustelle baustelle) {
@@ -115,22 +113,22 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
     //region > addStep (action)
     @Mixin(method="act")
     public static class addStep {
-        private final TestAuftrag testAuftrag;
-        public addStep(final TestAuftrag testAuftrag) {
-            this.testAuftrag = testAuftrag;
+        private final Auftrag auftrag;
+        public addStep(final Auftrag auftrag) {
+            this.auftrag = auftrag;
         }
-        public static class DomainEvent extends ActionDomainEvent<TestAuftrag> {
+        public static class DomainEvent extends ActionDomainEvent<Auftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public DurchFuhren act(final Integer number, final PrufVerfahren prufVerfahren, final int numberDays) {
-            final DurchFuhren durchFuhren = durchFuhrenRepository.create(number, prufVerfahren, testAuftrag);
-            final DateTime when = testAuftrag.getWhen();
+        public Durchfuehren act(final Integer number, final PruefVerfahren pruefVerfahren, final int numberDays) {
+            final Durchfuehren durchfuehren = durchFuhrenRepository.create(number, pruefVerfahren, auftrag);
+            final DateTime when = auftrag.getWhen();
             if(when != null) {
                 final DateTime stepStart = when.plusDays(numberDays);
-                durchFuhren.setWhen(stepStart);
+                durchfuehren.setWhen(stepStart);
             }
-            return durchFuhren;
+            return durchfuehren;
         }
 
         @javax.inject.Inject
@@ -141,16 +139,16 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
     //region > steppen (derived collection)
     @Mixin(method="coll")
     public static class steppen {
-        private final TestAuftrag testAuftrag;
-        public steppen(final TestAuftrag testAuftrag) {
-            this.testAuftrag = testAuftrag;
+        private final Auftrag auftrag;
+        public steppen(final Auftrag auftrag) {
+            this.auftrag = auftrag;
         }
-        public static class DomainEvent extends ActionDomainEvent<TestAuftrag> {
+        public static class DomainEvent extends ActionDomainEvent<Auftrag> {
         }
         @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
         @ActionLayout(contributed= Contributed.AS_ASSOCIATION)
-        public List<DurchFuhren> coll() {
-            return durchFuhrenRepository.findByTestAuftrag(testAuftrag);
+        public List<Durchfuehren> coll() {
+            return durchFuhrenRepository.findByAuftrag(auftrag);
         }
         public boolean hideColl() {
             return false;
@@ -174,7 +172,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestAuftrag, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Auftrag, String> { }
     }
 
 
@@ -201,7 +199,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestAuftrag, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Auftrag, String> { }
     }
 
 
@@ -225,7 +223,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
     }
 
     @Override
-    public int compareTo(final TestAuftrag other) {
+    public int compareTo(final Auftrag other) {
         return ObjectContracts.compare(this, other, "name");
     }
 

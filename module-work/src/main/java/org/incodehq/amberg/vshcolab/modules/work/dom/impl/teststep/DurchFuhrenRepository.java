@@ -20,8 +20,8 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
 
 import java.util.List;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -31,32 +31,32 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = DurchFuhren.class
+        repositoryFor = Durchfuehren.class
 )
 public class DurchFuhrenRepository {
 
-    public List<DurchFuhren> listAll() {
-        return repositoryService.allInstances(DurchFuhren.class);
+    public List<Durchfuehren> listAll() {
+        return repositoryService.allInstances(Durchfuehren.class);
     }
 
-    public List<DurchFuhren> findByName(final String name) {
+    public List<Durchfuehren> findByName(final String name) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        DurchFuhren.class,
+                        Durchfuehren.class,
                         "findByName",
                         "name", name));
     }
 
-    public List<DurchFuhren> findByTestAuftrag(final TestAuftrag testAuftrag) {
+    public List<Durchfuehren> findByAuftrag(final Auftrag auftrag) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        DurchFuhren.class,
-                        "findByTestAuftrag",
-                        "testAuftrag", testAuftrag));
+                        Durchfuehren.class,
+                        "findByAuftrag",
+                        "auftrag", auftrag));
     }
 
-    public DurchFuhren create(final Integer stepNumber, final PrufVerfahren prufVerfahren, final TestAuftrag testAuftrag) {
-        final DurchFuhren object = new DurchFuhren(stepNumber, prufVerfahren, testAuftrag);
+    public Durchfuehren create(final Integer stepNumber, final PruefVerfahren pruefVerfahren, final Auftrag auftrag) {
+        final Durchfuehren object = new Durchfuehren(stepNumber, pruefVerfahren, auftrag);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;

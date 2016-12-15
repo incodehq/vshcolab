@@ -28,28 +28,28 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = PrufVerfahren.class
+        repositoryFor = PruefVerfahren.class
 )
 public class PrufVerfahrenRepository {
 
-    public List<PrufVerfahren> listAll() {
-        return repositoryService.allInstances(PrufVerfahren.class);
+    public List<PruefVerfahren> listAll() {
+        return repositoryService.allInstances(PruefVerfahren.class);
     }
 
-    public List<PrufVerfahren> findByCode(final String code) {
+    public List<PruefVerfahren> findByCode(final String code) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        PrufVerfahren.class,
+                        PruefVerfahren.class,
                         "findByCode",
                         "name", code));
     }
 
-    public PrufVerfahren create(final String code, final String name, final String norm) {
-        final PrufVerfahren prufVerfahren = new PrufVerfahren(code, name);
-        serviceRegistry.injectServicesInto(prufVerfahren);
-        prufVerfahren.addNorm(norm);
-        repositoryService.persist(prufVerfahren);
-        return prufVerfahren;
+    public PruefVerfahren create(final String code, final String name, final String norm) {
+        final PruefVerfahren pruefVerfahren = new PruefVerfahren(code, name);
+        serviceRegistry.injectServicesInto(pruefVerfahren);
+        pruefVerfahren.addNorm(norm);
+        repositoryService.persist(pruefVerfahren);
+        return pruefVerfahren;
     }
 
     @javax.inject.Inject

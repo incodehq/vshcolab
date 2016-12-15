@@ -26,8 +26,8 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftragRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.Auftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.AuftragRepository;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -53,8 +53,7 @@ import lombok.Setter;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "test",
-        table = "Baustelle"
+        schema = "test"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -76,7 +75,6 @@ import lombok.Setter;
 })
 @javax.jdo.annotations.Unique(name="Baustelle_client_name_UNQ", members = {"client", "name"})
 @DomainObject(
-        objectType = "test.Baustelle",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
@@ -197,26 +195,26 @@ public class Baustelle implements Comparable<Baustelle> {
     }
     //endregion
 
-    //region > testAuftragen (derived collection)
+    //region > auftragen (derived collection)
     @Mixin(method="coll")
-    public static class testAuftragen {
+    public static class auftragen {
         private final Baustelle baustelle;
-        public testAuftragen(final Baustelle baustelle) {
+        public auftragen(final Baustelle baustelle) {
             this.baustelle = baustelle;
         }
         public static class DomainEvent extends ActionDomainEvent<Baustelle> {
         }
         @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ASSOCIATION)
-        public List<TestAuftrag> coll() {
-            return testAuftragRepository.findByBaustelle(baustelle);
+        public List<Auftrag> coll() {
+            return auftragRepository.findByBaustelle(baustelle);
         }
         public boolean hideColl() {
             return false;
         }
 
         @javax.inject.Inject
-        TestAuftragRepository testAuftragRepository;
+        AuftragRepository auftragRepository;
     }
     //endregion
 
@@ -231,9 +229,9 @@ public class Baustelle implements Comparable<Baustelle> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public TestAuftrag act(final String name) {
-            final TestAuftrag testAuftrag = testAuftragRepository.create(name,  baustelle);
-            return testAuftrag;
+        public Auftrag act(final String name) {
+            final Auftrag auftrag = auftragRepository.create(name,  baustelle);
+            return auftrag;
         }
 //        public boolean hideAct() {
 //            return false;
@@ -252,7 +250,7 @@ public class Baustelle implements Comparable<Baustelle> {
 //        }
 
         @javax.inject.Inject
-        TestAuftragRepository testAuftragRepository;
+        AuftragRepository auftragRepository;
     }
     //endregion
 

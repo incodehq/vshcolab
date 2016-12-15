@@ -31,7 +31,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
-        repositoryFor = PrufVerfahren.class
+        repositoryFor = PruefVerfahren.class
 )
 @DomainServiceLayout(
         named = "PrufVerfahren",
@@ -43,7 +43,7 @@ public class PrufVerfahrenMenu {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<PrufVerfahren> listAll() {
+    public List<PruefVerfahren> listAll() {
         return prufVerfahrenRepository.listAll();
     }
 

@@ -59,8 +59,7 @@ import lombok.Setter;
  */
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "test",
-        table = "PrufVerfahren"
+        schema = "test"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -72,16 +71,15 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByCode", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PruefVerfahren "
                         + "WHERE code.indexOf(:code) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="PrufVerfahren_code_UNQ", members = {"code"})
+@javax.jdo.annotations.Unique(name="PruefVerfahren_code_UNQ", members = {"code"})
 @DomainObject(
-        objectType = "test.PrufVerfahren",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class PrufVerfahren implements Comparable<PrufVerfahren> {
+public class PruefVerfahren implements Comparable<PruefVerfahren> {
 
 
     //region > title
@@ -91,7 +89,7 @@ public class PrufVerfahren implements Comparable<PrufVerfahren> {
     //endregion
 
     //region > constructor
-    public PrufVerfahren(final String code, final String description) {
+    public PruefVerfahren(final String code, final String description) {
         setCode(code);
         setDescription(description);
     }
@@ -118,7 +116,7 @@ public class PrufVerfahren implements Comparable<PrufVerfahren> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<PrufVerfahren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<PruefVerfahren, String> { }
     }
 
 
@@ -145,7 +143,7 @@ public class PrufVerfahren implements Comparable<PrufVerfahren> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<PrufVerfahren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<PruefVerfahren, String> { }
     }
 
 
@@ -179,7 +177,7 @@ public class PrufVerfahren implements Comparable<PrufVerfahren> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<PrufVerfahren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<PruefVerfahren, String> { }
     }
 
 
@@ -200,11 +198,11 @@ public class PrufVerfahren implements Comparable<PrufVerfahren> {
     @Mixin(method = "exec")
     public static class delete {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<PrufVerfahren> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<PruefVerfahren> {
         }
 
-        private final PrufVerfahren client;
-        public delete(final PrufVerfahren client) {
+        private final PruefVerfahren client;
+        public delete(final PruefVerfahren client) {
             this.client = client;
         }
 
@@ -240,7 +238,7 @@ public class PrufVerfahren implements Comparable<PrufVerfahren> {
     }
 
     @Override
-    public int compareTo(final PrufVerfahren other) {
+    public int compareTo(final PruefVerfahren other) {
         return ObjectContracts.compare(this, other, "code");
     }
 
