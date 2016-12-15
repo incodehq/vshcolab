@@ -24,6 +24,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestTypeRepository;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.factory.FactoryService;
@@ -38,6 +39,12 @@ public class DomainAppDemo extends FixtureScript {
     protected void execute(final ExecutionContext ec) {
 
         ec.executeChild(this, new DomainAppTearDown());
+
+        TestType type13412 = testTypeRepository.create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
+        TestType type13414 = testTypeRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
+        TestType type13416 = testTypeRepository.create("13416", "Frischbetonrohdichte", "SN EN 12350-6");
+        TestType type13418 = testTypeRepository.create("13418", "Luftgehalt von Frischbeton", "SN EN 12350-7");
+
         final Client kappl = clientRepository.create("Kappl");
 
         final Baustelle tamina = factoryService.mixin(Client.addBaustelle.class, kappl).act("Tamina");
@@ -45,9 +52,9 @@ public class DomainAppDemo extends FixtureScript {
         factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #2");
 
         final TestAuftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #1");
-        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #1", TestType.FBK);
-        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #2", TestType.Wurfel);
-        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #3", TestType.MEWert);
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #1", type13412);
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #2", type13414);
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #3", type13416);
 
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #2");
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #3");
@@ -60,6 +67,8 @@ public class DomainAppDemo extends FixtureScript {
 
     @javax.inject.Inject
     ClientRepository clientRepository;
+
+    @javax.inject.Inject TestTypeRepository testTypeRepository;
 
     @javax.inject.Inject FactoryService factoryService;
 

@@ -65,9 +65,9 @@ import lombok.Setter;
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Client_name_UNQ", members = {"name"})
 @DomainObject(
-        objectType = "simple.SimpleObject",
+        objectType = "simple.Client",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )

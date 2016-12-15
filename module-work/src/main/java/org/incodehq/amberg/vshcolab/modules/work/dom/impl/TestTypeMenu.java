@@ -28,48 +28,27 @@ import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
-        repositoryFor = Baustelle.class
+        repositoryFor = TestType.class
 )
 @DomainServiceLayout(
-        named = "Baustelle",
+        named = "Test types",
         menuOrder = "20"
 )
-public class BaustelleMenu {
+public class TestTypeMenu {
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<Baustelle> listAll() {
-        return baustelleRepository.listAll();
-    }
-
-
-    @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    @MemberOrder(sequence = "2")
-    public List<Baustelle> findByName(
-            final String name
-    ) {
-        return baustelleRepository.findByName(name);
-    }
-
-
-    public static class CreateDomainEvent extends ActionDomainEvent<BaustelleMenu> {}
-    @Action(domainEvent = CreateDomainEvent.class)
-    @MemberOrder(sequence = "3")
-    public Baustelle create(
-            final Client client,
-            final String name) {
-        return baustelleRepository.create(name, client);
+    public List<TestType> listAll() {
+        return testTypeRepository.listAll();
     }
 
 
     @javax.inject.Inject
-    BaustelleRepository baustelleRepository;
+    TestTypeRepository testTypeRepository;
 
 }
