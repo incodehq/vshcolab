@@ -43,7 +43,7 @@ public class PruefVerfahrenRepository {
         final PruefVerfahren pruefVerfahren = new PruefVerfahren(code, name, parentIfAny);
         serviceRegistry.injectServicesInto(pruefVerfahren);
         pruefVerfahren.addNormIfAny(normIfAny);
-        repositoryService.persist(pruefVerfahren);
+        repositoryService.persistAndFlush(pruefVerfahren);
         return pruefVerfahren;
     }
 

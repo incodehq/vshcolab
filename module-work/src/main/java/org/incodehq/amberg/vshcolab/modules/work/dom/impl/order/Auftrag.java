@@ -38,6 +38,7 @@ import org.apache.isis.applib.annotation.CommandReification;
 import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
@@ -105,17 +106,18 @@ public class Auftrag implements Comparable<Auftrag> {
     @Getter @Setter
     private LocalDate when;
 
-    //region > addStep (action)
+    //region > addExecution (action)
     @Mixin(method="act")
-    public static class addStep {
+    public static class addExecution {
         private final Auftrag auftrag;
-        public addStep(final Auftrag auftrag) {
+        public addExecution(final Auftrag auftrag) {
             this.auftrag = auftrag;
         }
         public static class DomainEvent extends ActionDomainEvent<Auftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed=Contributed.AS_ACTION)
+        @ActionLayout(contributed=Contributed.AS_ACTION, cssClassFa = "fa-plus")
+        @MemberOrder(name = "executions", sequence = "1")
         public Durchfuehrung act(final Integer number, final Verfahren verfahren, final int numberDays) {
             final Durchfuehrung durchfuehrung = durchfuehrungRepository.create(number, verfahren, auftrag);
             final LocalDate when = auftrag.getWhen();
@@ -131,11 +133,11 @@ public class Auftrag implements Comparable<Auftrag> {
     }
     //endregion
 
-    //region > steppen (derived collection)
+    //region > executions (derived collection)
     @Mixin(method="coll")
-    public static class steppen {
+    public static class executions {
         private final Auftrag auftrag;
-        public steppen(final Auftrag auftrag) {
+        public executions(final Auftrag auftrag) {
             this.auftrag = auftrag;
         }
         public static class DomainEvent extends ActionDomainEvent<Auftrag> {

@@ -40,6 +40,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.services.xactn.TransactionService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -89,8 +90,9 @@ public class PruefVerfahren extends Verfahren {
 
     @Action
     @MemberOrder(name = "norms", sequence = "1")
-    public void addNorm(final Norm norm) {
+    public PruefVerfahren addNorm(final Norm norm) {
         getNorms().add(norm);
+        return this;
     }
 
     public List<Norm> choices0AddNorm() {
@@ -114,8 +116,9 @@ public class PruefVerfahren extends Verfahren {
 
     @Action
     @MemberOrder(name = "norms", sequence = "2")
-    public void removeNorm(final Norm norm) {
+    public PruefVerfahren removeNorm(final Norm norm) {
         getNorms().remove(norm);
+        return this;
     }
     public SortedSet<Norm> choices0RemoveNorm() {
         return getNorms();
@@ -131,5 +134,7 @@ public class PruefVerfahren extends Verfahren {
 
     @Inject
     PruefVerfahrenRepository repository;
+
+    @Inject TransactionService transactionService;
 
 }

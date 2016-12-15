@@ -36,7 +36,7 @@ public class BusinessVerfahrenRepository {
 
     public BusinessVerfahren create(final Integer code, final String name, final Verfahren parentIfAny) {
         final BusinessVerfahren businessVerfahren = new BusinessVerfahren(code, name, parentIfAny);
-        repositoryService.persist(businessVerfahren);
+        repositoryService.persistAndFlush(businessVerfahren);
         return businessVerfahren;
     }
 

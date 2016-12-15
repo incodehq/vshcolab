@@ -17,7 +17,15 @@
                                     <cpt:action id="updateName"/>
                                 </cpt:property>
                                 <cpt:property id="client"/>
-                                <cpt:property id="notes" namedEscaped="true" multiLine="10" hidden="EVERYWHERE"/>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Notes">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Notes">
+                                <cpt:property id="notes" namedEscaped="true" multiLine="10" hidden="ALL_TABLES"/>
                             </cpt:fieldSet>
                         </bs3:col>
                     </bs3:row>

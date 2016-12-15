@@ -23,7 +23,6 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.VerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.resourcetype.ResourceType;
@@ -60,17 +59,17 @@ public class DomainAppDemo extends FixtureScript {
 
         final Client kappl = clientRepository.create("Kappl");
 
-        final Baustelle tamina = factoryService.mixin(Client.addBaustelle.class, kappl).act("Tamina");
-        factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #1");
-        factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #2");
+        final Baustelle tamina = kappl.addBaustelle("Tamina");
+        kappl.addBaustelle("Baustelle #1");
+        kappl.addBaustelle("Baustelle #2");
 
         final Auftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #1");
         //taminaTest1.setWhen(now);
         taminaTest1.setWhen(clockService.now());
 
-        factoryService.mixin(Auftrag.addStep.class, taminaTest1).act(1, procedure13412, 0);
-        factoryService.mixin(Auftrag.addStep.class, taminaTest1).act(2, procedure13414, 7);
-        factoryService.mixin(Auftrag.addStep.class, taminaTest1).act(3, procedure13416, 14);
+        factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(1, procedure13412, 0);
+        factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(2, procedure13414, 7);
+        factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(3, procedure13416, 14);
 
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #2");
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #3");

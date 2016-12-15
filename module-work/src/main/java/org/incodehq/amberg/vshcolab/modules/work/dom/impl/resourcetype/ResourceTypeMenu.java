@@ -35,7 +35,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 )
 @DomainServiceLayout(
         named = "Resource types",
-        menuOrder = "19"
+        menuOrder = "80"
 )
 public class ResourceTypeMenu {
 

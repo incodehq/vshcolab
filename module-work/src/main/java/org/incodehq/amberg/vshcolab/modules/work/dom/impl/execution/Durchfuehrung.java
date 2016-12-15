@@ -152,7 +152,7 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
         public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-plus")
+        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-plus", named = "Zufuegen")
         @MemberOrder(name = "messwerte", sequence = "1")
         public Durchfuehrung act(final Norm norm, final LocalDateTime measuredAt, final BigDecimal value) {
             final Messwert messwert = new Messwert(durchfuehrung, norm, measuredAt, value);
@@ -186,7 +186,7 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
         public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-minus")
+        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-minus", named = "Entfernen")
         @MemberOrder(name = "messwerte", sequence = "2")
         public Durchfuehrung act(final Messwert messwert) {
             repositoryService.remove(messwert);

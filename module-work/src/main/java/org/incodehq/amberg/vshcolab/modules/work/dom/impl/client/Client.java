@@ -34,6 +34,7 @@ import org.apache.isis.applib.annotation.CommandReification;
 import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
@@ -74,68 +75,6 @@ import lombok.Setter;
 public class Client implements Comparable<Client> {
 
 
-    //region > addBaustelle (action)
-    @Mixin(method="act")
-    public static class addBaustelle {
-        private final Client client;
-        public addBaustelle(final Client client) {
-            this.client = client;
-        }
-        public static class DomainEvent extends ActionDomainEvent<Client> {
-        }
-        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed=Contributed.AS_ACTION)
-        public Baustelle act(final String name) {
-            return baustelleRepository.create(name, client);
-        }
-        public boolean hideAct() {
-            return false;
-        }
-        public String disableAct() {
-            return null;
-        }
-        public String validate0Act(final String name) {
-            return null;
-        }
-        @javax.inject.Inject
-        BaustelleRepository baustelleRepository;
-    }
-    //endregion
-
-    //region > removeBaustelle (action)
-    @Mixin(method="act")
-    public static class removeBaustelle {
-        private final Client client;
-        public removeBaustelle(final Client client) {
-            this.client = client;
-        }
-        public static class DomainEvent extends ActionDomainEvent<Client> {
-        }
-        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed=Contributed.AS_ACTION)
-        public Client act(final Baustelle baustelle) {
-            repositoryService.removeAndFlush(baustelle);
-            return client;
-        }
-        public boolean hideAct() {
-            return false;
-        }
-        public String disableAct() {
-            return null;
-        }
-        public List<Baustelle> choices0Act() {
-            return baustelleRepository.findByClient(client);
-        }
-
-        @javax.inject.Inject
-        RepositoryService repositoryService;
-
-        @javax.inject.Inject
-        BaustelleRepository baustelleRepository;
-    }
-    //endregion
-
-
     //region > baustellen (derived collection)
     @Mixin(method="coll")
     public static class baustellen {
@@ -156,6 +95,24 @@ public class Client implements Comparable<Client> {
 
         @javax.inject.Inject
         BaustelleRepository baustelleRepository;
+    }
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(cssClassFa = "fa-plus", named = "Add")
+    @MemberOrder(name = "baustellen", sequence = "1")
+    public Baustelle addBaustelle(final String name ) {
+        return baustelleRepository.create(name, this);
+    }
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(cssClassFa = "fa-minus", named = "Remove")
+    @MemberOrder(name = "baustellen", sequence = "2")
+    public Client removeBaustelle(final Baustelle baustelle) {
+        repositoryService.removeAndFlush(baustelle);
+        return this;
+    }
+    public List<Baustelle> choices0RemoveBaustelle() {
+        return baustelleRepository.findByClient(this);
     }
     //endregion
 
@@ -318,6 +275,11 @@ public class Client implements Comparable<Client> {
 
     //endregion
 
+    @javax.inject.Inject
+    BaustelleRepository baustelleRepository;
+
+    @javax.inject.Inject
+    RepositoryService repositoryService;
 
 
 }
