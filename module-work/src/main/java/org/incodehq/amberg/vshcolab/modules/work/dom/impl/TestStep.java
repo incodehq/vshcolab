@@ -29,6 +29,7 @@ import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.CommandReification;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.services.i18n.TranslatableString;
@@ -91,13 +92,16 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
     @Getter @Setter
     private TestType testType;
 
+    //region > when
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
     private DateTime when;
 
+    @Programmatic
     @Override
     public String getCalendarName() {
+        //return getTestAuftrag().getBaustelle().getName() + ":" + testAuftrag.getName();
         return testAuftrag.getName();
     }
 
@@ -105,6 +109,7 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
     public CalendarEvent toCalendarEvent() {
         return getWhen() != null ? new CalendarEvent(getWhen(), getCalendarName(), titleService.titleOf(this)): null;
     }
+    //endregion
 
     //region > name (editable property)
     public static class NumberType {

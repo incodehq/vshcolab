@@ -19,7 +19,7 @@
 package org.incodehq.amberg.vshcolab.application.fixture.scenarios;
 
 import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDown;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag;

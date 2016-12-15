@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle;
 
 import java.util.List;
 
@@ -25,6 +25,9 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftragRepository;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -63,12 +66,12 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
                 name = "findByClient", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle "
                         + "WHERE client == :client ")
 })
 @javax.jdo.annotations.Unique(name="Baustelle_client_name_UNQ", members = {"client", "name"})
