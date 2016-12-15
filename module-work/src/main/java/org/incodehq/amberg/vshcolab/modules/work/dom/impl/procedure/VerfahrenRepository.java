@@ -35,12 +35,13 @@ public class VerfahrenRepository {
         return repositoryService.allInstances(Verfahren.class);
     }
 
-    public Verfahren findByCode(final Integer code) {
+    public Verfahren findByCode(final Integer codeIfAny) {
+        if(codeIfAny == null) return null;
         return repositoryService.uniqueMatch(
                 new QueryDefault<>(
                         Verfahren.class,
                         "findByCode",
-                        "code", code));
+                        "code", codeIfAny));
     }
 
 

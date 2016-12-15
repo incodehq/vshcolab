@@ -18,11 +18,13 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.inject.Inject;
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Element;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.Join;
@@ -39,6 +41,7 @@ import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
@@ -128,6 +131,16 @@ public class PruefVerfahren extends Verfahren {
     }
 
     //endregion
+
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private BigDecimal price;
+
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private Boolean priceAufAnfrage;
 
     @Inject
     NormRepository normRepository;

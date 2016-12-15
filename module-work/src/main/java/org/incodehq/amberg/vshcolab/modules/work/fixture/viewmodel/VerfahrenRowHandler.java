@@ -30,6 +30,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.BusinessVerf
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.VerfahrenRepository;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -46,11 +47,15 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
     @Getter @Setter
     private String discriminator;
     @Getter @Setter
+    private Integer parentCode;
+    @Getter @Setter
     private String description;
     @Getter @Setter
-    private String norm;
-    @Getter @Setter
     private BigDecimal price;
+    @Getter @Setter
+    private Boolean priceAufAnfrage;
+    @Getter @Setter
+    private String norm;
 
     @Override
     public List<Object> handleRow(
@@ -66,9 +71,16 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
                 pruefVerfahren.addNormIfAny(norm);
             }
         } else {
-            verfahren = "P".equalsIgnoreCase(discriminator)
-                    ? pruefVerfahrenRepository.create(code, description, null, null)
-                    : businessVerfahrenRepository.create(code, description, null);
+            Verfahren parentVerfahren = verfahrenRepository.findByCode(parentCode);
+            if ("P".equalsIgnoreCase(discriminator)) {
+                PruefVerfahren pruefVerfahren = pruefVerfahrenRepository.create(code, description, parentVerfahren, null);
+                pruefVerfahren.setPrice(price);
+                pruefVerfahren.setPriceAufAnfrage(priceAufAnfrage);
+                verfahren = pruefVerfahren;
+            }
+            else {
+                verfahren = businessVerfahrenRepository.create(code, description, parentVerfahren);
+            }
         }
 
         return Lists.newArrayList(verfahren);
@@ -81,6 +93,8 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
     @Getter @Setter
     Verfahren verfahren;
 
+    @Inject
+    VerfahrenRepository verfahrenRepository;
     @Inject
     PruefVerfahrenRepository pruefVerfahrenRepository;
     @Inject
