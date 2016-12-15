@@ -19,10 +19,10 @@
 package org.incodehq.amberg.vshcolab.application.fixture.scenarios;
 
 import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDown;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateBaustellen;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
-
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 
 public class DomainAppDemo extends FixtureScript {
 
@@ -56,6 +56,7 @@ public class DomainAppDemo extends FixtureScript {
         // execute
         ec.executeChild(this, new DomainAppTearDown());
         ec.executeChild(this, new RecreateClients().setNumber(number));
+        ec.executeChild(this, new RecreateBaustellen().setNumber(number));
 
     }
 }

@@ -47,7 +47,7 @@ import lombok.Setter;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "Client"
+        table = "Baustelle"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -59,25 +59,25 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Baustelle_name_UNQ", members = {"name"})
 @DomainObject(
-        objectType = "simple.SimpleObject",
+        objectType = "simple.Baustelle",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class Client implements Comparable<Client> {
+public class Baustelle implements Comparable<Baustelle> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Client: {name}", "name", getName());
+        return TranslatableString.tr("Site: {name}", "name", getName());
     }
     //endregion
 
     //region > constructor
-    public Client(final String name) {
+    public Baustelle(final String name) {
         setName(name);
     }
     //endregion
@@ -95,7 +95,7 @@ public class Client implements Comparable<Client> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Client, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Baustelle, String> { }
     }
 
 
@@ -122,7 +122,7 @@ public class Client implements Comparable<Client> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Client, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Baustelle, String> { }
     }
 
 
@@ -143,12 +143,12 @@ public class Client implements Comparable<Client> {
     @Mixin(method = "exec")
     public static class updateName {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Client> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Baustelle> {
         }
 
-        private final Client client;
+        private final Baustelle client;
 
-        public updateName(final Client client) {
+        public updateName(final Baustelle client) {
             this.client = client;
         }
 
@@ -161,8 +161,8 @@ public class Client implements Comparable<Client> {
         @ActionLayout(
                 contributed = Contributed.AS_ACTION
         )
-        public Client exec(
-                @Parameter(maxLength = Client.NameType.Meta.MAX_LEN)
+        public Baustelle exec(
+                @Parameter(maxLength = Baustelle.NameType.Meta.MAX_LEN)
                 final String name) {
             client.setName(name);
             return client;
@@ -183,11 +183,11 @@ public class Client implements Comparable<Client> {
     @Mixin(method = "exec")
     public static class delete {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Client> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Baustelle> {
         }
 
-        private final Client client;
-        public delete(final Client client) {
+        private final Baustelle client;
+        public delete(final Baustelle client) {
             this.client = client;
         }
 
@@ -223,7 +223,7 @@ public class Client implements Comparable<Client> {
     }
 
     @Override
-    public int compareTo(final Client other) {
+    public int compareTo(final Baustelle other) {
         return ObjectContracts.compare(this, other, "name");
     }
 
