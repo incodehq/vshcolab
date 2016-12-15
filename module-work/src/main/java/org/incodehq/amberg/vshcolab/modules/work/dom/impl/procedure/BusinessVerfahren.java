@@ -18,72 +18,33 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.inject.Inject;
-import javax.jdo.annotations.Element;
 import javax.jdo.annotations.InheritanceStrategy;
-import javax.jdo.annotations.Join;
-import javax.jdo.annotations.Persistent;
-
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.NormRepository;
 
 import org.apache.isis.applib.annotation.Auditing;
-import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Publishing;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
- * A test "procedure".
+ * A business "procedure".
  */
 @javax.jdo.annotations.PersistenceCapable(schema = "test")
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
-@javax.jdo.annotations.Discriminator(value="test.PruefVerfahren")
+@javax.jdo.annotations.Discriminator(value="test.BusinessVerfahren")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
                 name = "findByCode",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.BusinessVerfahren "
                         + "WHERE code.indexOf(:code) >= 0 ")
 })
 @DomainObject(
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class PruefVerfahren extends Verfahren {
+public class BusinessVerfahren extends Verfahren {
 
-    //region > constructor
-    public PruefVerfahren(final String code, final String description) {
+    public BusinessVerfahren(final String code, final String description) {
         super(code, description);
     }
-
-    //endregion
-
-    //region > norms (collection); addNorm (action)
-
-    @Persistent( table = "PruefVerfahrenNorm")
-    @Join(column = "pruefVerfahren")
-    @Element(column = "norm")
-    @Collection()
-    @Getter @Setter
-    private SortedSet<Norm> norms = new TreeSet<Norm>();
-
-    @Programmatic
-    public void addNorm(final String normName) {
-        if(normName != null) {
-            final Norm norm = normRepository.findOrCreateByName(normName);
-            getNorms().add(norm);
-        }
-    }
-    //endregion
-
-    @Inject
-    NormRepository normRepository;
 
 }

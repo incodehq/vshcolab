@@ -22,26 +22,28 @@ import java.util.List;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = PruefVerfahren.class
+        repositoryFor = Verfahren.class
 )
-public class PruefVerfahrenRepository {
+public class VerfahrenRepository {
 
-    public List<PruefVerfahren> listAll() {
-        return repositoryService.allInstances(PruefVerfahren.class);
+    public List<Verfahren> listAll() {
+        return repositoryService.allInstances(Verfahren.class);
     }
 
-    public PruefVerfahren create(final String code, final String name, final String norm) {
-        final PruefVerfahren pruefVerfahren = new PruefVerfahren(code, name);
-        serviceRegistry.injectServicesInto(pruefVerfahren);
-        pruefVerfahren.addNorm(norm);
-        repositoryService.persist(pruefVerfahren);
-        return pruefVerfahren;
+    public List<Verfahren> findByCode(final String code) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Verfahren.class,
+                        "findByCode",
+                        "name", code));
     }
+
 
     @javax.inject.Inject
     RepositoryService repositoryService;
