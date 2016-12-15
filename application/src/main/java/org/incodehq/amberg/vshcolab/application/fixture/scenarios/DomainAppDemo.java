@@ -23,8 +23,8 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestTypeRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestTypeRepository;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.clock.ClockService;

@@ -27,7 +27,7 @@ import javax.jdo.annotations.VersionStrategy;
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.TestStep;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.TestStepRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.joda.time.DateTime;
 

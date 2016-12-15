@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -58,7 +58,7 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByCode", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType "
                         + "WHERE code.indexOf(:code) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="TestType_code_UNQ", members = {"code"})
