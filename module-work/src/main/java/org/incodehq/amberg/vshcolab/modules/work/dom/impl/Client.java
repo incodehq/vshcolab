@@ -18,6 +18,9 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -35,6 +38,7 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.message.MessageService;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -69,6 +73,30 @@ import lombok.Setter;
         publishing = Publishing.ENABLED
 )
 public class Client implements Comparable<Client> {
+
+
+    //region > baustelles (derived collection)
+    @Mixin(method="coll")
+    public static class baustelles {
+        private final Client client;
+        public baustelles(final Client client) {
+            this.client = client;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Client> {
+        }
+        @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed=Contributed.AS_ASSOCIATION)
+        public List<Baustelle> coll() {
+            return baustelleRepository.findByClient(this.client);
+        }
+        public boolean hideColl() {
+            return false;
+        }
+
+        @javax.inject.Inject
+        BaustelleRepository baustelleRepository;
+    }
+    //endregion
 
     //region > title
     public TranslatableString title() {
@@ -228,5 +256,7 @@ public class Client implements Comparable<Client> {
     }
 
     //endregion
+
+
 
 }

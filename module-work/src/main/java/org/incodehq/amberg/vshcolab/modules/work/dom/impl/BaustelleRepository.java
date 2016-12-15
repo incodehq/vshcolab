@@ -44,8 +44,16 @@ public class BaustelleRepository {
                         "name", name));
     }
 
-    public Baustelle create(final String name) {
-        final Baustelle object = new Baustelle(name);
+    public List<Baustelle> findByClient(final Client client) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Baustelle.class,
+                        "findByClient",
+                        "client", client));
+    }
+
+    public Baustelle create(final String name, final Client client) {
+        final Baustelle object = new Baustelle(name, client);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;
@@ -55,4 +63,5 @@ public class BaustelleRepository {
     RepositoryService repositoryService;
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
+
 }

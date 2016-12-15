@@ -36,7 +36,7 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
         repositoryFor = Client.class
 )
 @DomainServiceLayout(
-        named = "Simple Objects",
+        named = "Clients",
         menuOrder = "10"
 )
 public class ClientMenu {

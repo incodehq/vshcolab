@@ -18,6 +18,7 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -60,7 +61,12 @@ import lombok.Setter;
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle "
-                        + "WHERE name.indexOf(:name) >= 0 ")
+                        + "WHERE name.indexOf(:name) >= 0 "),
+        @javax.jdo.annotations.Query(
+                name = "findByClient", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle "
+                        + "WHERE client == :client ")
 })
 @javax.jdo.annotations.Unique(name="Baustelle_name_UNQ", members = {"name"})
 @DomainObject(
@@ -77,8 +83,9 @@ public class Baustelle implements Comparable<Baustelle> {
     //endregion
 
     //region > constructor
-    public Baustelle(final String name) {
+    public Baustelle(final String name, final Client client) {
         setName(name);
+        setClient(client);
     }
     //endregion
 
@@ -108,6 +115,11 @@ public class Baustelle implements Comparable<Baustelle> {
     private String name;
 
     // endregion
+
+    @Column(allowsNull = "false")
+    @Property()
+    @Getter @Setter
+    private Client client;
 
     //region > notes (editable property)
     public static class NotesType {
@@ -228,5 +240,6 @@ public class Baustelle implements Comparable<Baustelle> {
     }
 
     //endregion
+
 
 }

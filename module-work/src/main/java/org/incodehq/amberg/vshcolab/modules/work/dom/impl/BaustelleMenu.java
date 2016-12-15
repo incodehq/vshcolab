@@ -54,7 +54,6 @@ public class BaustelleMenu {
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "2")
     public List<Baustelle> findByName(
-            @ParameterLayout(named="Name")
             final String name
     ) {
         return baustelleRepository.findByName(name);
@@ -65,9 +64,9 @@ public class BaustelleMenu {
     @Action(domainEvent = CreateDomainEvent.class)
     @MemberOrder(sequence = "3")
     public Baustelle create(
-            @ParameterLayout(named="Name")
+            final Client client,
             final String name) {
-        return baustelleRepository.create(name);
+        return baustelleRepository.create(name, client);
     }
 
 
