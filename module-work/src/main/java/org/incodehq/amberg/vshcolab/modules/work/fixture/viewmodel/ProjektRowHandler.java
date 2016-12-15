@@ -21,7 +21,14 @@ package org.incodehq.amberg.vshcolab.modules.work.fixture.viewmodel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import com.google.common.collect.Lists;
+
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.projekt.Projekt;
+
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.repository.RepositoryService;
 
 import org.isisaddons.module.excel.dom.ExcelFixture;
 import org.isisaddons.module.excel.dom.ExcelFixtureRowHandler;
@@ -31,7 +38,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-public class Projekt implements ExcelFixtureRowHandler {
+public class ProjektRowHandler implements ExcelFixtureRowHandler {
 
     @Getter @Setter
     private String kostenTraeger;
@@ -40,19 +47,26 @@ public class Projekt implements ExcelFixtureRowHandler {
     @Getter @Setter
     private String projektNummer;
     @Getter @Setter
-    private String versand;
+    private String auftraggeber;
     @Getter @Setter
     private String rechnung;
     @Getter @Setter
-    private String auftraggeber;
-    @Getter @Setter
     private String versandRechnung;
+    @Getter @Setter
+    private String bericht;
 
     @Override
     public List<Object> handleRow(
             final FixtureScript.ExecutionContext executionContext,
             final ExcelFixture excelFixture,
             final Object previousRow) {
-        return null;
+        final Projekt projekt = new Projekt(getKostenTraeger(), getProjektLeiter(), getProjektNummer(),
+                getAuftraggeber(), getRechnung(), getVersandRechnung(), getBericht());
+        repositoryService.persist(projekt);
+        return Lists.newArrayList(projekt);
     }
+
+    @Inject
+    RepositoryService repositoryService;
+
 }

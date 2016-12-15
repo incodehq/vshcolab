@@ -32,7 +32,7 @@ public class ProjektImport extends FixtureScript {
     @Override
     protected void execute(final ExecutionContext executionContext) {
         final URL excelResource = Resources.getResource(ProjektImport.class, "VSH Sample data.xlsx");
-        final ExcelFixture excelFixture = new ExcelFixture(excelResource, Projekt.class);
+        final ExcelFixture excelFixture = new ExcelFixture(excelResource, ProjektRowHandler.class);
         executionContext.executeChild(this, excelFixture);
     }
 }
