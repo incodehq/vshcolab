@@ -69,7 +69,7 @@ public class TestStep implements Comparable<TestStep> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Site: {name}", "name", getName());
+        return TranslatableString.tr("TestStep: {name}", "name", getName());
     }
     //endregion
 

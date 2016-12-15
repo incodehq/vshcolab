@@ -81,7 +81,7 @@ public class Baustelle implements Comparable<Baustelle> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Site: {name}", "name", getName());
+        return TranslatableString.tr("Baustelle: {name}", "name", getName());
     }
     //endregion
 

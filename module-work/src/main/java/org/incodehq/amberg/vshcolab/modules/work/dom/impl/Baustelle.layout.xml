@@ -3,28 +3,51 @@
     <bs3:row>
         <bs3:col span="12" unreferencedActions="true">
             <cpt:domainObject/>
-            <cpt:action id="clearHints"/>
-            <cpt:action id="downloadLayoutXml"/>
-            <cpt:action id="downloadJdoMetadata"/>
-            <cpt:action id="rebuildMetamodel"/>
-            <cpt:action id="delete"/>
-            <cpt:action id="addTest"/>
-            <cpt:action id="updateName"/>
         </bs3:col>
     </bs3:row>
     <bs3:row>
         <bs3:col span="4">
-            <cpt:fieldSet name="General" id="general" unreferencedProperties="true">
-                <cpt:property id="datanucleusIdLong"/>
-                <cpt:property id="datanucleusVersionLong"/>
-                <cpt:property id="datanucleusVersionTimestamp"/>
-                <cpt:property id="client"/>
-                <cpt:property id="name"/>
-                <cpt:property id="notes"/>
-            </cpt:fieldSet>
+            <bs3:tabGroup>
+                <bs3:tab name="General">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Name">
+                                <cpt:action id="delete"/>
+                                <cpt:property id="name" namedEscaped="true">
+                                    <cpt:action id="updateName"/>
+                                </cpt:property>
+                                <cpt:property id="client"/>
+                                <cpt:property id="notes" namedEscaped="true" multiLine="10" hidden="EVERYWHERE"/>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Metadata">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Metadata">
+                                <cpt:action id="clearHints" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
+                                <cpt:property id="datanucleusIdLong"/>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Other">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Other" unreferencedProperties="true"/>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+            </bs3:tabGroup>
         </bs3:col>
         <bs3:col span="8" unreferencedCollections="true">
-            <cpt:collection id="testAuftragen"/>
+            <cpt:collection id="testAuftragen">
+                <cpt:action id="addTest"/>
+            </cpt:collection>
         </bs3:col>
     </bs3:row>
 </bs3:grid>
