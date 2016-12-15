@@ -19,16 +19,17 @@
 
 package org.incodehq.amberg.vshcolab.modules.work.fixture.data;
 
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientMenu;
+
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-public class SimpleObjectMenu_create extends FixtureScript {
+public class ClientMenu_create extends FixtureScript {
 
     /**
      * Name of the object (required)
@@ -48,11 +49,11 @@ public class SimpleObjectMenu_create extends FixtureScript {
 
         String name = checkParam("name", ec, String.class);
 
-        this.client = wrap(simpleObjectMenu).create(name);
+        this.client = wrap(clientMenu).create(name);
         ec.addResult(this, client);
     }
 
     @javax.inject.Inject
-    SimpleObjectMenu simpleObjectMenu;
+    ClientMenu clientMenu;
 
 }

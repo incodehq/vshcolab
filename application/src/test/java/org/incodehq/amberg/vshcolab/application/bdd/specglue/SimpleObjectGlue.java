@@ -25,8 +25,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientMenu;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -35,7 +34,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     @Given("^there are.* (\\d+) simple objects$")
     public void there_are_N_simple_objects(int n) throws Throwable {
         try {
-            final List<Client> findAll = service(SimpleObjectMenu.class).listAll();
+            final List<Client> findAll = service(ClientMenu.class).listAll();
             assertThat(findAll.size(), is(n));
             putVar("list", "all", findAll);
             
@@ -46,7 +45,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     
     @When("^I create a new simple object$")
     public void I_create_a_new_simple_object() throws Throwable {
-        service(SimpleObjectMenu.class).create(UUID.randomUUID().toString());
+        service(ClientMenu.class).create(UUID.randomUUID().toString());
     }
     
 }

@@ -39,14 +39,14 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
         named = "Simple Objects",
         menuOrder = "10"
 )
-public class SimpleObjectMenu {
+public class ClientMenu {
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
     public List<Client> listAll() {
-        return simpleObjectRepository.listAll();
+        return clientRepository.listAll();
     }
 
 
@@ -57,21 +57,21 @@ public class SimpleObjectMenu {
             @ParameterLayout(named="Name")
             final String name
     ) {
-        return simpleObjectRepository.findByName(name);
+        return clientRepository.findByName(name);
     }
 
 
-    public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjectMenu> {}
+    public static class CreateDomainEvent extends ActionDomainEvent<ClientMenu> {}
     @Action(domainEvent = CreateDomainEvent.class)
     @MemberOrder(sequence = "3")
     public Client create(
             @ParameterLayout(named="Name")
             final String name) {
-        return simpleObjectRepository.create(name);
+        return clientRepository.create(name);
     }
 
 
     @javax.inject.Inject
-    SimpleObjectRepository simpleObjectRepository;
+    ClientRepository clientRepository;
 
 }

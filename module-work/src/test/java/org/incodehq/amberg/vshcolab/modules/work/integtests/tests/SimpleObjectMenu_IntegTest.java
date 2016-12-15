@@ -37,7 +37,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.SimpleObjectMenu;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientMenu;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateClients;
 import org.incodehq.amberg.vshcolab.modules.work.integtests.SimpleModuleIntegTestAbstract;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +49,7 @@ public class SimpleObjectMenu_IntegTest extends SimpleModuleIntegTestAbstract {
     @Inject
     TransactionService transactionService;
     @Inject
-    SimpleObjectMenu menu;
+    ClientMenu menu;
     @Inject
     RepositoryService repositoryService;
 

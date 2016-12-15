@@ -30,7 +30,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
         nature = NatureOfService.DOMAIN,
         repositoryFor = Client.class
 )
-public class SimpleObjectRepository {
+public class ClientRepository {
 
     public List<Client> listAll() {
         return repositoryService.allInstances(Client.class);
