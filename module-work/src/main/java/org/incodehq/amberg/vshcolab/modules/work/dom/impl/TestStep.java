@@ -23,6 +23,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.joda.time.DateTime;
 
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.CommandReification;
@@ -31,7 +32,11 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
+
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -60,7 +65,7 @@ import lombok.Setter;
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class TestStep implements Comparable<TestStep> {
+public class TestStep implements Comparable<TestStep>, CalendarEventable {
 
     //region > title
     public TranslatableString title() {
@@ -85,6 +90,21 @@ public class TestStep implements Comparable<TestStep> {
     @Property()
     @Getter @Setter
     private TestType testType;
+
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private DateTime when;
+
+    @Override
+    public String getCalendarName() {
+        return testAuftrag.getName();
+    }
+
+    @Override
+    public CalendarEvent toCalendarEvent() {
+        return getWhen() != null ? new CalendarEvent(getWhen(), getCalendarName(), titleService.titleOf(this)): null;
+    }
 
     //region > name (editable property)
     public static class NumberType {
@@ -154,5 +174,7 @@ public class TestStep implements Comparable<TestStep> {
 
     //endregion
 
+    @javax.inject.Inject
+    TitleService titleService;
 
 }
