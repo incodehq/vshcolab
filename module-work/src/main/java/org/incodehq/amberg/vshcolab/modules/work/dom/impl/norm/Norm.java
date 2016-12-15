@@ -55,7 +55,7 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByName", language = "JDOQL",
+                name = "findByName",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm "
                         + "WHERE name.indexOf(:name) >= 0 ")

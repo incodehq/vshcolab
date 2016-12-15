@@ -20,7 +20,7 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.measurement;
 
 import java.util.List;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.Durchfuehrung;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;

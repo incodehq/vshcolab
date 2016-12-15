@@ -25,7 +25,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.Durchfuehrung;
 import org.joda.time.LocalDateTime;
 
 import org.apache.isis.applib.annotation.Auditing;

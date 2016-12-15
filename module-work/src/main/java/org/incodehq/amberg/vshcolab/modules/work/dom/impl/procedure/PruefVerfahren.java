@@ -69,7 +69,7 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByCode", language = "JDOQL",
+                name = "findByCode",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren "
                         + "WHERE code.indexOf(:code) >= 0 ")

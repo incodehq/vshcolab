@@ -44,12 +44,12 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByLeiter", language = "JDOQL",
+                name = "findByLeiter",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.projekt.Projekt "
                         + "WHERE leiter.indexOf(:leiter) >= 0 "),
         @javax.jdo.annotations.Query(
-                name = "findByNummer", language = "JDOQL",
+                name = "findByNummer",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.projekt.Projekt "
                         + "WHERE nummer == :nummer ")

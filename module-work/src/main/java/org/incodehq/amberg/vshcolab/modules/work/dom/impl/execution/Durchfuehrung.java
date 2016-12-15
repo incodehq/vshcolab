@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution;
 
 import java.math.BigDecimal;
 import java.util.SortedSet;
@@ -78,9 +78,9 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByAuftrag", language = "JDOQL",
+                name = "findByAuftrag",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.Durchfuehrung "
                         + "WHERE auftrag == :auftrag ")
 })
 @javax.jdo.annotations.Unique(name="Durchfuehrung_auftrag_number_UNQ", members = {"auftrag", "number"})

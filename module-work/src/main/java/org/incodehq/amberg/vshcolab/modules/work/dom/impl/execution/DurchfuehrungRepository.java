@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution;
 
 import java.util.List;
 

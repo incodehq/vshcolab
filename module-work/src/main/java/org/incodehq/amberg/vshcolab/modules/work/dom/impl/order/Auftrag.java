@@ -26,8 +26,8 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuehrung;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchfuehrungRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.Durchfuehrung;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.DurchfuehrungRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.joda.time.LocalDate;
 
@@ -61,12 +61,12 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByName", language = "JDOQL",
+                name = "findByName",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
-                name = "findByBaustelle", language = "JDOQL",
+                name = "findByBaustelle",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag "
                         + "WHERE baustelle == :baustelle ")
