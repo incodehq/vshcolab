@@ -25,9 +25,9 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.TestStep;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.TestStepRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchFuhren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.DurchFuhrenRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.joda.time.DateTime;
 
@@ -51,7 +51,7 @@ import lombok.Setter;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "simple",
+        schema = "test",
         table = "TestAuftrag"
 )
 @javax.jdo.annotations.DatastoreIdentity(
@@ -74,7 +74,7 @@ import lombok.Setter;
 })
 @javax.jdo.annotations.Unique(name="TestAuftrag_baustelle_name_UNQ", members = {"baustelle", "name"})
 @DomainObject(
-        objectType = "simple.TestAuftrag",
+        objectType = "test.TestAuftrag",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
@@ -123,18 +123,18 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public TestStep act(final Integer number, final TestType testType, final int numberDays) {
-            final TestStep testStep = testStepRepository.create(number, testType, testAuftrag);
+        public DurchFuhren act(final Integer number, final PrufVerfahren prufVerfahren, final int numberDays) {
+            final DurchFuhren durchFuhren = durchFuhrenRepository.create(number, prufVerfahren, testAuftrag);
             final DateTime when = testAuftrag.getWhen();
             if(when != null) {
                 final DateTime stepStart = when.plusDays(numberDays);
-                testStep.setWhen(stepStart);
+                durchFuhren.setWhen(stepStart);
             }
-            return testStep;
+            return durchFuhren;
         }
 
         @javax.inject.Inject
-        TestStepRepository testStepRepository;
+        DurchFuhrenRepository durchFuhrenRepository;
     }
     //endregion
 
@@ -149,15 +149,15 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
         @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
         @ActionLayout(contributed= Contributed.AS_ASSOCIATION)
-        public List<TestStep> coll() {
-            return testStepRepository.findByTestAuftrag(testAuftrag);
+        public List<DurchFuhren> coll() {
+            return durchFuhrenRepository.findByTestAuftrag(testAuftrag);
         }
         public boolean hideColl() {
             return false;
         }
 
         @javax.inject.Inject
-        TestStepRepository testStepRepository;
+        DurchFuhrenRepository durchFuhrenRepository;
     }
     //endregion
 

@@ -31,24 +31,24 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
-        repositoryFor = TestType.class
+        repositoryFor = PrufVerfahren.class
 )
 @DomainServiceLayout(
-        named = "Test types",
+        named = "PrufVerfahren",
         menuOrder = "20"
 )
-public class TestTypeMenu {
+public class PrufVerfahrenMenu {
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<TestType> listAll() {
-        return testTypeRepository.listAll();
+    public List<PrufVerfahren> listAll() {
+        return prufVerfahrenRepository.listAll();
     }
 
 
     @javax.inject.Inject
-    TestTypeRepository testTypeRepository;
+    PrufVerfahrenRepository prufVerfahrenRepository;
 
 }

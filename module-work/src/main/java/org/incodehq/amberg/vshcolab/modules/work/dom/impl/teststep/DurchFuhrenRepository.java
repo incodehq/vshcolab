@@ -16,9 +16,12 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
 
 import java.util.List;
+
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -28,32 +31,40 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = TestType.class
+        repositoryFor = DurchFuhren.class
 )
-public class TestTypeRepository {
+public class DurchFuhrenRepository {
 
-    public List<TestType> listAll() {
-        return repositoryService.allInstances(TestType.class);
+    public List<DurchFuhren> listAll() {
+        return repositoryService.allInstances(DurchFuhren.class);
     }
 
-    public List<TestType> findByCode(final String code) {
+    public List<DurchFuhren> findByName(final String name) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        TestType.class,
-                        "findByCode",
-                        "name", code));
+                        DurchFuhren.class,
+                        "findByName",
+                        "name", name));
     }
 
-    public TestType create(final String code, final String name, final String norm) {
-        final TestType testType = new TestType(code, name);
-        serviceRegistry.injectServicesInto(testType);
-        testType.addNorm(norm);
-        repositoryService.persist(testType);
-        return testType;
+    public List<DurchFuhren> findByTestAuftrag(final TestAuftrag testAuftrag) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        DurchFuhren.class,
+                        "findByTestAuftrag",
+                        "testAuftrag", testAuftrag));
+    }
+
+    public DurchFuhren create(final Integer stepNumber, final PrufVerfahren prufVerfahren, final TestAuftrag testAuftrag) {
+        final DurchFuhren object = new DurchFuhren(stepNumber, prufVerfahren, testAuftrag);
+        serviceRegistry.injectServicesInto(object);
+        repositoryService.persist(object);
+        return object;
     }
 
     @javax.inject.Inject
     RepositoryService repositoryService;
     @javax.inject.Inject
     ServiceRegistry2 serviceRegistry;
+
 }

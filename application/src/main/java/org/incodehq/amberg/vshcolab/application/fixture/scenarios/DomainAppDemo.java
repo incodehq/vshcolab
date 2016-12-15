@@ -25,8 +25,8 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepositor
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroup;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testgroup.TestGroupRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestTypeRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.viewmodel.ProjektImport;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -51,10 +51,11 @@ public class DomainAppDemo extends FixtureScript {
         final TestGroup testGroup2 = testGroupRepository.create("Test group #2");
         final TestGroup testGroup3 = testGroupRepository.create("Test group #3");
 
-        TestType type13412 = testTypeRepository.create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
-        TestType type13414 = testTypeRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
-        TestType type13416 = testTypeRepository.create("13416", "Frischbetonrohdichte", "SN EN 12350-6");
-        TestType type13418 = testTypeRepository.create("13418", "Luftgehalt von Frischbeton", "SN EN 12350-7");
+        PrufVerfahren type13412 = prufVerfahrenRepository
+                .create("13412", "Wassergehalt von Frischbeton", "SN EN 12350-6");
+        PrufVerfahren type13414 = prufVerfahrenRepository.create("13414", "Konsistenz", "SN EN 12350-2 bzw");
+        PrufVerfahren type13416 = prufVerfahrenRepository.create("13416", "Frischbetonrohdichte", "SN EN 12350-6");
+        PrufVerfahren type13418 = prufVerfahrenRepository.create("13418", "Luftgehalt von Frischbeton", "SN EN 12350-7");
 
         final Client kappl = clientRepository.create("Kappl");
 
@@ -83,7 +84,7 @@ public class DomainAppDemo extends FixtureScript {
 
     @javax.inject.Inject TestGroupRepository testGroupRepository;
 
-    @javax.inject.Inject TestTypeRepository testTypeRepository;
+    @javax.inject.Inject PrufVerfahrenRepository prufVerfahrenRepository;
 
     @javax.inject.Inject ClockService clockService;
 

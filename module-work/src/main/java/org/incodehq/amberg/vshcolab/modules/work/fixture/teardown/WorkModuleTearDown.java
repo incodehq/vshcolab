@@ -26,14 +26,14 @@ public class WorkModuleTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"simple\".\"TestStep\"");
-        isisJdoSupport.executeUpdate("delete from \"simple\".\"TestAuftrag\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"DurchFuhren\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"TestAuftrag\"");
 
-        isisJdoSupport.executeUpdate("delete from \"simple\".\"Baustelle\"");
-        isisJdoSupport.executeUpdate("delete from \"simple\".\"Client\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"Baustelle\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"Client\"");
 
-        isisJdoSupport.executeUpdate("delete from \"simple\".\"TestType\"");
-        isisJdoSupport.executeUpdate("delete from \"simple\".\"TestGroup\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"PrufVerfahren\"");
+        isisJdoSupport.executeUpdate("delete from \"test\".\"TestGroup\"");
     }
 
 

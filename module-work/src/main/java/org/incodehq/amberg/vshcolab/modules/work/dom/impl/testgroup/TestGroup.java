@@ -45,7 +45,7 @@ import lombok.Setter;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "simple",
+        schema = "test",
         table = "TestGroup"
 )
 @javax.jdo.annotations.DatastoreIdentity(
@@ -63,7 +63,7 @@ import lombok.Setter;
 })
 @javax.jdo.annotations.Unique(name="TestGroup_name_UNQ", members = {"name"})
 @DomainObject(
-        objectType = "simple.TestGroup",
+        objectType = "test.TestGroup",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )

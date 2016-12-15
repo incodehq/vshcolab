@@ -54,10 +54,13 @@ import org.apache.isis.applib.util.ObjectContracts;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * A test "procedure".
+ */
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "simple",
-        table = "TestType"
+        schema = "test",
+        table = "PrufVerfahren"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -69,16 +72,16 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByCode", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren "
                         + "WHERE code.indexOf(:code) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="TestType_code_UNQ", members = {"code"})
+@javax.jdo.annotations.Unique(name="PrufVerfahren_code_UNQ", members = {"code"})
 @DomainObject(
-        objectType = "simple.TestType",
+        objectType = "test.PrufVerfahren",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class TestType implements Comparable<TestType> {
+public class PrufVerfahren implements Comparable<PrufVerfahren> {
 
 
     //region > title
@@ -88,7 +91,7 @@ public class TestType implements Comparable<TestType> {
     //endregion
 
     //region > constructor
-    public TestType(final String code, final String description) {
+    public PrufVerfahren(final String code, final String description) {
         setCode(code);
         setDescription(description);
     }
@@ -115,7 +118,7 @@ public class TestType implements Comparable<TestType> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestType, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<PrufVerfahren, String> { }
     }
 
 
@@ -142,7 +145,7 @@ public class TestType implements Comparable<TestType> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestType, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<PrufVerfahren, String> { }
     }
 
 
@@ -176,7 +179,7 @@ public class TestType implements Comparable<TestType> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestType, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<PrufVerfahren, String> { }
     }
 
 
@@ -197,11 +200,11 @@ public class TestType implements Comparable<TestType> {
     @Mixin(method = "exec")
     public static class delete {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<TestType> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<PrufVerfahren> {
         }
 
-        private final TestType client;
-        public delete(final TestType client) {
+        private final PrufVerfahren client;
+        public delete(final PrufVerfahren client) {
             this.client = client;
         }
 
@@ -237,7 +240,7 @@ public class TestType implements Comparable<TestType> {
     }
 
     @Override
-    public int compareTo(final TestType other) {
+    public int compareTo(final PrufVerfahren other) {
         return ObjectContracts.compare(this, other, "code");
     }
 

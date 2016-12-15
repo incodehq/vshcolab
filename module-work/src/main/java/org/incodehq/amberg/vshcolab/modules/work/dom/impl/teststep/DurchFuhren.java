@@ -23,8 +23,8 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.PrufVerfahren;
 import org.joda.time.DateTime;
 
 import org.apache.isis.applib.annotation.Auditing;
@@ -44,10 +44,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * A test "execution"
+ */
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
-        schema = "simple",
-        table = "TestStep"
+        schema = "test",
+        table = "DurchFuhren"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -59,27 +62,27 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByTestAuftrag", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.TestStep "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.Durchfuhren "
                         + "WHERE testAuftrag == :testAuftrag ")
 })
 @javax.jdo.annotations.Unique(name="TestStep_auftrag_number_UNQ", members = {"testAuftrag", "number"})
 @DomainObject(
-        objectType = "simple.TestStep",
+        objectType = "test.DurchFuhren",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class TestStep implements Comparable<TestStep>, CalendarEventable {
+public class DurchFuhren implements Comparable<DurchFuhren>, CalendarEventable {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", getTestType().getCode());
+        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", this.getPrufVerfahren().getCode());
     }
     //endregion
 
     //region > constructor
-    public TestStep(final Integer number, final TestType testType, final TestAuftrag testAuftrag) {
+    public DurchFuhren(final Integer number, final PrufVerfahren prufVerfahren, final TestAuftrag testAuftrag) {
         setNumber(number);
-        setTestType(testType);
+        setPrufVerfahren(prufVerfahren);
         setTestAuftrag(testAuftrag);
     }
     //endregion
@@ -92,7 +95,7 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private TestType testType;
+    private PrufVerfahren prufVerfahren;
 
     //region > when
     @Column(allowsNull = "true")
@@ -125,7 +128,7 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestStep, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<DurchFuhren, String> { }
     }
 
 
@@ -152,7 +155,7 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestStep, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<DurchFuhren, String> { }
     }
 
 
@@ -176,7 +179,7 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
     }
 
     @Override
-    public int compareTo(final TestStep other) {
+    public int compareTo(final DurchFuhren other) {
         return ObjectContracts.compare(this, other, "testAuftrag", "number");
     }
 
