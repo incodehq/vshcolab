@@ -22,6 +22,7 @@ import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDo
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.Client;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.ClientRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -43,9 +44,13 @@ public class DomainAppDemo extends FixtureScript {
         factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #1");
         factoryService.mixin(Client.addBaustelle.class, kappl).act("Baustelle #2");
 
-        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #1", TestType.FBK);
-        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #2", TestType.MEWert);
-        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #3", TestType.Wurfel);
+        final TestAuftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #1");
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #1", TestType.FBK);
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #2", TestType.Wurfel);
+        factoryService.mixin(TestAuftrag.addStep.class, taminaTest1).act("Step #3", TestType.MEWert);
+
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #2");
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Test #3");
 
         final Client meier = clientRepository.create("Meier");
         final Client logbau = clientRepository.create("Logbau");

@@ -18,7 +18,6 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
@@ -229,9 +228,9 @@ public class Baustelle implements Comparable<Baustelle> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public Baustelle act(final String name, final TestType testType) {
-            final TestAuftrag testAuftrag = testAuftragRepository.create(name, testType, baustelle);
-            return baustelle;
+        public TestAuftrag act(final String name) {
+            final TestAuftrag testAuftrag = testAuftragRepository.create(name,  baustelle);
+            return testAuftrag;
         }
 //        public boolean hideAct() {
 //            return false;

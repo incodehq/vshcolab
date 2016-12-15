@@ -18,27 +18,18 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.CommandReification;
-import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.util.ObjectContracts;
 
@@ -48,7 +39,7 @@ import lombok.Setter;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "TestAuftrag"
+        table = "TestStep"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -60,21 +51,21 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestStep "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
-                name = "findByBaustelle", language = "JDOQL",
+                name = "findByTestAuftrag", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag "
-                        + "WHERE baustelle == :baustelle ")
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestStep "
+                        + "WHERE testAuftrag == :testAuftrag ")
 })
-@javax.jdo.annotations.Unique(name="TestAuftrag_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="TestStep_name_UNQ", members = {"name"})
 @DomainObject(
-        objectType = "simple.TestAuftrag",
+        objectType = "simple.TestStep",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class TestAuftrag implements Comparable<TestAuftrag> {
+public class TestStep implements Comparable<TestStep> {
 
     //region > title
     public TranslatableString title() {
@@ -83,84 +74,22 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
     //endregion
 
     //region > constructor
-    public TestAuftrag(
-            final String name,
-//            final TestType testType,
-            final Baustelle baustelle) {
+    public TestStep(final String name, final TestType testType, final TestAuftrag testAuftrag) {
         setName(name);
-//        setTestType(testType);
-        setBaustelle(baustelle);
+        setTestType(testType);
+        setTestAuftrag(testAuftrag);
     }
     //endregion
 
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private Baustelle baustelle;
+    private TestAuftrag testAuftrag;
 
-//    @Column(allowsNull = "false")
-//    @Property()
-//    @Getter @Setter
-//    private TestType testType;
-
-    //region > addStep (action)
-    @Mixin(method="act")
-    public static class addStep {
-        private final TestAuftrag testAuftrag;
-        public addStep(final TestAuftrag testAuftrag) {
-            this.testAuftrag = testAuftrag;
-        }
-        public static class DomainEvent extends ActionDomainEvent<TestAuftrag> {
-        }
-        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed=Contributed.AS_ACTION)
-        public TestAuftrag act(final String name, final TestType testType) {
-            testStepRepository.create(name, testType, testAuftrag);
-            return testAuftrag;
-        }
-        public boolean hideAct() {
-            return false;
-        }
-        public String disableAct() {
-            return null;
-        }
-        public String validate0Act(final String name) {
-            return null;
-        }
-        public List<String> choices0Act() {
-            return Collections.emptyList();
-        }
-        public String default0Act() {
-            return null;
-        }
-
-        @javax.inject.Inject
-        TestStepRepository testStepRepository;
-    }
-    //endregion
-
-    //region > steppen (derived collection)
-    @Mixin(method="coll")
-    public static class steppen {
-        private final TestAuftrag testAuftrag;
-        public steppen(final TestAuftrag testAuftrag) {
-            this.testAuftrag = testAuftrag;
-        }
-        public static class DomainEvent extends ActionDomainEvent<TestAuftrag> {
-        }
-        @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed= Contributed.AS_ASSOCIATION)
-        public List<TestStep> coll() {
-            return testStepRepository.findByTestAuftrag(testAuftrag);
-        }
-        public boolean hideColl() {
-            return false;
-        }
-
-        @javax.inject.Inject
-        TestStepRepository testStepRepository;
-    }
-    //endregion
+    @Column(allowsNull = "false")
+    @Property()
+    @Getter @Setter
+    private TestType testType;
 
     //region > name (editable property)
     public static class NameType {
@@ -175,7 +104,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestAuftrag, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestStep, String> { }
     }
 
 
@@ -202,7 +131,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestAuftrag, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestStep, String> { }
     }
 
 
@@ -226,7 +155,7 @@ public class TestAuftrag implements Comparable<TestAuftrag> {
     }
 
     @Override
-    public int compareTo(final TestAuftrag other) {
+    public int compareTo(final TestStep other) {
         return ObjectContracts.compare(this, other, "name");
     }
 
