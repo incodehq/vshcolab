@@ -18,6 +18,9 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -36,6 +39,7 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.message.MessageService;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -190,6 +194,64 @@ public class Baustelle implements Comparable<Baustelle> {
 
     }
     //endregion
+
+    //region > testAuftragen (derived collection)
+    @Mixin(method="coll")
+    public static class testAuftragen {
+        private final Baustelle baustelle;
+        public testAuftragen(final Baustelle baustelle) {
+            this.baustelle = baustelle;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Baustelle> {
+        }
+        @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed=Contributed.AS_ASSOCIATION)
+        public List<TestAuftrag> coll() {
+            // TODO: business logic here
+            return Collections.emptyList();
+        }
+        public boolean hideColl() {
+            return false;
+        }
+    }
+    //endregion
+
+    //region > addTest (action)
+    @Mixin(method="act")
+    public static class addTest {
+        private final Baustelle baustelle;
+        public addTest(final Baustelle baustelle) {
+            this.baustelle = baustelle;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Baustelle> {
+        }
+        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed=Contributed.AS_ACTION)
+        public Baustelle act(final String name, final TestType testType) {
+            final TestAuftrag testAuftrag = testAuftragRepository.create(name, testType, baustelle);
+            return baustelle;
+        }
+//        public boolean hideAct() {
+//            return false;
+//        }
+//        public String disableAct() {
+//            return null;
+//        }
+//        public String validate0Act(final String name) {
+//            return null;
+//        }
+//        public List<String> choices0Act() {
+//            return Collections.emptyList();
+//        }
+//        public String default0Act() {
+//            return null;
+//        }
+
+        @javax.inject.Inject
+        TestAuftragRepository testAuftragRepository;
+    }
+    //endregion
+
 
     //region > delete (action)
     @Mixin(method = "exec")

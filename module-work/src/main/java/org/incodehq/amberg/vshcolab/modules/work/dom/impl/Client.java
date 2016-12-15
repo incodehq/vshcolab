@@ -137,11 +137,11 @@ public class Client implements Comparable<Client> {
     //endregion
 
 
-    //region > baustelles (derived collection)
+    //region > baustellen (derived collection)
     @Mixin(method="coll")
-    public static class baustelles {
+    public static class baustellen {
         private final Client client;
-        public baustelles(final Client client) {
+        public baustellen(final Client client) {
             this.client = client;
         }
         public static class DomainEvent extends ActionDomainEvent<Client> {
