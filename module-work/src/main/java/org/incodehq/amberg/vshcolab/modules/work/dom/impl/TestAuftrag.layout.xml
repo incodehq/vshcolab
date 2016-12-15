@@ -63,4 +63,11 @@
             </bs3:tabGroup>
         </bs3:col>
     </bs3:row>
+    <bs3:row>
+        <bs3:col span="12">
+            <c:collection id="steppen">
+                <c:action id="addStep"/>
+            </c:collection>
+        </bs3:col>
+    </bs3:row>
 </bs3:grid>

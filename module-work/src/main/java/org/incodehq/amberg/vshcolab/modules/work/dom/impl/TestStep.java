@@ -164,12 +164,12 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
     //region > toString, compareTo
     @Override
     public String toString() {
-        return ObjectContracts.toString(this, "name");
+        return ObjectContracts.toString(this, "testAuftrag", "number");
     }
 
     @Override
     public int compareTo(final TestStep other) {
-        return ObjectContracts.compare(this, other, "name");
+        return ObjectContracts.compare(this, other, "testAuftrag", "number");
     }
 
     //endregion
