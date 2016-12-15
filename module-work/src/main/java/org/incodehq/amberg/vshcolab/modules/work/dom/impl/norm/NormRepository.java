@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm;
 
 import java.util.List;
 
@@ -28,28 +28,32 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = TestType.class
+        repositoryFor = Norm.class
 )
-public class TestTypeRepository {
+public class NormRepository {
 
-    public List<TestType> listAll() {
-        return repositoryService.allInstances(TestType.class);
+    public List<Norm> listAll() {
+        return repositoryService.allInstances(Norm.class);
     }
 
-    public List<TestType> findByCode(final String code) {
-        return repositoryService.allMatches(
+    public Norm findOrCreateByName(final String name) {
+        Norm norm = repositoryService.uniqueMatch(
                 new QueryDefault<>(
-                        TestType.class,
-                        "findByCode",
-                        "name", code));
+                        Norm.class,
+                        "findByName",
+                        "name", name));
+        if (norm == null) {
+            norm = new Norm(name);
+            repositoryService.persist(norm);
+        }
+        return norm;
     }
 
-    public TestType create(final String code, final String name, final String norm) {
-        final TestType testType = new TestType(code, name);
-        serviceRegistry.injectServicesInto(testType);
-        testType.addNorm(norm);
-        repositoryService.persist(testType);
-        return testType;
+    public Norm create(final String name) {
+        final Norm object = new Norm(name);
+        serviceRegistry.injectServicesInto(object);
+        repositoryService.persist(object);
+        return object;
     }
 
     @javax.inject.Inject

@@ -18,19 +18,30 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.inject.Inject;
+import javax.jdo.annotations.Element;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.NormRepository;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Auditing;
+import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CommandReification;
 import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Mixin;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -77,10 +88,17 @@ public class TestType implements Comparable<TestType> {
     //endregion
 
     //region > constructor
-    public TestType(final String code, final String description, final String norm) {
+    public TestType(final String code, final String description) {
         setCode(code);
         setDescription(description);
-        setNorm(norm);
+    }
+
+    @Programmatic
+    public void addNorm(final String normName) {
+        if(normName != null) {
+            final Norm norm = normRepository.findOrCreateByName(normName);
+            getNorms().add(norm);
+        }
     }
     //endregion
 
@@ -138,32 +156,12 @@ public class TestType implements Comparable<TestType> {
 
     // endregion
 
-    //region > norm (editable property)
-    public static class NormType {
-        private NormType() {
-        }
-
-        public static class Meta {
-            public static final int MAX_LEN = 40;
-
-            private Meta() {
-            }
-        }
-
-        public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestType, String> { }
-    }
-
-
-    @javax.jdo.annotations.Column(allowsNull = "false", length = NormType.Meta.MAX_LEN)
-    @Property(
-            editing = Editing.ENABLED,
-            domainEvent = NormType.PropertyDomainEvent.class
-    )
+    @Persistent(table = "TestTypeNorm")
+    @Join(column = "testType")
+    @Element(column = "norm")
+    @Collection()
     @Getter @Setter
-    private String norm;
-
-    // endregion
+    private SortedSet<Norm> norms = new TreeSet<Norm>();
 
     //region > notes (editable property)
     public static class NotesType {
@@ -246,5 +244,7 @@ public class TestType implements Comparable<TestType> {
     //endregion
 
 
+    @Inject
+    NormRepository normRepository;
 
 }

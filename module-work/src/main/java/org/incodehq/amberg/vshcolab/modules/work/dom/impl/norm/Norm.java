@@ -16,30 +16,29 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm;
 
-import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testtype.TestType;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
-import org.joda.time.DateTime;
 
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.CommandReification;
+import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.message.MessageService;
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
-
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +46,7 @@ import lombok.Setter;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "TestStep"
+        table = "Norm"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -57,85 +56,56 @@ import lombok.Setter;
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByTestAuftrag", language = "JDOQL",
+                name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.teststep.TestStep "
-                        + "WHERE testAuftrag == :testAuftrag ")
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm "
+                        + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="TestStep_auftrag_number_UNQ", members = {"testAuftrag", "number"})
+@javax.jdo.annotations.Unique(name="Norm_name_UNQ", members = {"name"})
 @DomainObject(
-        objectType = "simple.TestStep",
+        objectType = "simple.Norm",
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class TestStep implements Comparable<TestStep>, CalendarEventable {
+public class Norm implements Comparable<Norm> {
+
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", getTestType().getCode());
+        return TranslatableString.tr("{name}", "name", getName());
     }
     //endregion
 
     //region > constructor
-    public TestStep(final Integer number, final TestType testType, final TestAuftrag testAuftrag) {
-        setNumber(number);
-        setTestType(testType);
-        setTestAuftrag(testAuftrag);
-    }
-    //endregion
-
-    @Column(allowsNull = "false")
-    @Property()
-    @Getter @Setter
-    private TestAuftrag testAuftrag;
-
-    @Column(allowsNull = "false")
-    @Property()
-    @Getter @Setter
-    private TestType testType;
-
-    //region > when
-    @Column(allowsNull = "true")
-    @Property()
-    @Getter @Setter
-    private DateTime when;
-
-    @Programmatic
-    @Override
-    public String getCalendarName() {
-        //return getTestAuftrag().getBaustelle().getName() + ":" + testAuftrag.getName();
-        return testAuftrag.getName();
-    }
-
-    @Programmatic
-    @Override
-    public CalendarEvent toCalendarEvent() {
-        return getWhen() != null ? new CalendarEvent(getWhen(), getCalendarName(), titleService.titleOf(this)): null;
+    public Norm(final String name) {
+        setName(name);
     }
     //endregion
 
     //region > name (editable property)
-    public static class NumberType {
-        private NumberType() {
+    public static class NameType {
+        private NameType() {
         }
 
         public static class Meta {
+            public static final int MAX_LEN = 40;
+
             private Meta() {
             }
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestStep, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Norm, String> { }
     }
 
 
-    @Column(allowsNull = "false")
+    @javax.jdo.annotations.Column(allowsNull = "false", length = NameType.Meta.MAX_LEN)
     @Property(
             editing = Editing.ENABLED,
-            domainEvent = NumberType.PropertyDomainEvent.class
+            domainEvent = NameType.PropertyDomainEvent.class
     )
     @Getter @Setter
-    private Integer number;
+    private String name;
 
     // endregion
 
@@ -152,11 +122,11 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<TestStep, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Norm, String> { }
     }
 
 
-    @Column(
+    @javax.jdo.annotations.Column(
             allowsNull = "true",
             length = NotesType.Meta.MAX_LEN
     )
@@ -169,20 +139,55 @@ public class TestStep implements Comparable<TestStep>, CalendarEventable {
     private String notes;
     //endregion
 
-    //region > toString, compareTo
-    @Override
-    public String toString() {
-        return ObjectContracts.toString(this, "testAuftrag", "number");
-    }
+    //region > delete (action)
+    @Mixin(method = "exec")
+    public static class delete {
 
-    @Override
-    public int compareTo(final TestStep other) {
-        return ObjectContracts.compare(this, other, "testAuftrag", "number");
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Norm> {
+        }
+
+        private final Norm client;
+        public delete(final Norm client) {
+            this.client = client;
+        }
+
+        @Action(
+                domainEvent = ActionDomainEvent.class,
+                semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+        )
+        @ActionLayout(
+                contributed = Contributed.AS_ACTION
+        )
+        public void exec() {
+            final String title = titleService.titleOf(client);
+            messageService.informUser(String.format("'%s' deleted", title));
+            repositoryService.remove(client);
+        }
+
+        @javax.inject.Inject
+        RepositoryService repositoryService;
+
+        @javax.inject.Inject
+        TitleService titleService;
+
+        @javax.inject.Inject
+        MessageService messageService;
     }
 
     //endregion
 
-    @javax.inject.Inject
-    TitleService titleService;
+    //region > toString, compareTo
+    @Override
+    public String toString() {
+        return ObjectContracts.toString(this, "name");
+    }
+
+    @Override
+    public int compareTo(final Norm other) {
+        return ObjectContracts.compare(this, other, "name");
+    }
+
+    //endregion
+
 
 }
