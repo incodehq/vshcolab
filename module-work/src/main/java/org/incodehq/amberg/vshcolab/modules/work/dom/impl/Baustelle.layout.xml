@@ -45,7 +45,7 @@
             </bs3:tabGroup>
         </bs3:col>
         <bs3:col span="8" unreferencedCollections="true">
-            <cpt:collection id="testAuftragen">
+            <cpt:collection id="testAuftragen" defaultView="table">
                 <cpt:action id="addTest"/>
             </cpt:collection>
         </bs3:col>

@@ -78,7 +78,9 @@ public class TestType implements Comparable<TestType> {
 
     //region > constructor
     public TestType(final String code, final String description, final String norm) {
+        setCode(code);
         setDescription(description);
+        setNorm(norm);
     }
     //endregion
 
