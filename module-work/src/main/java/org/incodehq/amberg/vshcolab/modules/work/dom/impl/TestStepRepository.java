@@ -20,6 +20,8 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
 
 import java.util.List;
 
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.query.QueryDefault;

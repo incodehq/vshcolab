@@ -23,6 +23,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag;
 import org.joda.time.DateTime;
 
 import org.apache.isis.applib.annotation.Auditing;

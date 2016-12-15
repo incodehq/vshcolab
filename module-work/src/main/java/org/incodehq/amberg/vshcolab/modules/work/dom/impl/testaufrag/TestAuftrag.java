@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag;
 
 import java.util.List;
 
@@ -25,6 +25,9 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestStep;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestStepRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestType;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.joda.time.DateTime;
 
@@ -61,12 +64,12 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
                 name = "findByBaustelle", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.TestAuftrag "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.testaufrag.TestAuftrag "
                         + "WHERE baustelle == :baustelle ")
 })
 @javax.jdo.annotations.Unique(name="TestAuftrag_baustelle_name_UNQ", members = {"baustelle", "name"})
