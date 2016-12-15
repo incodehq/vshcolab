@@ -20,8 +20,8 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution;
 
 import java.util.List;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -55,8 +55,8 @@ public class DurchfuehrungRepository {
                         "auftrag", auftrag));
     }
 
-    public Durchfuehrung create(final Integer stepNumber, final PruefVerfahren pruefVerfahren, final Auftrag auftrag) {
-        final Durchfuehrung object = new Durchfuehrung(stepNumber, pruefVerfahren, auftrag);
+    public Durchfuehrung create(final Integer stepNumber, final Verfahren verfahren, final Auftrag auftrag) {
+        final Durchfuehrung object = new Durchfuehrung(stepNumber, verfahren, auftrag);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;

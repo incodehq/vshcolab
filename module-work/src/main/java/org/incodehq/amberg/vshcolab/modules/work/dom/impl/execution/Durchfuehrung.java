@@ -33,6 +33,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.measurement.Messwert;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
@@ -92,15 +93,15 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", this.getPruefVerfahren().getCode());
+        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", this.getVerfahren().getCode());
     }
     //endregion
 
 
     //region > constructor
-    public Durchfuehrung(final Integer number, final PruefVerfahren pruefVerfahren, final Auftrag auftrag) {
+    public Durchfuehrung(final Integer number, final Verfahren verfahren, final Auftrag auftrag) {
         setNumber(number);
-        setPruefVerfahren(pruefVerfahren);
+        setVerfahren(verfahren);
         setAuftrag(auftrag);
     }
     //endregion
@@ -113,7 +114,7 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private PruefVerfahren pruefVerfahren;
+    private Verfahren verfahren;
 
     //region > when
     @Column(allowsNull = "true")
@@ -159,8 +160,12 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
             return durchfuehrung;
         }
 
+        public boolean hideAct() {
+            return !(durchfuehrung.getVerfahren() instanceof PruefVerfahren);
+        }
         public SortedSet<Norm> choices0Act() {
-            return durchfuehrung.getPruefVerfahren().getNorms();
+            PruefVerfahren pruefVerfahren = (PruefVerfahren) durchfuehrung.getVerfahren();
+            return pruefVerfahren.getNorms();
         }
 
         public LocalDateTime default1Act() {
@@ -186,6 +191,10 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
         public Durchfuehrung act(final Messwert messwert) {
             repositoryService.remove(messwert);
             return durchfuehrung;
+        }
+
+        public boolean hideAct() {
+            return !(durchfuehrung.getVerfahren() instanceof PruefVerfahren);
         }
 
         public SortedSet<Messwert> choices0Act() {

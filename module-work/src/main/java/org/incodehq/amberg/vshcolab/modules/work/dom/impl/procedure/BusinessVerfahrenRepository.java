@@ -34,10 +34,10 @@ public class BusinessVerfahrenRepository {
         return repositoryService.allInstances(BusinessVerfahren.class);
     }
 
-    public BusinessVerfahren create(final String code, final String name, final Verfahren parentIfAny) {
-        final BusinessVerfahren pruefVerfahren = new BusinessVerfahren(code, name, parentIfAny);
-        repositoryService.persist(pruefVerfahren);
-        return pruefVerfahren;
+    public BusinessVerfahren create(final Integer code, final String name, final Verfahren parentIfAny) {
+        final BusinessVerfahren businessVerfahren = new BusinessVerfahren(code, name, parentIfAny);
+        repositoryService.persist(businessVerfahren);
+        return businessVerfahren;
     }
 
     @javax.inject.Inject

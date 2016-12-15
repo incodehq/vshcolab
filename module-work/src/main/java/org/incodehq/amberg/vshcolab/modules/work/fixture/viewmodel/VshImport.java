@@ -27,12 +27,12 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.isisaddons.module.excel.dom.ExcelFixture;
 
-public class ProjektImport extends FixtureScript {
+public class VshImport extends FixtureScript {
 
     @Override
     protected void execute(final ExecutionContext executionContext) {
-        final URL excelResource = Resources.getResource(ProjektImport.class, "VSH Sample data.xlsx");
-        final ExcelFixture excelFixture = new ExcelFixture(excelResource, ProjektRowHandler.class);
+        final URL excelResource = Resources.getResource(VshImport.class, "VSH Sample data.xlsx");
+        final ExcelFixture excelFixture = new ExcelFixture(excelResource, ProjektRowHandler.class, VerfahrenRowHandler.class);
         executionContext.executeChild(this, excelFixture);
     }
 }

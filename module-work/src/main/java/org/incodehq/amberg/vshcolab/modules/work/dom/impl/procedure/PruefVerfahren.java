@@ -64,7 +64,7 @@ import lombok.Setter;
 public class PruefVerfahren extends Verfahren {
 
     //region > constructor
-    public PruefVerfahren(final String code, final String description, final Verfahren parentIfAny) {
+    public PruefVerfahren(final Integer code, final String description, final Verfahren parentIfAny) {
         super(code, description, parentIfAny);
     }
 
@@ -72,7 +72,7 @@ public class PruefVerfahren extends Verfahren {
 
     @Action()
     @MemberOrder(name = "children", sequence = "1")
-    public Verfahren addChild(final String code, final String description ) {
+    public Verfahren addChild(final Integer code, final String description ) {
         PruefVerfahren pruefVerfahren = repository.create(code, description, this, null);
         getChildren().add(pruefVerfahren);
         return this;
@@ -81,7 +81,7 @@ public class PruefVerfahren extends Verfahren {
     //region > norms (collection); addNorm (action); removeNorm (action)
 
     @Persistent( table = "PruefVerfahrenNorm")
-    @Join(column = "pruefVerfahren")
+    @Join(column = "verfahren")
     @Element(column = "norm")
     @Collection()
     @Getter @Setter
@@ -104,11 +104,12 @@ public class PruefVerfahren extends Verfahren {
     }
 
     @Programmatic
-    public void addNorm(final String normName) {
-        if(normName != null) {
-            final Norm norm = normRepository.findOrCreateByName(normName);
-            addNorm(norm);
+    public void addNormIfAny(final String normNameIfAny) {
+        if (normNameIfAny == null) {
+            return;
         }
+        final Norm norm = normRepository.findOrCreateByName(normNameIfAny);
+        addNorm(norm);
     }
 
     @Action

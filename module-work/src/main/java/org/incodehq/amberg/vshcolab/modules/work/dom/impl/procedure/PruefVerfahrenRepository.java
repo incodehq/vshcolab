@@ -36,13 +36,13 @@ public class PruefVerfahrenRepository {
     }
 
     public PruefVerfahren create(
-            final String code,
+            final Integer code,
             final String name,
             final Verfahren parentIfAny,
-            final String norm) {
+            final String normIfAny) {
         final PruefVerfahren pruefVerfahren = new PruefVerfahren(code, name, parentIfAny);
         serviceRegistry.injectServicesInto(pruefVerfahren);
-        pruefVerfahren.addNorm(norm);
+        pruefVerfahren.addNormIfAny(normIfAny);
         repositoryService.persist(pruefVerfahren);
         return pruefVerfahren;
     }

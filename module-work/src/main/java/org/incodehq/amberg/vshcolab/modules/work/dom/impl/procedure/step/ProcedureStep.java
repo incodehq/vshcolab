@@ -16,28 +16,28 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.step;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.DiscriminatorStrategy;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.InheritanceStrategy;
-import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Auditing;
-import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CommandReification;
+import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.message.MessageService;
+import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import lombok.Getter;
@@ -47,93 +47,64 @@ import lombok.Setter;
         identityType=IdentityType.DATASTORE,
         schema = "test"
 )
-@javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="id")
-@javax.jdo.annotations.Discriminator(
-        strategy = DiscriminatorStrategy.VALUE_MAP,
-        column = "discriminator")
 @javax.jdo.annotations.Version(
         strategy= VersionStrategy.DATE_TIME,
         column="version")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
-                name = "findByCode",
+                name = "findByName",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren "
-                        + "WHERE code == :code ")
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.step.ProcedureStep "
+                        + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="Verfahren_code_UNQ", members = {"code"})
+@javax.jdo.annotations.Unique(name="ProcedureStep_name_UNQ", members = {"name"})
 @DomainObject(
         auditing = Auditing.ENABLED,
-        publishing = Publishing.ENABLED
+        publishing = Publishing.ENABLED,
+        bounded = true
 )
-public abstract class Verfahren implements Comparable<Verfahren> {
+public class ProcedureStep implements Comparable<ProcedureStep> {
+
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{code}", "code", getCode());
+        return TranslatableString.tr("{name}", "name", getName());
     }
     //endregion
 
     //region > constructor
-    public Verfahren(final Integer code, final String description, final Verfahren parentIfAny) {
-        setCode(code);
-        setDescription(description);
-        setParent(parentIfAny);
+    public ProcedureStep(final String name) {
+        setName(name);
     }
-
     //endregion
 
-    //region > code (readonly property)
-    public static class CodeType {
-        private CodeType() {
+    //region > name (editable property)
+    public static class NameType {
+        private NameType() {
         }
 
         public static class Meta {
-            private Meta() {
-            }
-        }
-
-        public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Verfahren, String> { }
-    }
-
-    @javax.jdo.annotations.Column(allowsNull = "false")
-    @Property(
-            editing = Editing.DISABLED,
-            domainEvent = CodeType.PropertyDomainEvent.class
-    )
-    @Getter @Setter
-    private Integer code;
-
-    // endregion
-
-    //region > description (editable property)
-    public static class DescriptionType {
-        private DescriptionType() {
-        }
-
-        public static class Meta {
-            public static final int MAX_LEN = 255;
+            public static final int MAX_LEN = 40;
 
             private Meta() {
             }
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Verfahren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<ProcedureStep, String> { }
     }
 
 
-    @javax.jdo.annotations.Column(allowsNull = "false", length = DescriptionType.Meta.MAX_LEN)
+    @javax.jdo.annotations.Column(allowsNull = "false", length = NameType.Meta.MAX_LEN)
     @Property(
             editing = Editing.ENABLED,
-            domainEvent = DescriptionType.PropertyDomainEvent.class
+            domainEvent = NameType.PropertyDomainEvent.class
     )
     @Getter @Setter
-    private String description;
+    private String name;
 
     // endregion
 
@@ -150,7 +121,7 @@ public abstract class Verfahren implements Comparable<Verfahren> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Verfahren, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<ProcedureStep, String> { }
     }
 
 
@@ -167,25 +138,52 @@ public abstract class Verfahren implements Comparable<Verfahren> {
     private String notes;
     //endregion
 
-    @Persistent(mappedBy = "parent", dependentElement = "false")
-    @Collection()
-    @Getter @Setter
-    private SortedSet<Verfahren> children = new TreeSet<>();
+    //region > delete (action)
+    @Mixin(method = "exec")
+    public static class delete {
 
-    @Column(allowsNull = "true")
-    @Property()
-    @Getter @Setter
-    private Verfahren parent;
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<ProcedureStep> {
+        }
+
+        private final ProcedureStep client;
+        public delete(final ProcedureStep client) {
+            this.client = client;
+        }
+
+        @Action(
+                domainEvent = ActionDomainEvent.class,
+                semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
+        )
+        @ActionLayout(
+                contributed = Contributed.AS_ACTION
+        )
+        public void exec() {
+            final String title = titleService.titleOf(client);
+            messageService.informUser(String.format("'%s' deleted", title));
+            repositoryService.remove(client);
+        }
+
+        @javax.inject.Inject
+        RepositoryService repositoryService;
+
+        @javax.inject.Inject
+        TitleService titleService;
+
+        @javax.inject.Inject
+        MessageService messageService;
+    }
+
+    //endregion
 
     //region > toString, compareTo
     @Override
     public String toString() {
-        return ObjectContracts.toString(this, "code");
+        return ObjectContracts.toString(this, "name");
     }
 
     @Override
-    public int compareTo(final Verfahren other) {
-        return ObjectContracts.compare(this, other, "code");
+    public int compareTo(final ProcedureStep other) {
+        return ObjectContracts.compare(this, other, "name");
     }
 
     //endregion

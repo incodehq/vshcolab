@@ -28,7 +28,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.Durchfuehrung;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.DurchfuehrungRepository;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
 import org.joda.time.LocalDate;
 
 import org.apache.isis.applib.annotation.Action;
@@ -116,8 +116,8 @@ public class Auftrag implements Comparable<Auftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION)
-        public Durchfuehrung act(final Integer number, final PruefVerfahren pruefVerfahren, final int numberDays) {
-            final Durchfuehrung durchfuehrung = durchfuehrungRepository.create(number, pruefVerfahren, auftrag);
+        public Durchfuehrung act(final Integer number, final Verfahren verfahren, final int numberDays) {
+            final Durchfuehrung durchfuehrung = durchfuehrungRepository.create(number, verfahren, auftrag);
             final LocalDate when = auftrag.getWhen();
             if(when != null) {
                 final LocalDate stepStart = when.plusDays(numberDays);

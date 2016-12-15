@@ -23,7 +23,6 @@ import java.util.List;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.query.QueryDefault;
-import org.apache.isis.applib.services.registry.ServiceRegistry2;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
@@ -36,17 +35,15 @@ public class VerfahrenRepository {
         return repositoryService.allInstances(Verfahren.class);
     }
 
-    public List<Verfahren> findByCode(final String code) {
-        return repositoryService.allMatches(
+    public Verfahren findByCode(final Integer code) {
+        return repositoryService.uniqueMatch(
                 new QueryDefault<>(
                         Verfahren.class,
                         "findByCode",
-                        "name", code));
+                        "code", code));
     }
 
 
     @javax.inject.Inject
     RepositoryService repositoryService;
-    @javax.inject.Inject
-    ServiceRegistry2 serviceRegistry;
 }

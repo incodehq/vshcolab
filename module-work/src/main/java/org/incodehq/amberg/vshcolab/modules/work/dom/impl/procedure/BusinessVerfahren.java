@@ -46,13 +46,13 @@ import org.apache.isis.applib.annotation.Publishing;
 )
 public class BusinessVerfahren extends Verfahren {
 
-    public BusinessVerfahren(final String code, final String description, final Verfahren parentIfAny) {
+    public BusinessVerfahren(final Integer code, final String description, final Verfahren parentIfAny) {
         super(code, description, parentIfAny);
     }
 
     @Action()
     @MemberOrder(name = "children", sequence = "1")
-    public Verfahren addChild(final String code, final String description ) {
+    public Verfahren addChild(final Integer code, final String description ) {
         BusinessVerfahren businessVerfahren = repository.create(code, description, this);
         getChildren().add(businessVerfahren);
         return this;
