@@ -56,6 +56,8 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
     private Boolean priceAufAnfrage;
     @Getter @Setter
     private String norm;
+    @Getter @Setter
+    private String normUnitOfMeasurement;
 
     @Override
     public List<Object> handleRow(
@@ -68,12 +70,12 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
             verfahren = verfahrenRowHandler.verfahren;
             if(verfahren instanceof PruefVerfahren) {
                 PruefVerfahren pruefVerfahren = (PruefVerfahren) verfahren;
-                pruefVerfahren.addNormIfAny(norm);
+                pruefVerfahren.addNormIfAny(norm, normUnitOfMeasurement);
             }
         } else {
             Verfahren parentVerfahren = verfahrenRepository.findByCode(parentCode);
             if ("P".equalsIgnoreCase(discriminator)) {
-                PruefVerfahren pruefVerfahren = pruefVerfahrenRepository.create(code, description, parentVerfahren, norm);
+                PruefVerfahren pruefVerfahren = pruefVerfahrenRepository.create(code, description, parentVerfahren, norm, normUnitOfMeasurement);
                 pruefVerfahren.setPrice(price);
                 pruefVerfahren.setPriceAufAnfrage(priceAufAnfrage);
                 verfahren = pruefVerfahren;

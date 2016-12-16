@@ -39,10 +39,11 @@ public class PruefVerfahrenRepository {
             final Integer code,
             final String name,
             final Verfahren parentIfAny,
-            final String normIfAny) {
+            final String normIfAny,
+            final String normUnitOfMeasurementIfAny) {
         final PruefVerfahren pruefVerfahren = new PruefVerfahren(code, name, parentIfAny);
         serviceRegistry.injectServicesInto(pruefVerfahren);
-        pruefVerfahren.addNormIfAny(normIfAny);
+        pruefVerfahren.addNormIfAny(normIfAny, normUnitOfMeasurementIfAny);
         repositoryService.persistAndFlush(pruefVerfahren);
         return pruefVerfahren;
     }

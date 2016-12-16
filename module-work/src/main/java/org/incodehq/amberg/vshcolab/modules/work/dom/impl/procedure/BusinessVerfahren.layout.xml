@@ -34,7 +34,8 @@
                                 <cpt:action id="delete"/>
                                 <cpt:property id="code" namedEscaped="true"/>
                                 <cpt:property id="description" namedEscaped="true"/>
-                                <cpt:property id="parent" namedEscaped="true"/>
+                                <cpt:property id="descriptionInTables" namedEscaped="true"/>
+                                <cpt:property id="parent" namedEscaped="true" hidden="ALL_TABLES"/>
                             </cpt:fieldSet>
                         </bs3:col>
                     </bs3:row>

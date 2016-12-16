@@ -36,21 +36,21 @@ public class NormRepository {
         return repositoryService.allInstances(Norm.class);
     }
 
-    public Norm findOrCreateByName(final String name) {
+    public Norm findOrCreateByName(final String name, final String normUnitOfMeasurementIfAny) {
         Norm norm = repositoryService.uniqueMatch(
                 new QueryDefault<>(
                         Norm.class,
                         "findByName",
                         "name", name));
         if (norm == null) {
-            norm = new Norm(name);
+            norm = new Norm(name, UnitOfMeasurement.valueOf(normUnitOfMeasurementIfAny));
             repositoryService.persist(norm);
         }
         return norm;
     }
 
-    public Norm create(final String name) {
-        final Norm object = new Norm(name);
+    public Norm create(final String name, final String normUnitOfMeasurementIfAny) {
+        final Norm object = new Norm(name, UnitOfMeasurement.valueOf(normUnitOfMeasurementIfAny));
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;

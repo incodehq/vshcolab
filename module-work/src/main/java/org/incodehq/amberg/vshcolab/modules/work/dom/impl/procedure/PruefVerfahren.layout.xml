@@ -34,7 +34,8 @@
                                 <c:action id="delete"/>
                                 <c:property id="code" namedEscaped="true"/>
                                 <c:property id="description" namedEscaped="true"/>
-                                <c:property id="parent" namedEscaped="true"/>
+                                <c:property id="descriptionInTable" namedEscaped="true"/>
+                                <c:property id="parent" namedEscaped="true" hidden="ALL_TABLES"/>
                             </c:fieldSet>
                             <c:fieldSet name="Prices">
                                 <c:property id="price"/>

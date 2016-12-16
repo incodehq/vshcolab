@@ -64,7 +64,12 @@ import lombok.Setter;
                 name = "findByCode",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren "
-                        + "WHERE code == :code ")
+                        + "WHERE code == :code "),
+        @javax.jdo.annotations.Query(
+                name = "findByDescription",
+                value = "SELECT "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren "
+                        + "WHERE description.indexOf(:description) >= 0 "),
 })
 @javax.jdo.annotations.Unique(name="Verfahren_code_UNQ", members = {"code"})
 @DomainObject(
@@ -140,16 +145,18 @@ public abstract class Verfahren implements Comparable<Verfahren> {
 
     // endregion
 
+    //region > descriptionInTable (derived property)
     @Property(hidden = Where.OBJECT_FORMS)
     @PropertyLayout(named = "Description")
     public String getDescriptionInTable() {
         int indent = getIndent();
-        return "--------------------------------------".substring(0, indent) + getDescription();
+        return ".....................................".substring(0, indent) + " " + getDescription();
     }
 
     private int getIndent() {
         return getParent() != null ? getParent().getIndent() + 2: 0;
     }
+    //endregion
 
     //region > notes (editable property)
     public static class NotesType {
@@ -181,6 +188,7 @@ public abstract class Verfahren implements Comparable<Verfahren> {
     private String notes;
     //endregion
 
+    //region > children (collection) and parent (property)
     @Persistent(mappedBy = "parent", dependentElement = "false")
     @Collection()
     @Getter @Setter
@@ -190,6 +198,7 @@ public abstract class Verfahren implements Comparable<Verfahren> {
     @Property()
     @Getter @Setter
     private Verfahren parent;
+    //endregion
 
     //region > toString, compareTo
     @Override

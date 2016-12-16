@@ -18,6 +18,7 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.order;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.jdo.annotations.Column;
@@ -29,6 +30,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.Durchfuehrung;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution.DurchfuehrungRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.VerfahrenRepository;
 import org.joda.time.LocalDate;
 
 import org.apache.isis.applib.annotation.Action;
@@ -128,8 +130,13 @@ public class Auftrag implements Comparable<Auftrag> {
             return durchfuehrung;
         }
 
+        public Collection<Verfahren> autoComplete1Act(final String search) {
+            return verfahrenRepository.search(search);
+        }
+
         @javax.inject.Inject
         DurchfuehrungRepository durchfuehrungRepository;
+        @javax.inject.Inject VerfahrenRepository verfahrenRepository;
     }
     //endregion
 

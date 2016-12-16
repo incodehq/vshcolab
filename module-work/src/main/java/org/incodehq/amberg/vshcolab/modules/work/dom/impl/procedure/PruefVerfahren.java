@@ -45,14 +45,10 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.xactn.TransactionService;
 
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * A test "procedure".
- */
 @javax.jdo.annotations.PersistenceCapable(schema = "test")
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 @javax.jdo.annotations.Discriminator(value="test.PruefVerfahren")
@@ -104,11 +100,11 @@ public class PruefVerfahren extends Verfahren {
     }
 
     @Programmatic
-    public void addNormIfAny(final String normNameIfAny) {
+    public void addNormIfAny(final String normNameIfAny, final String normUnitOfMeasurementIfAny) {
         if (normNameIfAny == null) {
             return;
         }
-        final Norm norm = normRepository.findOrCreateByName(normNameIfAny);
+        final Norm norm = normRepository.findOrCreateByName(normNameIfAny, normUnitOfMeasurementIfAny);
         addNorm(norm);
     }
 
@@ -128,31 +124,30 @@ public class PruefVerfahren extends Verfahren {
 
     //endregion
 
+    //region > price
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
     private BigDecimal price;
 
+    public boolean hidePrice() {
+        return getPriceAufAnfrage() != null && getPriceAufAnfrage().booleanValue();
+    }
+    //endregion
+
+    //region > priceAufAnfrage
     @Column(allowsNull = "true")
     @Property()
     @Getter @Setter
     private Boolean priceAufAnfrage;
+    //endregion
 
-//    @Action()
-//    @MemberOrder(name = "children", sequence = "1")
-//    public Verfahren addChild(final Integer code, final String description ) {
-//        PruefVerfahren pruefVerfahren = repository.create(code, description, this, null);
-//        getChildren().add(pruefVerfahren);
-//        return this;
-//    }
-//
-
+    //region > injected services
     @Inject
     NormRepository normRepository;
 
     @Inject
     PruefVerfahrenRepository repository;
-
-    @Inject TransactionService transactionService;
+    //endregion
 
 }

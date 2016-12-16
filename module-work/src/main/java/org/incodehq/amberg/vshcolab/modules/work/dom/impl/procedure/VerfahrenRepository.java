@@ -18,6 +18,7 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.isis.applib.annotation.DomainService;
@@ -44,7 +45,15 @@ public class VerfahrenRepository {
                         "code", codeIfAny));
     }
 
+    public Collection<Verfahren> search(final String description) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Verfahren.class,
+                        "findByDescription",
+                        "description", description));
+    }
 
     @javax.inject.Inject
     RepositoryService repositoryService;
+
 }

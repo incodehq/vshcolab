@@ -18,26 +18,18 @@
  */
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Auditing;
-import org.apache.isis.applib.annotation.CommandReification;
-import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
-import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.i18n.TranslatableString;
-import org.apache.isis.applib.services.message.MessageService;
-import org.apache.isis.applib.services.repository.RepositoryService;
-import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import lombok.Getter;
@@ -76,8 +68,9 @@ public class Norm implements Comparable<Norm> {
     //endregion
 
     //region > constructor
-    public Norm(final String name) {
+    public Norm(final String name, final UnitOfMeasurement unitOfMeasurement) {
         setName(name);
+        setUnitOfMeasurement(unitOfMeasurement);
     }
     //endregion
 
@@ -108,72 +101,11 @@ public class Norm implements Comparable<Norm> {
 
     // endregion
 
-    //region > notes (editable property)
-    public static class NotesType {
-        private NotesType() {
-        }
 
-        public static class Meta {
-            public static final int MAX_LEN = 4000;
-
-            private Meta() {
-            }
-        }
-
-        public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Norm, String> { }
-    }
-
-
-    @javax.jdo.annotations.Column(
-            allowsNull = "true",
-            length = NotesType.Meta.MAX_LEN
-    )
-    @Property(
-            command = CommandReification.ENABLED,
-            publishing = Publishing.ENABLED,
-            domainEvent = NotesType.PropertyDomainEvent.class
-    )
+    @Column(allowsNull = "false")
+    @Property()
     @Getter @Setter
-    private String notes;
-    //endregion
-
-    //region > delete (action)
-    @Mixin(method = "exec")
-    public static class delete {
-
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Norm> {
-        }
-
-        private final Norm client;
-        public delete(final Norm client) {
-            this.client = client;
-        }
-
-        @Action(
-                domainEvent = ActionDomainEvent.class,
-                semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-        )
-        @ActionLayout(
-                contributed = Contributed.AS_ACTION
-        )
-        public void exec() {
-            final String title = titleService.titleOf(client);
-            messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(client);
-        }
-
-        @javax.inject.Inject
-        RepositoryService repositoryService;
-
-        @javax.inject.Inject
-        TitleService titleService;
-
-        @javax.inject.Inject
-        MessageService messageService;
-    }
-
-    //endregion
+    private UnitOfMeasurement unitOfMeasurement;
 
     //region > toString, compareTo
     @Override
