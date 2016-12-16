@@ -42,6 +42,7 @@ import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -117,14 +118,18 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     public Baustelle positionSuche(
             final @ParameterLayout(describedAs = "Example: Herengracht 469, Amsterdam, NL") String addresse) {
-        if (locationLookupService != null) {
-            setPosition(locationLookupService.lookup(addresse));
-        }
+        setPosition(locationLookupService.lookup(addresse));
+        setAddresse(addresse);
         return this;
     }
 
+    public boolean hidePositionSuche() {
+        return locationLookupService == null;
+    }
+
+
     @Override
-    @ActionLayout(hidden = Where.ANYWHERE)
+    @Programmatic
     public Location getLocation() {
         return getPosition();
     }

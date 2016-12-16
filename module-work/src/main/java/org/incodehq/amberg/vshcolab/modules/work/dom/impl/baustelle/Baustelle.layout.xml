@@ -30,6 +30,23 @@
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
+                <bs3:tab name="Addresse">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Addresse" unreferencedProperties="true">
+                                <cpt:property id="addresse"/>
+                                <cpt:property id="position"/>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Other">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Other" unreferencedProperties="true"/>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
                 <bs3:tab name="Metadata">
                     <bs3:row>
                         <bs3:col span="12">
@@ -40,13 +57,6 @@
                                 <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
                                 <cpt:property id="datanucleusIdLong"/>
                             </cpt:fieldSet>
-                        </bs3:col>
-                    </bs3:row>
-                </bs3:tab>
-                <bs3:tab name="Other">
-                    <bs3:row>
-                        <bs3:col span="12">
-                            <cpt:fieldSet name="Other" unreferencedProperties="true"/>
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
