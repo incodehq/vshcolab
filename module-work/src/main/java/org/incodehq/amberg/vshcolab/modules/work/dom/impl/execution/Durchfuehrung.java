@@ -99,7 +99,12 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", this.getVerfahren().getCode());
+        return TranslatableString.tr(
+                "{number}: {type} {description} ({when})",
+                "number", getNumber(),
+                "type", this.getVerfahren().getCode(),
+                "description", this.getVerfahren().getDescription(),
+                "when", getWhenElseProjected());
     }
     //endregion
 

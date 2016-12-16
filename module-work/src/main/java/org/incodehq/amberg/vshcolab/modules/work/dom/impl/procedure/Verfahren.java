@@ -80,7 +80,7 @@ public abstract class Verfahren implements Comparable<Verfahren> {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{code}", "code", getCode());
+        return TranslatableString.tr("{code}: {description}", "code", getCode(), "description", getDescription());
     }
     //endregion
 
