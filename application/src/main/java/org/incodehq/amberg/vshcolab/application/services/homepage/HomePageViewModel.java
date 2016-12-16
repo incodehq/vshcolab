@@ -20,32 +20,51 @@ package org.incodehq.amberg.vshcolab.application.services.homepage;
 
 import java.util.List;
 
-import org.apache.isis.applib.annotation.ViewModel;
-import org.apache.isis.applib.services.i18n.TranslatableString;
+import javax.inject.Inject;
 
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.BaustelleRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.KundeRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.VerfahrenRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.projekt.Projekt;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.projekt.ProjektRepository;
+
+import org.apache.isis.applib.annotation.ViewModel;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 
 @ViewModel
 public class HomePageViewModel {
 
-    //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("{num} objects", "num", getObjects().size());
+        return TranslatableString.tr("Wilkommen");
     }
-    //endregion
 
-    //region > object (collection)
-    @org.apache.isis.applib.annotation.HomePage
-    public List<Kunde> getObjects() {
+    public List<Kunde> getKunden() {
         return kundeRepository.listAll();
     }
-    //endregion
 
-    //region > injected services
+    public List<Projekt> getProjekte() { return projektRepository.listAll(); }
 
-    @javax.inject.Inject
+    public List<Baustelle> getBaustellen() {
+        return baustelleRepository.listAll();
+    }
+
+    @Inject
     KundeRepository kundeRepository;
+
+    @Inject
+    BaustelleRepository baustelleRepository;
+
+    @Inject
+    ProjektRepository projektRepository;
+
+    @Inject
+    VerfahrenRepository verfahrenRepository;
+
+
+
+
 
     //endregion
 }
