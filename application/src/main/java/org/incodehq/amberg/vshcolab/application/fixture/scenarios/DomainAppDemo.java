@@ -67,9 +67,9 @@ public class DomainAppDemo extends FixtureScript {
         //taminaTest1.setWhen(now);
         taminaTest1.setWhen(clockService.now());
 
-        factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(1, procedure13412, 0);
-        factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(2, procedure13414, 7);
-        factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(3, procedure13416, 14);
+        factoryService.mixin(Auftrag.durchfuehrungZufuegen.class, taminaTest1).act(1, procedure13412, 0);
+        factoryService.mixin(Auftrag.durchfuehrungZufuegen.class, taminaTest1).act(2, procedure13414, 7);
+        factoryService.mixin(Auftrag.durchfuehrungZufuegen.class, taminaTest1).act(3, procedure13416, 14);
 
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Auftrag #2");
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Auftrag #3");

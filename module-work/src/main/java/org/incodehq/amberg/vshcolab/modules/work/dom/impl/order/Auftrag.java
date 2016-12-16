@@ -108,18 +108,18 @@ public class Auftrag implements Comparable<Auftrag> {
     @Getter @Setter
     private LocalDate when;
 
-    //region > addExecution (action)
+    //region > durchfuehrungZufuegen (action)
     @Mixin(method="act")
-    public static class addExecution {
+    public static class durchfuehrungZufuegen {
         private final Auftrag auftrag;
-        public addExecution(final Auftrag auftrag) {
+        public durchfuehrungZufuegen(final Auftrag auftrag) {
             this.auftrag = auftrag;
         }
         public static class DomainEvent extends ActionDomainEvent<Auftrag> {
         }
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed=Contributed.AS_ACTION, cssClassFa = "fa-plus")
-        @MemberOrder(name = "executions", sequence = "1")
+        @ActionLayout(contributed=Contributed.AS_ACTION, cssClassFa = "fa-plus", named = "Zufuegen")
+        @MemberOrder(name = "pruefungen", sequence = "1")
         public Durchfuehrung act(final Integer number, final Verfahren verfahren, final int executeAfterDays) {
             final Durchfuehrung durchfuehrung = durchfuehrungRepository.create(number, verfahren, auftrag);
             durchfuehrung.setExecuteAfterDays(executeAfterDays);
@@ -136,11 +136,11 @@ public class Auftrag implements Comparable<Auftrag> {
     }
     //endregion
 
-    //region > executions (derived collection)
+    //region > pruefungen (derived collection)
     @Mixin(method="coll")
-    public static class executions {
+    public static class pruefungen {
         private final Auftrag auftrag;
-        public executions(final Auftrag auftrag) {
+        public pruefungen(final Auftrag auftrag) {
             this.auftrag = auftrag;
         }
         public static class DomainEvent extends ActionDomainEvent<Auftrag> {
