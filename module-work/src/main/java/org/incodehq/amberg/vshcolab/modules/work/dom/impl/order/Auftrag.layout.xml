@@ -73,8 +73,8 @@
     </bs3:row>
     <bs3:row>
         <bs3:col span="12">
-            <cpt:collection id="steppen" defaultView="calendar">
-                <cpt:action id="addStep"/>
+            <cpt:collection id="executions" defaultView="calendar">
+                <cpt:action id="addExecution"/>
             </cpt:collection>
         </bs3:col>
     </bs3:row>

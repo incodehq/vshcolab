@@ -199,17 +199,57 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
     }
     //endregion
 
+    //region > calendarable (programmatic)
+    @Programmatic
+    @Override
+    public Set<String> getCalendarNames() {
+        List<String> calendarNames = Lists.newArrayList();
+        calendarNames.add(calendarName());
+        return Sets.newTreeSet(calendarNames);
+    }
+
+    @Programmatic
+    @Override
+    public ImmutableMap<String, CalendarEventable> getCalendarEvents() {
+        final LocalDate whenElseProjected = getWhenElseProjected();
+
+        String calendarName = calendarName();
+        return ImmutableMap.of(calendarName, new CalendarEventable() {
+            @Override public String getCalendarName() {
+                return calendarName;
+            }
+
+            @Override public CalendarEvent toCalendarEvent() {
+                return whenElseProjected != null
+                        ? new CalendarEvent(whenElseProjected.toDateTimeAtStartOfDay(),
+                        getCalendarName(),
+                        titleService.titleOf(Durchfuehrung.this))
+                        : null;
+            }
+        });
+    }
+
+    private String calendarName() {
+        return calendarName(getWhen() != null ? "actual" : "projected");
+    }
+
+    private String calendarName(final String prefix) {
+        return String.format("%s %s:%s", prefix, getAuftrag().getBaustelle().getName(), getAuftrag().getName());
+    }
+
+    //endregion
 
 
     //region > execute
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     public Durchfuehrung execute(final LocalDate when, final String who) {
         setWhen(when);
+        setWho(who);
         return this;
     }
 
     public LocalDate default0Execute() {
-        return clockService.now();
+        return getWhenElseProjected();
     }
 
     public String default1Execute() {
@@ -222,39 +262,6 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
     @Property()
     @Getter @Setter
     private LocalDate when;
-
-    @Programmatic
-    @Override
-    public Set<String> getCalendarNames() {
-        List<String> calendarNames = Lists.newArrayList();
-        calendarNames.add(calendarName(getWhen() != null ? "actual" : "projected"));
-        return Sets.newTreeSet(calendarNames);
-    }
-
-    @Programmatic
-    @Override
-    public ImmutableMap<String, CalendarEventable> getCalendarEvents() {
-        final LocalDate whenElseProjected = getWhenElseProjected();
-
-        String calendarName = calendarName("actual");
-        return ImmutableMap.of("actual", new CalendarEventable() {
-            @Override public String getCalendarName() {
-                return calendarName;
-            }
-
-            @Override public CalendarEvent toCalendarEvent() {
-                return whenElseProjected != null
-                        ? new CalendarEvent(whenElseProjected.toDateTimeAtStartOfDay(),
-                        getCalendarName(),
-                        titleService.titleOf(this))
-                        : null;
-            }
-        });
-    }
-
-    private String calendarName(final String prefix) {
-        return String.format("%s %s:%s", prefix, getAuftrag().getBaustelle().getName(), getAuftrag().getName());
-    }
     //endregion
 
     //region > who (property)

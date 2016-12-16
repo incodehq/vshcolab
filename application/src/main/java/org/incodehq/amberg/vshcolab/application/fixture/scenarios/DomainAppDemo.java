@@ -63,7 +63,7 @@ public class DomainAppDemo extends FixtureScript {
         kappl.addBaustelle("Edelweiss", "Haus Edelweiss, Flums, Sarganserland");
         kappl.addBaustelle("Untergrund", "Polistrasse 1, 8893 Flums");
 
-        final Auftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #1");
+        final Auftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Auftrag #1");
         //taminaTest1.setWhen(now);
         taminaTest1.setWhen(clockService.now());
 
@@ -71,8 +71,8 @@ public class DomainAppDemo extends FixtureScript {
         factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(2, procedure13414, 7);
         factoryService.mixin(Auftrag.addExecution.class, taminaTest1).act(3, procedure13416, 14);
 
-        factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #2");
-        factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #3");
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Auftrag #2");
+        factoryService.mixin(Baustelle.addTest.class, tamina).act("Auftrag #3");
 
         final Client meier = clientRepository.create("Meier");
         final Client logbau = clientRepository.create("Logbau");
