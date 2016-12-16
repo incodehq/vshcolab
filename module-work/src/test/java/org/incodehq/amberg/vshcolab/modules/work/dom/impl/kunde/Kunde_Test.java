@@ -14,35 +14,35 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.client;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Client_Test {
+public class Kunde_Test {
 
-    Client client;
+    Kunde kunde;
 
     @Before
     public void setUp() throws Exception {
-        client = new Client("Foobar");
+        kunde = new Kunde("Foobar");
     }
 
-    public static class Name extends Client_Test {
+    public static class Name extends Kunde_Test {
 
         @Test
         public void happyCase() throws Exception {
             // given
-            assertThat(client.getName()).isEqualTo("Foobar");
+            assertThat(kunde.getName()).isEqualTo("Foobar");
 
             // when
             String name = "Foobar - updated";
-            client.setName(name);
+            kunde.setName(name);
 
             // then
-            assertThat(client.getName()).isEqualTo(name);
+            assertThat(kunde.getName()).isEqualTo(name);
         }
     }
 

@@ -145,9 +145,9 @@ public class ProcedureStep implements Comparable<ProcedureStep> {
         public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<ProcedureStep> {
         }
 
-        private final ProcedureStep client;
-        public delete(final ProcedureStep client) {
-            this.client = client;
+        private final ProcedureStep kunde;
+        public delete(final ProcedureStep kunde) {
+            this.kunde = kunde;
         }
 
         @Action(
@@ -158,9 +158,9 @@ public class ProcedureStep implements Comparable<ProcedureStep> {
                 contributed = Contributed.AS_ACTION
         )
         public void exec() {
-            final String title = titleService.titleOf(client);
+            final String title = titleService.titleOf(kunde);
             messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(client);
+            repositoryService.remove(kunde);
         }
 
         @javax.inject.Inject

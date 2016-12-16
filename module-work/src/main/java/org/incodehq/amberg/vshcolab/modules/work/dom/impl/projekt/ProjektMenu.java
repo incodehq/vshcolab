@@ -20,7 +20,7 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.projekt;
 
 import java.util.List;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -33,33 +33,29 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
-        repositoryFor = Client.class
+        repositoryFor = Kunde.class
 )
 @DomainServiceLayout(
-        named = "Projekts",
+        named = "Projekte",
         menuOrder = "15"
 )
 public class ProjektMenu {
 
-
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<Projekt> listAll() {
+    public List<Projekt> alleProjekte() {
         return projektRepository.listAll();
     }
-
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "2")
-    public List<Projekt> findByNummer(
+    public List<Projekt> nachNummerSuchen(
             final String nummer
     ) {
         return projektRepository.findByNummer(nummer);
     }
-
-
 
     @javax.inject.Inject
     ProjektRepository projektRepository;

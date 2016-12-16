@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.client;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde;
 
 import java.util.List;
 
@@ -64,30 +64,30 @@ import lombok.Setter;
         @javax.jdo.annotations.Query(
                 name = "findByName",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="Client_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Kunde_name_UNQ", members = {"name"})
 @DomainObject(
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class Client implements Comparable<Client> {
+public class Kunde implements Comparable<Kunde> {
 
 
     //region > baustellen (derived collection)
     @Mixin(method="coll")
     public static class baustellen {
-        private final Client client;
-        public baustellen(final Client client) {
-            this.client = client;
+        private final Kunde kunde;
+        public baustellen(final Kunde kunde) {
+            this.kunde = kunde;
         }
-        public static class DomainEvent extends ActionDomainEvent<Client> {
+        public static class DomainEvent extends ActionDomainEvent<Kunde> {
         }
         @Action(semantics = SemanticsOf.SAFE, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ASSOCIATION)
         public List<Baustelle> coll() {
-            return baustelleRepository.findByClient(this.client);
+            return baustelleRepository.findByKunde(this.kunde);
         }
         public boolean hideColl() {
             return false;
@@ -107,12 +107,12 @@ public class Client implements Comparable<Client> {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(cssClassFa = "fa-minus", named = "Remove")
     @MemberOrder(name = "baustellen", sequence = "2")
-    public Client removeBaustelle(final Baustelle baustelle) {
+    public Kunde removeBaustelle(final Baustelle baustelle) {
         repositoryService.removeAndFlush(baustelle);
         return this;
     }
     public List<Baustelle> choices0RemoveBaustelle() {
-        return baustelleRepository.findByClient(this);
+        return baustelleRepository.findByKunde(this);
     }
     //endregion
 
@@ -123,7 +123,7 @@ public class Client implements Comparable<Client> {
     //endregion
 
     //region > constructor
-    public Client(final String name) {
+    public Kunde(final String name) {
         setName(name);
     }
     //endregion
@@ -141,7 +141,7 @@ public class Client implements Comparable<Client> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Client, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Kunde, String> { }
     }
 
 
@@ -168,7 +168,7 @@ public class Client implements Comparable<Client> {
         }
 
         public static class PropertyDomainEvent
-                extends WorkModuleDomSubmodule.PropertyDomainEvent<Client, String> { }
+                extends WorkModuleDomSubmodule.PropertyDomainEvent<Kunde, String> { }
     }
 
 
@@ -189,13 +189,13 @@ public class Client implements Comparable<Client> {
     @Mixin(method = "exec")
     public static class updateName {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Client> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Kunde> {
         }
 
-        private final Client client;
+        private final Kunde kunde;
 
-        public updateName(final Client client) {
-            this.client = client;
+        public updateName(final Kunde kunde) {
+            this.kunde = kunde;
         }
 
         @Action(
@@ -207,15 +207,15 @@ public class Client implements Comparable<Client> {
         @ActionLayout(
                 contributed = Contributed.AS_ACTION
         )
-        public Client exec(
-                @Parameter(maxLength = Client.NameType.Meta.MAX_LEN)
+        public Kunde exec(
+                @Parameter(maxLength = Kunde.NameType.Meta.MAX_LEN)
                 final String name) {
-            client.setName(name);
-            return client;
+            kunde.setName(name);
+            return kunde;
         }
 
         public String default0Exec() {
-            return client.getName();
+            return kunde.getName();
         }
 
         public TranslatableString validate0Exec(final String name) {
@@ -229,12 +229,12 @@ public class Client implements Comparable<Client> {
     @Mixin(method = "exec")
     public static class delete {
 
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Client> {
+        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Kunde> {
         }
 
-        private final Client client;
-        public delete(final Client client) {
-            this.client = client;
+        private final Kunde kunde;
+        public delete(final Kunde kunde) {
+            this.kunde = kunde;
         }
 
         @Action(
@@ -245,9 +245,9 @@ public class Client implements Comparable<Client> {
                 contributed = Contributed.AS_ACTION
         )
         public void exec() {
-            final String title = titleService.titleOf(client);
+            final String title = titleService.titleOf(kunde);
             messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(client);
+            repositoryService.remove(kunde);
         }
 
         @javax.inject.Inject
@@ -269,7 +269,7 @@ public class Client implements Comparable<Client> {
     }
 
     @Override
-    public int compareTo(final Client other) {
+    public int compareTo(final Kunde other) {
         return ObjectContracts.compare(this, other, "name");
     }
 

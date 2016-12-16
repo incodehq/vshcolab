@@ -23,8 +23,8 @@ import java.util.List;
 import org.apache.isis.applib.annotation.ViewModel;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.KundeRepository;
 
 @ViewModel
 public class HomePageViewModel {
@@ -37,15 +37,15 @@ public class HomePageViewModel {
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<Client> getObjects() {
-        return clientRepository.listAll();
+    public List<Kunde> getObjects() {
+        return kundeRepository.listAll();
     }
     //endregion
 
     //region > injected services
 
     @javax.inject.Inject
-    ClientRepository clientRepository;
+    KundeRepository kundeRepository;
 
     //endregion
 }

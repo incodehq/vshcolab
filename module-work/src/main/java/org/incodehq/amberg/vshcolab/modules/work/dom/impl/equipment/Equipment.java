@@ -144,9 +144,9 @@ public class Equipment implements Comparable<Equipment> {
         public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Equipment> {
         }
 
-        private final Equipment client;
-        public delete(final Equipment client) {
-            this.client = client;
+        private final Equipment kunde;
+        public delete(final Equipment kunde) {
+            this.kunde = kunde;
         }
 
         @Action(
@@ -157,9 +157,9 @@ public class Equipment implements Comparable<Equipment> {
                 contributed = Contributed.AS_ACTION
         )
         public void exec() {
-            final String title = titleService.titleOf(client);
+            final String title = titleService.titleOf(kunde);
             messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(client);
+            repositoryService.remove(kunde);
         }
 
         @javax.inject.Inject

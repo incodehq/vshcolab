@@ -144,9 +144,9 @@ public class ResourceType implements Comparable<ResourceType> {
         public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<ResourceType> {
         }
 
-        private final ResourceType client;
-        public delete(final ResourceType client) {
-            this.client = client;
+        private final ResourceType kunde;
+        public delete(final ResourceType kunde) {
+            this.kunde = kunde;
         }
 
         @Action(
@@ -157,9 +157,9 @@ public class ResourceType implements Comparable<ResourceType> {
                 contributed = Contributed.AS_ACTION
         )
         public void exec() {
-            final String title = titleService.titleOf(client);
+            final String title = titleService.titleOf(kunde);
             messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(client);
+            repositoryService.remove(kunde);
         }
 
         @javax.inject.Inject

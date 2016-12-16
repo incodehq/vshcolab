@@ -19,13 +19,13 @@ package org.incodehq.amberg.vshcolab.application.bdd.specglue;
 import java.util.List;
 import java.util.UUID;
 
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.KundeMenu;
+
 import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
-
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientMenu;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -34,7 +34,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     @Given("^there are.* (\\d+) simple objects$")
     public void there_are_N_simple_objects(int n) throws Throwable {
         try {
-            final List<Client> findAll = service(ClientMenu.class).listAll();
+            final List<Kunde> findAll = service(KundeMenu.class).alle();
             assertThat(findAll.size(), is(n));
             putVar("list", "all", findAll);
             
@@ -45,7 +45,7 @@ public class SimpleObjectGlue extends CukeGlueAbstract {
     
     @When("^I create a new simple object$")
     public void I_create_a_new_simple_object() throws Throwable {
-        service(ClientMenu.class).create(UUID.randomUUID().toString());
+        service(KundeMenu.class).hinzufuegen(UUID.randomUUID().toString());
     }
     
 }

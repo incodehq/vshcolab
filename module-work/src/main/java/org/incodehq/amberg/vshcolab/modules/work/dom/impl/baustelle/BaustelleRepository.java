@@ -20,7 +20,7 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle;
 
 import java.util.List;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -46,16 +46,16 @@ public class BaustelleRepository {
                         "name", name));
     }
 
-    public List<Baustelle> findByClient(final Client client) {
+    public List<Baustelle> findByKunde(final Kunde kunde) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
                         Baustelle.class,
-                        "findByClient",
-                        "client", client));
+                        "findByKunde",
+                        "kunde", kunde));
     }
 
-    public Baustelle create(final String name, final Client client, final String adresse) {
-        final Baustelle object = new Baustelle(name, client, adresse);
+    public Baustelle create(final String name, final Kunde kunde, final String adresse) {
+        final Baustelle object = new Baustelle(name, kunde, adresse);
         serviceRegistry.injectServicesInto(object);
         object.positionSuche(adresse);
         repositoryService.persist(object);

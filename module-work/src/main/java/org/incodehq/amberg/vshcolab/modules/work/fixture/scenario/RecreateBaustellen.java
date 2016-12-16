@@ -25,8 +25,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.fixture.data.ClientMenu_create;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.data.KundeMenu_create;
 import org.incodehq.amberg.vshcolab.modules.work.fixture.teardown.WorkModuleTearDown;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -45,7 +45,7 @@ public class RecreateBaustellen extends FixtureScript {
     private Integer number;
 
     @Getter
-    private final List<Client> clients = Lists.newArrayList();
+    private final List<Kunde> kundes = Lists.newArrayList();
 
     @Override
     protected void execute(final ExecutionContext ec) {
@@ -62,9 +62,9 @@ public class RecreateBaustellen extends FixtureScript {
         ec.executeChild(this, new WorkModuleTearDown());
         for (int i = 0; i < number; i++) {
             final String name = NAMES.get(i);
-            final ClientMenu_create fs = new ClientMenu_create().setName(name);
+            final KundeMenu_create fs = new KundeMenu_create().setName(name);
             ec.executeChild(this, fs.getName(), fs);
-            clients.add(fs.getClient());
+            kundes.add(fs.getKunde());
         }
     }
 

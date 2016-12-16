@@ -27,7 +27,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.AuftragRepository;
 
@@ -78,12 +78,11 @@ import lombok.Setter;
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle "
                         + "WHERE name.indexOf(:name) >= 0 "),
         @javax.jdo.annotations.Query(
-                name = "findByClient",
+                name = "findByKunde",
                 value = "SELECT "
                         + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle "
-                        + "WHERE client == :client ")
+                        + "WHERE kunde == :kunde ")
 })
-@javax.jdo.annotations.Unique(name="Baustelle_client_name_UNQ", members = {"client", "name"})
 @DomainObject(
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
@@ -97,9 +96,9 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
     //endregion
 
     //region > constructor
-    public Baustelle(final String name, final Client client, final String adresse) {
+    public Baustelle(final String name, final Kunde kunde, final String adresse) {
         setName(name);
-        setClient(client);
+        setKunde(kunde);
         setAddresse(adresse);
     }
     //endregion
@@ -169,7 +168,7 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private Client client;
+    private Kunde kunde;
 
     //region > notes (editable property)
     public static class NotesType {
@@ -208,10 +207,10 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
         public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Baustelle> {
         }
 
-        private final Baustelle client;
+        private final Baustelle kunde;
 
-        public updateName(final Baustelle client) {
-            this.client = client;
+        public updateName(final Baustelle kunde) {
+            this.kunde = kunde;
         }
 
         @Action(
@@ -226,12 +225,12 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
         public Baustelle exec(
                 @Parameter(maxLength = Baustelle.NameType.Meta.MAX_LEN)
                 final String name) {
-            client.setName(name);
-            return client;
+            kunde.setName(name);
+            return kunde;
         }
 
         public String default0Exec() {
-            return client.getName();
+            return kunde.getName();
         }
 
         public TranslatableString validate0Exec(final String name) {
@@ -308,9 +307,9 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
         public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Baustelle> {
         }
 
-        private final Baustelle client;
-        public delete(final Baustelle client) {
-            this.client = client;
+        private final Baustelle kunde;
+        public delete(final Baustelle kunde) {
+            this.kunde = kunde;
         }
 
         @Action(
@@ -321,9 +320,9 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
                 contributed = Contributed.AS_ACTION
         )
         public void exec() {
-            final String title = titleService.titleOf(client);
+            final String title = titleService.titleOf(kunde);
             messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(client);
+            repositoryService.remove(kunde);
         }
 
         @javax.inject.Inject

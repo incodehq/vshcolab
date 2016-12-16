@@ -20,8 +20,8 @@ package org.incodehq.amberg.vshcolab.application.fixture.scenarios;
 
 import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDown;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle.Baustelle;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.KundeRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.order.Auftrag;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.VerfahrenRepository;
@@ -57,7 +57,7 @@ public class DomainAppDemo extends FixtureScript {
         Verfahren procedure13416 = verfahrenRepository.findByCode(13416);
         Verfahren procedure13418 = verfahrenRepository.findByCode(13418);
 
-        final Client kappl = clientRepository.create("Kappl");
+        final Kunde kappl = kundeRepository.create("Kappl");
 
         final Baustelle tamina = kappl.addBaustelle("Tamina",  "Tamina, Bad Ragaz");
         kappl.addBaustelle("Edelweiss", "Haus Edelweiss, Flums, Sarganserland");
@@ -74,14 +74,14 @@ public class DomainAppDemo extends FixtureScript {
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Auftrag #2");
         factoryService.mixin(Baustelle.addTest.class, tamina).act("Auftrag #3");
 
-        final Client meier = clientRepository.create("Meier");
-        final Client logbau = clientRepository.create("Logbau");
+        final Kunde meier = kundeRepository.create("Meier");
+        final Kunde logbau = kundeRepository.create("Logbau");
 
     }
 
 
     @javax.inject.Inject
-    ClientRepository clientRepository;
+    KundeRepository kundeRepository;
 
     @javax.inject.Inject ResourceTypeRepository resourceTypeRepository;
 

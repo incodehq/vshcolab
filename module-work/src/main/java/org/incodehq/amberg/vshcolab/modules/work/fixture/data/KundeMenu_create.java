@@ -19,8 +19,8 @@
 
 package org.incodehq.amberg.vshcolab.modules.work.fixture.data;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientMenu;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.KundeMenu;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -29,7 +29,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(chain = true)
-public class ClientMenu_create extends FixtureScript {
+public class KundeMenu_create extends FixtureScript {
 
     /**
      * Name of the object (required)
@@ -41,7 +41,7 @@ public class ClientMenu_create extends FixtureScript {
      * The created simple object (output).
      */
     @Getter
-    private Client client;
+    private Kunde kunde;
 
 
     @Override
@@ -49,11 +49,11 @@ public class ClientMenu_create extends FixtureScript {
 
         String name = checkParam("name", ec, String.class);
 
-        this.client = wrap(clientMenu).create(name);
-        ec.addResult(this, client);
+        this.kunde = wrap(kundeMenu).hinzufuegen(name);
+        ec.addResult(this, kunde);
     }
 
     @javax.inject.Inject
-    ClientMenu clientMenu;
+    KundeMenu kundeMenu;
 
 }

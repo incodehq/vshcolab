@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.client;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde;
 
 import java.util.List;
 
@@ -33,45 +33,44 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
-        repositoryFor = Client.class
+        repositoryFor = Kunde.class
 )
 @DomainServiceLayout(
-        named = "Clients",
+        named = "Kunden",
         menuOrder = "10"
 )
-public class ClientMenu {
+public class KundeMenu {
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
-    public List<Client> listAll() {
-        return clientRepository.listAll();
+    public List<Kunde> alle() {
+        return kundeRepository.listAll();
     }
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "2")
-    public List<Client> findByName(
+    public List<Kunde> suchenMitName(
             @ParameterLayout(named="Name")
             final String name
     ) {
-        return clientRepository.findByName(name);
+        return kundeRepository.findByName(name);
     }
 
 
-    public static class CreateDomainEvent extends ActionDomainEvent<ClientMenu> {}
+    public static class CreateDomainEvent extends ActionDomainEvent<KundeMenu> {}
     @Action(domainEvent = CreateDomainEvent.class)
     @MemberOrder(sequence = "3")
-    public Client create(
-            @ParameterLayout(named="Name")
+    public Kunde hinzufuegen(
             final String name) {
-        return clientRepository.create(name);
+        return kundeRepository.create(name);
     }
 
 
     @javax.inject.Inject
-    ClientRepository clientRepository;
+    KundeRepository kundeRepository;
 
 }

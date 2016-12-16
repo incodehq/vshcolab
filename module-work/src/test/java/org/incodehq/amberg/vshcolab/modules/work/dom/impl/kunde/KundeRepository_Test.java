@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.client;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClientRepository_Test {
+public class KundeRepository_Test {
 
     @Rule
     public JUnitRuleMockery2 context = JUnitRuleMockery2.createFor(Mode.INTERFACES_AND_CLASSES);
@@ -49,16 +49,16 @@ public class ClientRepository_Test {
     @Mock
     RepositoryService mockRepositoryService;
 
-    ClientRepository clientRepository;
+    KundeRepository kundeRepository;
 
     @Before
     public void setUp() throws Exception {
-        clientRepository = new ClientRepository();
-        clientRepository.repositoryService = mockRepositoryService;
-        clientRepository.serviceRegistry = mockServiceRegistry;
+        kundeRepository = new KundeRepository();
+        kundeRepository.repositoryService = mockRepositoryService;
+        kundeRepository.serviceRegistry = mockServiceRegistry;
     }
 
-    public static class Create extends ClientRepository_Test {
+    public static class Create extends KundeRepository_Test {
 
         @Test
         public void happyCase() throws Exception {
@@ -69,7 +69,7 @@ public class ClientRepository_Test {
             final Sequence seq = context.sequence("create");
             context.checking(new Expectations() {
                 {
-                    oneOf(mockServiceRegistry).injectServicesInto(with(any(Client.class)));
+                    oneOf(mockServiceRegistry).injectServicesInto(with(any(Kunde.class)));
                     inSequence(seq);
 
                     oneOf(mockRepositoryService).persist(with(nameOf(someName)));
@@ -79,17 +79,17 @@ public class ClientRepository_Test {
             });
 
             // when
-            final Client obj = clientRepository.create(someName);
+            final Kunde obj = kundeRepository.create(someName);
 
             // then
             assertThat(obj).isNotNull();
             assertThat(obj.getName()).isEqualTo(someName);
         }
 
-        private static Matcher<Client> nameOf(final String name) {
-            return new TypeSafeMatcher<Client>() {
+        private static Matcher<Kunde> nameOf(final String name) {
+            return new TypeSafeMatcher<Kunde>() {
                 @Override
-                protected boolean matchesSafely(final Client item) {
+                protected boolean matchesSafely(final Kunde item) {
                     return name.equals(item.getName());
                 }
 
@@ -101,23 +101,23 @@ public class ClientRepository_Test {
         }
     }
 
-    public static class ListAll extends ClientRepository_Test {
+    public static class ListAll extends KundeRepository_Test {
 
         @Test
         public void happyCase() throws Exception {
 
             // given
-            final List<Client> all = Lists.newArrayList();
+            final List<Kunde> all = Lists.newArrayList();
 
             context.checking(new Expectations() {
                 {
-                    oneOf(mockRepositoryService).allInstances(Client.class);
+                    oneOf(mockRepositoryService).allInstances(Kunde.class);
                     will(returnValue(all));
                 }
             });
 
             // when
-            final List<Client> list = clientRepository.listAll();
+            final List<Kunde> list = kundeRepository.listAll();
 
             // then
             Assertions.assertThat(list).isEqualTo(all);

@@ -16,7 +16,7 @@
                                 <cpt:property id="name" namedEscaped="true">
                                     <cpt:action id="updateName"/>
                                 </cpt:property>
-                                <cpt:property id="client"/>
+                                <cpt:property id="kunde"/>
                             </cpt:fieldSet>
                         </bs3:col>
                     </bs3:row>

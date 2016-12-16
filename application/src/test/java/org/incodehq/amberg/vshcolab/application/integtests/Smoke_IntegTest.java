@@ -23,13 +23,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.incodehq.amberg.vshcolab.application.fixture.teardown.DomainAppTearDown;
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.Client;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.KundeMenu;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.client.ClientMenu;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
@@ -39,7 +39,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
     @Inject
     TransactionService transactionService;
     @Inject
-    ClientMenu menu;
+    KundeMenu menu;
 
     @Test
     public void create() throws Exception {
@@ -51,7 +51,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        List<Client> all = wrap(menu).listAll();
+        List<Kunde> all = wrap(menu).alle();
 
         // then
         assertThat(all).isEmpty();
@@ -59,29 +59,29 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        final Client fred = wrap(menu).create("Fred");
+        final Kunde fred = wrap(menu).hinzufuegen("Fred");
         transactionService.flushTransaction();
 
         // then
-        all = wrap(menu).listAll();
+        all = wrap(menu).alle();
         assertThat(all).hasSize(1);
         assertThat(all).contains(fred);
 
 
 
         // when
-        final Client bill = wrap(menu).create("Bill");
+        final Kunde bill = wrap(menu).hinzufuegen("Bill");
         transactionService.flushTransaction();
 
         // then
-        all = wrap(menu).listAll();
+        all = wrap(menu).alle();
         assertThat(all).hasSize(2);
         assertThat(all).contains(fred, bill);
 
 
 
         // when
-        wrap(mixin(Client.updateName.class, fred)).exec("Freddy");
+        wrap(mixin(Kunde.updateName.class, fred)).exec("Freddy");
         transactionService.flushTransaction();
 
         // then
@@ -97,11 +97,11 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        wrap(mixin(Client.delete.class, fred)).exec();
+        wrap(mixin(Kunde.delete.class, fred)).exec();
         transactionService.flushTransaction();
 
 
-        all = wrap(menu).listAll();
+        all = wrap(menu).alle();
         assertThat(all).hasSize(1);
 
     }

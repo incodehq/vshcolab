@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incodehq.amberg.vshcolab.modules.work.dom.impl.client;
+package org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde;
 
 import java.util.List;
 
@@ -28,24 +28,24 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = Client.class
+        repositoryFor = Kunde.class
 )
-public class ClientRepository {
+public class KundeRepository {
 
-    public List<Client> listAll() {
-        return repositoryService.allInstances(Client.class);
+    public List<Kunde> listAll() {
+        return repositoryService.allInstances(Kunde.class);
     }
 
-    public List<Client> findByName(final String name) {
+    public List<Kunde> findByName(final String name) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        Client.class,
+                        Kunde.class,
                         "findByName",
                         "name", name));
     }
 
-    public Client create(final String name) {
-        final Client object = new Client(name);
+    public Kunde create(final String name) {
+        final Kunde object = new Kunde(name);
         serviceRegistry.injectServicesInto(object);
         repositoryService.persist(object);
         return object;
