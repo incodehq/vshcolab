@@ -12,9 +12,7 @@
                     <bs3:row>
                         <bs3:col span="12">
                             <cpt:fieldSet name="Name">
-                                <cpt:action id="delete"/>
                                 <cpt:property id="name" namedEscaped="true">
-                                    <cpt:action id="updateName"/>
                                 </cpt:property>
                                 <cpt:property id="kunde"/>
                             </cpt:fieldSet>
@@ -35,7 +33,9 @@
                         <bs3:col span="12">
                             <cpt:fieldSet name="Addresse" unreferencedProperties="true">
                                 <cpt:property id="addresse"/>
-                                <cpt:property id="position"/>
+                                <cpt:property id="position">
+                                    <cpt:action id="lokalisieren"/>
+                                </cpt:property>
                             </cpt:fieldSet>
                         </bs3:col>
                     </bs3:row>

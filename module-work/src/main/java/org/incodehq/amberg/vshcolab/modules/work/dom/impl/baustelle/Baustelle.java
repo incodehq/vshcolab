@@ -40,7 +40,6 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
@@ -49,9 +48,6 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
-import org.apache.isis.applib.services.message.MessageService;
-import org.apache.isis.applib.services.repository.RepositoryService;
-import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
@@ -115,14 +111,15 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
     private Location position;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    public Baustelle positionSuche(
+
+    public Baustelle lokalisieren(
             final @ParameterLayout(describedAs = "Example: Herengracht 469, Amsterdam, NL") String addresse) {
         setPosition(locationLookupService.lookup(addresse));
         setAddresse(addresse);
         return this;
     }
 
-    public boolean hidePositionSuche() {
+    public boolean hideLokalisieren() {
         return locationLookupService == null;
     }
 
@@ -138,7 +135,7 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
     //endregion
 
 
-    //region > name (read-only property)
+    //region > name (editable property)
     public static class NameType {
         private NameType() {
         }
@@ -157,7 +154,7 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
 
     @javax.jdo.annotations.Column(allowsNull = "false", length = NameType.Meta.MAX_LEN)
     @Property(
-            editing = Editing.DISABLED,
+            editing = Editing.ENABLED,
             domainEvent = NameType.PropertyDomainEvent.class
     )
     @Getter @Setter
@@ -165,10 +162,12 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
 
     // endregion
 
+    //region > kunde (property)
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
     private Kunde kunde;
+    //endregion
 
     //region > notes (editable property)
     public static class NotesType {
@@ -198,46 +197,6 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
     )
     @Getter @Setter
     private String notes;
-    //endregion
-
-    //region > updateName (action)
-    @Mixin(method = "exec")
-    public static class updateName {
-
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Baustelle> {
-        }
-
-        private final Baustelle kunde;
-
-        public updateName(final Baustelle kunde) {
-            this.kunde = kunde;
-        }
-
-        @Action(
-                command = CommandReification.ENABLED,
-                publishing = Publishing.ENABLED,
-                semantics = SemanticsOf.IDEMPOTENT,
-                domainEvent = ActionDomainEvent.class
-        )
-        @ActionLayout(
-                contributed = Contributed.AS_ACTION
-        )
-        public Baustelle exec(
-                @Parameter(maxLength = Baustelle.NameType.Meta.MAX_LEN)
-                final String name) {
-            kunde.setName(name);
-            return kunde;
-        }
-
-        public String default0Exec() {
-            return kunde.getName();
-        }
-
-        public TranslatableString validate0Exec(final String name) {
-            return name != null && name.contains("!") ? TranslatableString.tr("Exclamation mark is not allowed") : null;
-        }
-
-    }
     //endregion
 
     //region > auftragen (derived collection)
@@ -297,44 +256,6 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
         @javax.inject.Inject
         AuftragRepository auftragRepository;
     }
-    //endregion
-
-
-    //region > delete (action)
-    @Mixin(method = "exec")
-    public static class delete {
-
-        public static class ActionDomainEvent extends WorkModuleDomSubmodule.ActionDomainEvent<Baustelle> {
-        }
-
-        private final Baustelle kunde;
-        public delete(final Baustelle kunde) {
-            this.kunde = kunde;
-        }
-
-        @Action(
-                domainEvent = ActionDomainEvent.class,
-                semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-        )
-        @ActionLayout(
-                contributed = Contributed.AS_ACTION
-        )
-        public void exec() {
-            final String title = titleService.titleOf(kunde);
-            messageService.informUser(String.format("'%s' deleted", title));
-            repositoryService.remove(kunde);
-        }
-
-        @javax.inject.Inject
-        RepositoryService repositoryService;
-
-        @javax.inject.Inject
-        TitleService titleService;
-
-        @javax.inject.Inject
-        MessageService messageService;
-    }
-
     //endregion
 
     //region > toString, compareTo

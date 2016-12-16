@@ -23,19 +23,18 @@ import java.sql.Timestamp;
 import javax.inject.Inject;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.kunde.Kunde;
+import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateKundes;
+import org.incodehq.amberg.vshcolab.modules.work.integtests.SimpleModuleIntegTestAbstract;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.services.wrapper.DisabledException;
-import org.apache.isis.applib.services.wrapper.InvalidException;
 import org.apache.isis.applib.services.xactn.TransactionService;
 import org.apache.isis.core.metamodel.services.jdosupport.Persistable_datanucleusIdLong;
 import org.apache.isis.core.metamodel.services.jdosupport.Persistable_datanucleusVersionTimestamp;
 
-import org.incodehq.amberg.vshcolab.modules.work.fixture.scenario.RecreateKundes;
-import org.incodehq.amberg.vshcolab.modules.work.integtests.SimpleModuleIntegTestAbstract;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimpleObject_IntegTest extends SimpleModuleIntegTestAbstract {
@@ -79,31 +78,6 @@ public class SimpleObject_IntegTest extends SimpleModuleIntegTestAbstract {
             wrap(kunde).setName("new name");
         }
 
-    }
-
-    public static class UpdateName extends SimpleObject_IntegTest {
-
-        @Test
-        public void can_be_updated_directly() throws Exception {
-
-            // when
-            wrap(mixin(Kunde.updateName.class, kunde)).exec("new name");
-            transactionService.nextTransaction();
-
-            // then
-            assertThat(wrap(kunde).getName()).isEqualTo("new name");
-        }
-
-        @Test
-        public void failsValidation() throws Exception {
-
-            // expect
-            expectedExceptions.expect(InvalidException.class);
-            expectedExceptions.expectMessage("Exclamation mark is not allowed");
-
-            // when
-            wrap(mixin(Kunde.updateName.class, kunde)).exec("new name!");
-        }
     }
 
 

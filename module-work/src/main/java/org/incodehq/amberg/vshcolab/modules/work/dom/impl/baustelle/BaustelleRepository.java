@@ -57,7 +57,7 @@ public class BaustelleRepository {
     public Baustelle create(final String name, final Kunde kunde, final String adresse) {
         final Baustelle object = new Baustelle(name, kunde, adresse);
         serviceRegistry.injectServicesInto(object);
-        object.positionSuche(adresse);
+        object.lokalisieren(adresse);
         repositoryService.persist(object);
         return object;
     }

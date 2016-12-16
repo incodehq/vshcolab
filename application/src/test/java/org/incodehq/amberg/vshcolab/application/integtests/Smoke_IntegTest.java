@@ -81,7 +81,7 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
 
         // when
-        wrap(mixin(Kunde.updateName.class, fred)).exec("Freddy");
+        wrap(fred).setName("Freddy");
         transactionService.flushTransaction();
 
         // then
@@ -94,15 +94,6 @@ public class Smoke_IntegTest extends DomainAppIntegTestAbstract {
 
         // then
         assertThat(wrap(fred).getNotes()).isEqualTo("These are some notes");
-
-
-        // when
-        wrap(mixin(Kunde.delete.class, fred)).exec();
-        transactionService.flushTransaction();
-
-
-        all = wrap(menu).alle();
-        assertThat(all).hasSize(1);
 
     }
 
