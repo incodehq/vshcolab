@@ -26,18 +26,18 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
-        repositoryFor = BusinessVerfahren.class
+        repositoryFor = AndereVerfahren.class
 )
-public class BusinessVerfahrenRepository {
+public class AndereVerfahrenRepository {
 
-    public List<BusinessVerfahren> listAll() {
-        return repositoryService.allInstances(BusinessVerfahren.class);
+    public List<AndereVerfahren> listAll() {
+        return repositoryService.allInstances(AndereVerfahren.class);
     }
 
-    public BusinessVerfahren create(final Integer code, final String name, final Verfahren parentIfAny) {
-        final BusinessVerfahren businessVerfahren = new BusinessVerfahren(code, name, parentIfAny);
-        repositoryService.persistAndFlush(businessVerfahren);
-        return businessVerfahren;
+    public AndereVerfahren create(final Integer code, final String name, final Verfahren parentIfAny) {
+        final AndereVerfahren andereVerfahren = new AndereVerfahren(code, name, parentIfAny);
+        repositoryService.persistAndFlush(andereVerfahren);
+        return andereVerfahren;
     }
 
     @javax.inject.Inject

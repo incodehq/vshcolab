@@ -32,34 +32,34 @@ import org.apache.isis.applib.annotation.Publishing;
  */
 @javax.jdo.annotations.PersistenceCapable(schema = "test")
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
-@javax.jdo.annotations.Discriminator(value="test.BusinessVerfahren")
+@javax.jdo.annotations.Discriminator(value="test.AndereVerfahren")
 @javax.jdo.annotations.Queries({
         @javax.jdo.annotations.Query(
                 name = "findByCode",
                 value = "SELECT "
-                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.BusinessVerfahren "
+                        + "FROM org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.AndereVerfahren "
                         + "WHERE code.indexOf(:code) >= 0 ")
 })
 @DomainObject(
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class BusinessVerfahren extends Verfahren {
+public class AndereVerfahren extends Verfahren {
 
-    public BusinessVerfahren(final Integer code, final String description, final Verfahren parentIfAny) {
+    public AndereVerfahren(final Integer code, final String description, final Verfahren parentIfAny) {
         super(code, description, parentIfAny);
     }
 
     @Action()
     @MemberOrder(name = "children", sequence = "1")
     public Verfahren addChild(final Integer code, final String description ) {
-        BusinessVerfahren businessVerfahren = repository.create(code, description, this);
-        getChildren().add(businessVerfahren);
+        AndereVerfahren andereVerfahren = repository.create(code, description, this);
+        getChildren().add(andereVerfahren);
         return this;
     }
 
     @Inject
-    BusinessVerfahrenRepository repository;
+    AndereVerfahrenRepository repository;
 
 
 }

@@ -20,13 +20,15 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm;
 
 public enum UnitOfMeasurement  {
 
-    DURATION_IN_HOURS("Uhr"),
+    TIME_IN_HOURS("uhr"),
+    TIME_IN_SEC("sek"),
     TEMPERATURE("\uc2b0C"),
     LENGTH_IN_MM("mm"),
     DENSITY("kg/m\uc2b3"),
     WEIGHT("kg"),
     VOLUME("m\uc2b3"),
     PERCENTAGE("%"),
+    RATIO("ratio"),
     NOT_APPLICABLE("n/a");
 
     private final String title;

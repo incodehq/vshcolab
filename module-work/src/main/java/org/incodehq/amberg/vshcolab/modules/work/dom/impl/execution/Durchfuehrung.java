@@ -19,6 +19,8 @@
 package org.incodehq.amberg.vshcolab.modules.work.dom.impl.execution;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -27,6 +29,10 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.measurement.Messwert;
@@ -52,21 +58,21 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
+import org.apache.isis.applib.services.user.UserService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.Calendarable;
 
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * A test "execution"
- */
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "test"
@@ -89,14 +95,13 @@ import lombok.Setter;
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventable {
+public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
 
     //region > title
     public TranslatableString title() {
         return TranslatableString.tr("{number}: {type}", "number", getNumber(), "type", this.getVerfahren().getCode());
     }
     //endregion
-
 
     //region > constructor
     public Durchfuehrung(final Integer number, final Verfahren verfahren, final Auftrag auftrag) {
@@ -106,105 +111,22 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
     }
     //endregion
 
+
+    //region > auftrag (property)
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
     private Auftrag auftrag;
+    //endregion
 
+    //region > verfahren
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
     private Verfahren verfahren;
 
-    //region > when
-    @Column(allowsNull = "true")
-    @Property()
-    @Getter @Setter
-    private LocalDate when;
-
-    @Programmatic
-    @Override
-    public String getCalendarName() {
-        return getAuftrag().getBaustelle().getName() + ":" + getAuftrag().getName();
-    }
-
-    @Programmatic
-    @Override
-    public CalendarEvent toCalendarEvent() {
-        return getWhen() != null
-                ? new CalendarEvent(getWhen().toDateTimeAtStartOfDay(), getCalendarName(), titleService.titleOf(this))
-                : null;
-    }
     //endregion
 
-    @Persistent(mappedBy = "durchfuehrung", dependentElement = "false")
-    @Collection()
-    @Getter @Setter
-    private SortedSet<Messwert> messwerte = new TreeSet<>();
-
-    //region > messwertZufuegen (action)
-    @Mixin(method="act")
-    public static class messwertZufuegen {
-        private final Durchfuehrung durchfuehrung;
-        public messwertZufuegen(final Durchfuehrung durchfuehrung) {
-            this.durchfuehrung = durchfuehrung;
-        }
-        public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
-        }
-        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-plus", named = "Zufuegen")
-        @MemberOrder(name = "messwerte", sequence = "1")
-        public Durchfuehrung act(final Norm norm, final LocalDateTime measuredAt, final BigDecimal value) {
-            final Messwert messwert = new Messwert(durchfuehrung, norm, measuredAt, value);
-            repositoryService.persist(messwert);
-            return durchfuehrung;
-        }
-
-        public boolean hideAct() {
-            return !(durchfuehrung.getVerfahren() instanceof PruefVerfahren);
-        }
-        public SortedSet<Norm> choices0Act() {
-            PruefVerfahren pruefVerfahren = (PruefVerfahren) durchfuehrung.getVerfahren();
-            return pruefVerfahren.getNorms();
-        }
-
-        public LocalDateTime default1Act() {
-            return durchfuehrung.getWhen() != null ? durchfuehrung.getWhen().toLocalDateTime(new LocalTime(9,0)): null;
-        }
-        @Inject
-        RepositoryService repositoryService;
-    }
-    //endregion
-
-    //region > messwertEntfernen (action)
-    @Mixin(method="act")
-    public static class messwertEntfernen {
-        private final Durchfuehrung durchfuehrung;
-        public messwertEntfernen(final Durchfuehrung durchfuehrung) {
-            this.durchfuehrung = durchfuehrung;
-        }
-        public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
-        }
-        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
-        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-minus", named = "Entfernen")
-        @MemberOrder(name = "messwerte", sequence = "2")
-        public Durchfuehrung act(final Messwert messwert) {
-            repositoryService.remove(messwert);
-            return durchfuehrung;
-        }
-
-        public boolean hideAct() {
-            return !(durchfuehrung.getVerfahren() instanceof PruefVerfahren);
-        }
-
-        public SortedSet<Messwert> choices0Act() {
-            return durchfuehrung.getMesswerte();
-        }
-
-        @Inject
-        RepositoryService repositoryService;
-    }
-    //endregion
 
     //region > name (editable property)
     public static class NumberType {
@@ -261,6 +183,170 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
     private String notes;
     //endregion
 
+    //region > executeAfterDays (property)
+    @Column(allowsNull = "false")
+    @Property()
+    @Getter @Setter
+    private Integer executeAfterDays;
+    //endregion
+
+    //region > whenElseProjected (property)
+    @Property()
+    public LocalDate getWhenElseProjected() {
+        return getWhen() != null
+                ? getWhen()
+                : getAuftrag().getWhen().plusDays(getExecuteAfterDays());
+    }
+    //endregion
+
+
+
+    //region > execute
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    public Durchfuehrung execute(final LocalDate when, final String who) {
+        setWhen(when);
+        return this;
+    }
+
+    public LocalDate default0Execute() {
+        return clockService.now();
+    }
+
+    public String default1Execute() {
+        return userService.getUser().getName();
+    }
+    //endregion
+
+    //region > when (property)
+    @Column(allowsNull = "true")
+    @Property()
+    @Getter @Setter
+    private LocalDate when;
+
+    @Programmatic
+    @Override
+    public Set<String> getCalendarNames() {
+        List<String> calendarNames = Lists.newArrayList();
+        calendarNames.add(calendarName(getWhen() != null ? "actual" : "projected"));
+        return Sets.newTreeSet(calendarNames);
+    }
+
+    @Programmatic
+    @Override
+    public ImmutableMap<String, CalendarEventable> getCalendarEvents() {
+        final LocalDate whenElseProjected = getWhenElseProjected();
+
+        String calendarName = calendarName("actual");
+        return ImmutableMap.of("actual", new CalendarEventable() {
+            @Override public String getCalendarName() {
+                return calendarName;
+            }
+
+            @Override public CalendarEvent toCalendarEvent() {
+                return whenElseProjected != null
+                        ? new CalendarEvent(whenElseProjected.toDateTimeAtStartOfDay(),
+                        getCalendarName(),
+                        titleService.titleOf(this))
+                        : null;
+            }
+        });
+    }
+
+    private String calendarName(final String prefix) {
+        return String.format("%s %s:%s", prefix, getAuftrag().getBaustelle().getName(), getAuftrag().getName());
+    }
+    //endregion
+
+    //region > who (property)
+    @Column(allowsNull = "true", length = 30)
+    @Property()
+    @Getter @Setter
+    private String who;
+    //endregion
+
+
+    //region > messwerte (collection)
+    @Persistent(mappedBy = "durchfuehrung", dependentElement = "false")
+    @Collection()
+    @Getter @Setter
+    private SortedSet<Messwert> messwerte = new TreeSet<>();
+
+    public boolean hideMesswerte() {
+        return cannotMeasure();
+    }
+
+    private boolean cannotMeasure() {
+        return !(getVerfahren() instanceof PruefVerfahren) || getWhen() == null;
+    }
+
+    //endregion
+
+    //region > messwertZufuegen (action)
+    @Mixin(method="act")
+    public static class messwertZufuegen {
+        private final Durchfuehrung durchfuehrung;
+        public messwertZufuegen(final Durchfuehrung durchfuehrung) {
+            this.durchfuehrung = durchfuehrung;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
+        }
+        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-plus", named = "Zufuegen")
+        @MemberOrder(name = "messwerte", sequence = "1")
+        public Durchfuehrung act(final Norm norm, final LocalDateTime measuredAt, final BigDecimal value) {
+            final Messwert messwert = new Messwert(durchfuehrung, norm, measuredAt, value);
+            repositoryService.persist(messwert);
+            return durchfuehrung;
+        }
+
+        public boolean hideAct() {
+            return durchfuehrung.cannotMeasure();
+        }
+
+        public SortedSet<Norm> choices0Act() {
+            PruefVerfahren pruefVerfahren = (PruefVerfahren) durchfuehrung.getVerfahren();
+            return pruefVerfahren.getNorms();
+        }
+
+        public LocalDateTime default1Act() {
+            return durchfuehrung.getWhen() != null ? durchfuehrung.getWhen().toLocalDateTime(new LocalTime(9,0)): null;
+        }
+        @Inject
+        RepositoryService repositoryService;
+    }
+    //endregion
+
+    //region > messwertEntfernen (action)
+    @Mixin(method="act")
+    public static class messwertEntfernen {
+        private final Durchfuehrung durchfuehrung;
+        public messwertEntfernen(final Durchfuehrung durchfuehrung) {
+            this.durchfuehrung = durchfuehrung;
+        }
+        public static class DomainEvent extends ActionDomainEvent<Durchfuehrung> {
+        }
+        @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
+        @ActionLayout(contributed = Contributed.AS_ACTION, cssClassFa = "fa-minus", named = "Entfernen")
+        @MemberOrder(name = "messwerte", sequence = "2")
+        public Durchfuehrung act(final Messwert messwert) {
+            repositoryService.remove(messwert);
+            return durchfuehrung;
+        }
+
+        public boolean hideAct() {
+            return durchfuehrung.cannotMeasure();
+        }
+
+        public SortedSet<Messwert> choices0Act() {
+            return durchfuehrung.getMesswerte();
+        }
+
+        @Inject
+        RepositoryService repositoryService;
+    }
+    //endregion
+
+
     //region > toString, compareTo
     @Override
     public String toString() {
@@ -274,7 +360,15 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, CalendarEventab
 
     //endregion
 
-    @javax.inject.Inject
+    //region > injected services
+    @Inject
     TitleService titleService;
+
+    @Inject
+    ClockService clockService;
+
+    @Inject
+    UserService userService;
+    //endregion
 
 }

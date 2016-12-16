@@ -51,14 +51,14 @@ public class VerfahrenMenu {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "20")
-    public List<BusinessVerfahren> businessVerfahren() {
-        return businessVerfahrenRepository.listAll();
+    public List<AndereVerfahren> businessVerfahren() {
+        return andereVerfahrenRepository.listAll();
     }
 
     @javax.inject.Inject
     PruefVerfahrenRepository pruefVerfahrenRepository;
 
     @javax.inject.Inject
-    BusinessVerfahrenRepository businessVerfahrenRepository;
+    AndereVerfahrenRepository andereVerfahrenRepository;
 
 }

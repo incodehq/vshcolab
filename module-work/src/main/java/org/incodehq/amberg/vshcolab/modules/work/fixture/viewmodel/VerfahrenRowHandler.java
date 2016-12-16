@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 import com.google.common.collect.Lists;
 
-import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.BusinessVerfahrenRepository;
+import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.AndereVerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahren;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.PruefVerfahrenRepository;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.procedure.Verfahren;
@@ -81,7 +81,7 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
                 verfahren = pruefVerfahren;
             }
             else {
-                verfahren = businessVerfahrenRepository.create(code, description, parentVerfahren);
+                verfahren = andereVerfahrenRepository.create(code, description, parentVerfahren);
             }
         }
 
@@ -100,6 +100,6 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
     @Inject
     PruefVerfahrenRepository pruefVerfahrenRepository;
     @Inject
-    BusinessVerfahrenRepository businessVerfahrenRepository;
+    AndereVerfahrenRepository andereVerfahrenRepository;
 
 }
