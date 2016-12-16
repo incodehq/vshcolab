@@ -100,8 +100,8 @@ public class Client implements Comparable<Client> {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(cssClassFa = "fa-plus", named = "Add")
     @MemberOrder(name = "baustellen", sequence = "1")
-    public Baustelle addBaustelle(final String name ) {
-        return baustelleRepository.create(name, this);
+    public Baustelle addBaustelle(final String name, final String adresse ) {
+        return baustelleRepository.create(name, this, adresse);
     }
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)

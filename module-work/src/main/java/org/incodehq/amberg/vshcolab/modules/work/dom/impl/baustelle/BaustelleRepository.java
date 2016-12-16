@@ -54,9 +54,10 @@ public class BaustelleRepository {
                         "client", client));
     }
 
-    public Baustelle create(final String name, final Client client) {
-        final Baustelle object = new Baustelle(name, client);
+    public Baustelle create(final String name, final Client client, final String adresse) {
+        final Baustelle object = new Baustelle(name, client, adresse);
         serviceRegistry.injectServicesInto(object);
+        object.positionSuche(adresse);
         repositoryService.persist(object);
         return object;
     }

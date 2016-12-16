@@ -59,9 +59,9 @@ public class DomainAppDemo extends FixtureScript {
 
         final Client kappl = clientRepository.create("Kappl");
 
-        final Baustelle tamina = kappl.addBaustelle("Tamina");
-        kappl.addBaustelle("Baustelle #1");
-        kappl.addBaustelle("Baustelle #2");
+        final Baustelle tamina = kappl.addBaustelle("Tamina",  "Tamina, Bad Ragaz");
+        kappl.addBaustelle("Edelweiss", "Haus Edelweiss, Flums, Sarganserland");
+        kappl.addBaustelle("Untergrund", "Polistrasse 1, 8893 Flums");
 
         final Auftrag taminaTest1 = factoryService.mixin(Baustelle.addTest.class, tamina).act("Order #1");
         //taminaTest1.setWhen(now);

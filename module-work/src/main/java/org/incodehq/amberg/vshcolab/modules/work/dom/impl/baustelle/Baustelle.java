@@ -20,8 +20,10 @@ package org.incodehq.amberg.vshcolab.modules.work.dom.impl.baustelle;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.incodehq.amberg.vshcolab.modules.work.dom.WorkModuleDomSubmodule;
@@ -37,16 +39,23 @@ import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Mixin;
+import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.message.MessageService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
+
+import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
+import org.isisaddons.wicket.gmap3.cpt.applib.Location;
+import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -78,7 +87,7 @@ import lombok.Setter;
         auditing = Auditing.ENABLED,
         publishing = Publishing.ENABLED
 )
-public class Baustelle implements Comparable<Baustelle> {
+public class Baustelle implements Comparable<Baustelle>, Locatable{
 
     //region > title
     public TranslatableString title() {
@@ -87,11 +96,43 @@ public class Baustelle implements Comparable<Baustelle> {
     //endregion
 
     //region > constructor
-    public Baustelle(final String name, final Client client) {
+    public Baustelle(final String name, final Client client, final String adresse) {
         setName(name);
         setClient(client);
+        setAddresse(adresse);
     }
     //endregion
+
+
+    //region > adresse
+    @Getter @Setter
+    @Column(allowsNull = "false")
+    public String addresse;
+
+    @Persistent
+    @Property(editing = Editing.DISABLED, optionality = Optionality.OPTIONAL, hidden = Where.ALL_TABLES)
+    @Getter @Setter
+    private Location position;
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    public Baustelle positionSuche(
+            final @ParameterLayout(describedAs = "Example: Herengracht 469, Amsterdam, NL") String addresse) {
+        if (locationLookupService != null) {
+            setPosition(locationLookupService.lookup(addresse));
+        }
+        return this;
+    }
+
+    @Override
+    @ActionLayout(hidden = Where.ANYWHERE)
+    public Location getLocation() {
+        return getPosition();
+    }
+
+    @Inject
+    private LocationLookupService locationLookupService;
+    //endregion
+
 
     //region > name (read-only property)
     public static class NameType {
