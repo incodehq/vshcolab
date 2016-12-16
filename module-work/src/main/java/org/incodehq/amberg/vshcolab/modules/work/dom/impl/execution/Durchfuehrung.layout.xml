@@ -52,8 +52,10 @@
         <bs3:col span="8">
             <cpt:fieldSet name="Plan">
                 <cpt:property id="verfahren"/>
-                <cpt:property id="executeAfterDays"/>
-                <cpt:property id="whenElseProjected"/>
+                <cpt:property id="wartenBis">
+                    <cpt:named>Warten (Tage)</cpt:named>
+                </cpt:property>
+                <cpt:property id="plannedOrActual"/>
             </cpt:fieldSet>
             <cpt:fieldSet name="Execution">
                 <cpt:property id="when"/>

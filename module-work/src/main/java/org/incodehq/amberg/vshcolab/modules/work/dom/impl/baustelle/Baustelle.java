@@ -201,9 +201,9 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
 
     //region > auftragen (derived collection)
     @Mixin(method="coll")
-    public static class auftragen {
+    public static class auftraege {
         private final Baustelle baustelle;
-        public auftragen(final Baustelle baustelle) {
+        public auftraege(final Baustelle baustelle) {
             this.baustelle = baustelle;
         }
         public static class DomainEvent extends ActionDomainEvent<Baustelle> {
@@ -222,11 +222,11 @@ public class Baustelle implements Comparable<Baustelle>, Locatable{
     }
     //endregion
 
-    //region > addTest (action)
+    //region > auftraegZufuegen (action)
     @Mixin(method="act")
-    public static class addTest {
+    public static class auftraegZufuegen {
         private final Baustelle baustelle;
-        public addTest(final Baustelle baustelle) {
+        public auftraegZufuegen(final Baustelle baustelle) {
             this.baustelle = baustelle;
         }
         public static class DomainEvent extends ActionDomainEvent<Baustelle> {

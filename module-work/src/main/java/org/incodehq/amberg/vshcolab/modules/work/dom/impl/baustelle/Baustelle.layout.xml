@@ -63,8 +63,10 @@
             </bs3:tabGroup>
         </bs3:col>
         <bs3:col span="8" unreferencedCollections="true">
-            <cpt:collection id="auftragen" defaultView="table">
-                <cpt:action id="addTest"/>
+            <cpt:collection id="auftraege" defaultView="table">
+                <cpt:action id="auftraegZufuegen" cssClassFa="fa-plus">
+                    <cpt:named>Zufuegen</cpt:named>
+                </cpt:action>
             </cpt:collection>
         </bs3:col>
     </bs3:row>

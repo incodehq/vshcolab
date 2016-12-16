@@ -120,9 +120,9 @@ public class Auftrag implements Comparable<Auftrag> {
         @Action(semantics = SemanticsOf.NON_IDEMPOTENT, domainEvent = DomainEvent.class)
         @ActionLayout(contributed=Contributed.AS_ACTION, cssClassFa = "fa-plus", named = "Zufuegen")
         @MemberOrder(name = "pruefungen", sequence = "1")
-        public Durchfuehrung act(final Integer number, final Verfahren verfahren, final int executeAfterDays) {
+        public Durchfuehrung act(final Integer number, final Verfahren verfahren, final int waitForDays) {
             final Durchfuehrung durchfuehrung = durchfuehrungRepository.create(number, verfahren, auftrag);
-            durchfuehrung.setExecuteAfterDays(executeAfterDays);
+            durchfuehrung.setWartenBis(waitForDays);
             return durchfuehrung;
         }
 

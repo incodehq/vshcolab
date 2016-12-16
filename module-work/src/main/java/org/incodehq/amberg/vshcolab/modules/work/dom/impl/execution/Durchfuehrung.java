@@ -104,7 +104,7 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
                 "number", getNumber(),
                 "type", this.getVerfahren().getCode(),
                 "description", this.getVerfahren().getDescription(),
-                "when", getWhenElseProjected());
+                "when", getPlannedOrActual());
     }
     //endregion
 
@@ -188,19 +188,19 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
     private String notes;
     //endregion
 
-    //region > executeAfterDays (property)
+    //region > wartenBis (property)
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private Integer executeAfterDays;
+    private Integer wartenBis;
     //endregion
 
-    //region > whenElseProjected (property)
+    //region > plannedOrActual (property)
     @Property()
-    public LocalDate getWhenElseProjected() {
+    public LocalDate getPlannedOrActual() {
         return getWhen() != null
                 ? getWhen()
-                : getAuftrag().getWhen().plusDays(getExecuteAfterDays());
+                : getAuftrag().getWhen().plusDays(getWartenBis());
     }
     //endregion
 
@@ -216,7 +216,7 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
     @Programmatic
     @Override
     public ImmutableMap<String, CalendarEventable> getCalendarEvents() {
-        final LocalDate whenElseProjected = getWhenElseProjected();
+        final LocalDate whenElseProjected = getPlannedOrActual();
 
         String calendarName = calendarName();
         return ImmutableMap.of(calendarName, new CalendarEventable() {
@@ -254,7 +254,7 @@ public class Durchfuehrung implements Comparable<Durchfuehrung>, Calendarable {
     }
 
     public LocalDate default0Execute() {
-        return getWhenElseProjected();
+        return getPlannedOrActual();
     }
 
     public String default1Execute() {
