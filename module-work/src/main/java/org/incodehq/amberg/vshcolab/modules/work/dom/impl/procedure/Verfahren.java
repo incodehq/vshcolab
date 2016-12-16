@@ -36,7 +36,9 @@ import org.apache.isis.applib.annotation.CommandReification;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.util.ObjectContracts;
 
@@ -130,12 +132,24 @@ public abstract class Verfahren implements Comparable<Verfahren> {
     @javax.jdo.annotations.Column(allowsNull = "false", length = DescriptionType.Meta.MAX_LEN)
     @Property(
             editing = Editing.ENABLED,
-            domainEvent = DescriptionType.PropertyDomainEvent.class
+            domainEvent = DescriptionType.PropertyDomainEvent.class,
+            hidden = Where.ALL_TABLES
     )
     @Getter @Setter
     private String description;
 
     // endregion
+
+    @Property(hidden = Where.OBJECT_FORMS)
+    @PropertyLayout(named = "Description")
+    public String getDescriptionInTable() {
+        int indent = getIndent();
+        return "--------------------------------------".substring(0, indent) + getDescription();
+    }
+
+    private int getIndent() {
+        return getParent() != null ? getParent().getIndent() + 2: 0;
+    }
 
     //region > notes (editable property)
     public static class NotesType {

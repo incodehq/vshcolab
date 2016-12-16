@@ -36,6 +36,7 @@ import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.Norm;
 import org.incodehq.amberg.vshcolab.modules.work.dom.impl.norm.NormRepository;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.DomainObject;
@@ -43,6 +44,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.xactn.TransactionService;
 
 import lombok.Getter;
@@ -74,14 +76,6 @@ public class PruefVerfahren extends Verfahren {
 
     //endregion
 
-    @Action()
-    @MemberOrder(name = "children", sequence = "1")
-    public Verfahren addChild(final Integer code, final String description ) {
-        PruefVerfahren pruefVerfahren = repository.create(code, description, this, null);
-        getChildren().add(pruefVerfahren);
-        return this;
-    }
-
     //region > norms (collection); addNorm (action); removeNorm (action)
 
     @Persistent( table = "PruefVerfahrenNorm")
@@ -91,7 +85,8 @@ public class PruefVerfahren extends Verfahren {
     @Getter @Setter
     private SortedSet<Norm> norms = new TreeSet<Norm>();
 
-    @Action
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(cssClassFa = "fa-plus", named = "Add")
     @MemberOrder(name = "norms", sequence = "1")
     public PruefVerfahren addNorm(final Norm norm) {
         getNorms().add(norm);
@@ -119,6 +114,7 @@ public class PruefVerfahren extends Verfahren {
 
     @Action
     @MemberOrder(name = "norms", sequence = "2")
+    @ActionLayout(cssClassFa = "fa-minus", named = "Remove")
     public PruefVerfahren removeNorm(final Norm norm) {
         getNorms().remove(norm);
         return this;
@@ -141,6 +137,15 @@ public class PruefVerfahren extends Verfahren {
     @Property()
     @Getter @Setter
     private Boolean priceAufAnfrage;
+
+//    @Action()
+//    @MemberOrder(name = "children", sequence = "1")
+//    public Verfahren addChild(final Integer code, final String description ) {
+//        PruefVerfahren pruefVerfahren = repository.create(code, description, this, null);
+//        getChildren().add(pruefVerfahren);
+//        return this;
+//    }
+//
 
     @Inject
     NormRepository normRepository;

@@ -65,7 +65,7 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
 
         if (code == null) {
             VerfahrenRowHandler verfahrenRowHandler = asHandler(previousRow);
-            Verfahren verfahren = verfahrenRowHandler.verfahren;
+            verfahren = verfahrenRowHandler.verfahren;
             if(verfahren instanceof PruefVerfahren) {
                 PruefVerfahren pruefVerfahren = (PruefVerfahren) verfahren;
                 pruefVerfahren.addNormIfAny(norm);
@@ -73,7 +73,7 @@ public class VerfahrenRowHandler implements ExcelFixtureRowHandler {
         } else {
             Verfahren parentVerfahren = verfahrenRepository.findByCode(parentCode);
             if ("P".equalsIgnoreCase(discriminator)) {
-                PruefVerfahren pruefVerfahren = pruefVerfahrenRepository.create(code, description, parentVerfahren, null);
+                PruefVerfahren pruefVerfahren = pruefVerfahrenRepository.create(code, description, parentVerfahren, norm);
                 pruefVerfahren.setPrice(price);
                 pruefVerfahren.setPriceAufAnfrage(priceAufAnfrage);
                 verfahren = pruefVerfahren;

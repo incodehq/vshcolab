@@ -33,12 +33,9 @@
                             <c:fieldSet name="Name">
                                 <c:action id="delete"/>
                                 <c:property id="code" namedEscaped="true"/>
-                                <c:property id="description" namedEscaped="true"/>
                                 <c:property id="parent" namedEscaped="true"/>
-                            </c:fieldSet>
-                            <c:fieldSet name="Prices">
-                                <c:property id="price"/>
-                                <c:property id="priceAufAnfrage"/>
+                                <c:property id="descriptionInTable" namedEscaped="true"/>
+                                <c:property id="description" namedEscaped="true"/>
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>
@@ -69,10 +66,6 @@
             </bs3:tabGroup>
             <bs3:tabGroup>
             </bs3:tabGroup>
-        </bs3:col>
-        <bs3:col span="6">
-            <c:collection id="norms" defaultView="table"/>
-            <c:collection id="children" defaultView="table"/>
         </bs3:col>
     </bs3:row>
     <bs3:row>
