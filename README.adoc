@@ -306,10 +306,14 @@ Extend/adapt these according to your own standards.
 |====================
 
 
-
 == Deployed
 
-NOTE: TODO
+The latest build of the application is deployed to the Microsoft Azure cloud:
+
+http://vshcolab.azurewebsites.net/vshcolab/wicket
+
+It's running on a low-cost plan with limited memory and the application goes into hibernate mode when inactive so it can take a while before the application responds when it needs to start up again.
+This is for demo purposes only, don't expect the same responsiveness a you would in a production environment.
 
 
 == Acknowledgements
